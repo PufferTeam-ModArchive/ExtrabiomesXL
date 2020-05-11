@@ -8,7 +8,6 @@ package extrabiomes.blocks;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLog;

@@ -95,7 +95,6 @@ public class BlockCropBasic extends BlockFlower {
 	{
 		ArrayList<IIcon> IIcons = Lists.newArrayListWithCapacity(MAX_GROWTH_STAGE+1);
 		final String name = cropType.name().toLowerCase();
-		IIcon lastIIcon = null;
 		for (int k = 0; k <= MAX_GROWTH_STAGE; ++k) {
 			int l = (k != (MAX_GROWTH_STAGE - 1)) ? k : k-1;
 			
