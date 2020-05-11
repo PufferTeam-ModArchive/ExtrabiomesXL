@@ -31,6 +31,7 @@ import com.google.common.base.Optional;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import extrabiomes.Extrabiomes;
+import extrabiomes.blocks.BlockNewLeaves.BlockType;
 import extrabiomes.lib.Element;
 import extrabiomes.lib.GeneralSettings;
 
@@ -321,7 +322,6 @@ public class BlockGreenLeaves extends BlockLeavesBase implements IShearable
         }
     }
     
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item id, CreativeTabs tab, List itemList)
@@ -408,13 +408,15 @@ public class BlockGreenLeaves extends BlockLeavesBase implements IShearable
         if (isUserPlaced(metadata) || !isDecaying(metadata))
             return;
         
-        final int rangeWood = 6;
+        final int rangeWood = (unmarkedMetadata(metadata) == BlockType.FIR.metadata) ? 14 : (unmarkedMetadata(metadata) == BlockType.ACACIA.metadata) ? 8 : 4;
         final int rangeCheckChunk = rangeWood + 1;
         final byte var9 = 32;
         final int var10 = var9 * var9;
         final int var11 = var9 / 2;
-        if (adjacentTreeBlocks == null)
+        final int leafRange = rangeWood;
+        if (adjacentTreeBlocks == null) {
             adjacentTreeBlocks = new int[var9 * var9 * var9];
+        }
         
         if (world.checkChunksExist(x - rangeCheckChunk, y - rangeCheckChunk, z - rangeCheckChunk, x + rangeCheckChunk, y + rangeCheckChunk, z + rangeCheckChunk))
         {
@@ -427,11 +429,11 @@ public class BlockGreenLeaves extends BlockLeavesBase implements IShearable
                     {
                         final Block block = world.getBlock(x + var12, y + var13, z + var14);
                         
-                        if (block != null && block.canSustainLeaves(world, x + var12, y + var13, z + var14))
+                        if (block.canSustainLeaves(world, x + var12, y + var13, z + var14))
                         {
                             adjacentTreeBlocks[(var12 + var11) * var10 + (var13 + var11) * var9 + var14 + var11] = 0;
                         }
-                        else if (block != null && block.isLeaves(world, x + var12, y + var13, z + var14))
+                        else if (block.isLeaves(world, x + var12, y + var13, z + var14))
                         {
                             adjacentTreeBlocks[(var12 + var11) * var10 + (var13 + var11) * var9 + var14 + var11] = -2;
                         }
@@ -443,7 +445,7 @@ public class BlockGreenLeaves extends BlockLeavesBase implements IShearable
                 }
             }
             
-            for (int var12 = 1; var12 <= 4; ++var12)
+            for (int var12 = 1; var12 <= leafRange; ++var12)
             {
                 for (int var13 = -rangeWood; var13 <= rangeWood; ++var13)
                 {

@@ -328,7 +328,6 @@ public class BlockNewLeaves extends BlockLeavesBase implements IShearable
         //return metadata == 0 ? ColorizerFoliage.getFoliageColorPine() : metadata == 1 ? ColorizerFoliage.getFoliageColorBasic() : ColorizerFoliage.getFoliageColor(0.9F, 0.1F);
     }
     
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item id, CreativeTabs tab, List itemList)
@@ -415,12 +414,12 @@ public class BlockNewLeaves extends BlockLeavesBase implements IShearable
         if (isUserPlaced(metadata) || !isDecaying(metadata))
             return;
         
-        final int rangeWood = (unmarkedMetadata(metadata) == BlockType.JAPANESE_MAPLE.metadata) ? 8 : 6;
+        final int rangeWood = (unmarkedMetadata(metadata) == BlockType.JAPANESE_MAPLE_SHRUB.metadata) ? 2 : (unmarkedMetadata(metadata) == BlockType.JAPANESE_MAPLE.metadata) ? 4 : 7;
         final int rangeCheckChunk = rangeWood + 1;
         final byte var9 = 32;
         final int var10 = var9 * var9;
         final int var11 = var9 / 2;
-        final int leafRange = (unmarkedMetadata(metadata) == BlockType.JAPANESE_MAPLE.metadata) ? 10 : 4;
+        final int leafRange = rangeWood;
         
         if (adjacentTreeBlocks == null)
         {
@@ -438,11 +437,11 @@ public class BlockNewLeaves extends BlockLeavesBase implements IShearable
                     {
                         final Block block = world.getBlock(x + var12, y + var13, z + var14);
                         
-                        if (block != null && block.canSustainLeaves(world, x + var12, y + var13, z + var14))
+                        if (block.canSustainLeaves(world, x + var12, y + var13, z + var14))
                         {
                             adjacentTreeBlocks[(var12 + var11) * var10 + (var13 + var11) * var9 + var14 + var11] = 0;
                         }
-                        else if (block != null && block.isLeaves(world, x + var12, y + var13, z + var14))
+                        else if (block.isLeaves(world, x + var12, y + var13, z + var14))
                         {
                             adjacentTreeBlocks[(var12 + var11) * var10 + (var13 + var11) * var9 + var14 + var11] = -2;
                         }

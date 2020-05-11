@@ -203,12 +203,7 @@ public class BlockMoreLeaves extends BlockLeavesBase implements IShearable
     public int colorMultiplier(IBlockAccess iBlockAccess, int x, int y, int z)
     {
         final int metadata = unmarkedMetadata(iBlockAccess.getBlockMetadata(x, y, z));
-        
-        //if(metadata == BlockType.JAPANESE_MAPLE.metadata()) {
         return getRenderColor(metadata);
-        //} else { 
-        //	return calcSmoothedBiomeFoliageColor(iBlockAccess, x, z);
-        //}
     }
     
     @Override
@@ -280,29 +275,9 @@ public class BlockMoreLeaves extends BlockLeavesBase implements IShearable
     @Override
     public int getRenderColor(int metadata)
     {
-        metadata = unmarkedMetadata(metadata);
-        
-        //return ColorizerFoliage.getFoliageColor(1.0F, 0.5F);
-        
-        switch (metadata)
-        {
-        //case 0:
-        //	return ColorizerFoliage.getFoliageColor(1.0F, 0.5F);
-        //case 1:
-        //	return 0xffffff;
-        //	//return ColorizerFoliage.getFoliageColor(1.0F, 0.2F);
-        //case 2:
-        //	return ColorizerFoliage.getFoliageColor(1.0F, 0.5F);
-            default:
-                //return ColorizerFoliage.getFoliageColor(1.0F, 1.0F);
-                return 0xffffff;
-                //
-        }
-        
-        //return metadata == 0 ? ColorizerFoliage.getFoliageColorPine() : metadata == 1 ? ColorizerFoliage.getFoliageColorBasic() : ColorizerFoliage.getFoliageColor(0.9F, 0.1F);
+    	return 0xffffff;
     }
     
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item id, CreativeTabs tab, List itemList)
@@ -389,12 +364,12 @@ public class BlockMoreLeaves extends BlockLeavesBase implements IShearable
         if (isUserPlaced(metadata) || !isDecaying(metadata))
             return;
         
-        final int rangeWood = 8;
+        final int rangeWood = 4;
         final int rangeCheckChunk = rangeWood + 1;
         final byte var9 = 32;
         final int var10 = var9 * var9;
         final int var11 = var9 / 2;
-        final int leafRange = 10;
+        final int leafRange = rangeWood;
         
         if (adjacentTreeBlocks == null)
         {
@@ -412,11 +387,11 @@ public class BlockMoreLeaves extends BlockLeavesBase implements IShearable
                     {
                         final Block block = world.getBlock(x + var12, y + var13, z + var14);
                         
-                        if (block != null && block.canSustainLeaves(world, x + var12, y + var13, z + var14))
+                        if (block.canSustainLeaves(world, x + var12, y + var13, z + var14))
                         {
                             adjacentTreeBlocks[(var12 + var11) * var10 + (var13 + var11) * var9 + var14 + var11] = 0;
                         }
-                        else if (block != null && block.isLeaves(world, x + var12, y + var13, z + var14))
+                        else if (block.isLeaves(world, x + var12, y + var13, z + var14))
                         {
                             adjacentTreeBlocks[(var12 + var11) * var10 + (var13 + var11) * var9 + var14 + var11] = -2;
                         }
