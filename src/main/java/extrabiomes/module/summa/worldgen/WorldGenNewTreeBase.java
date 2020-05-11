@@ -128,20 +128,25 @@ public abstract class WorldGenNewTreeBase extends WorldGenAbstractTree
         for (int y1 = y - 1; y1 > 1; y1--)
         {
             Block block = world.getBlock(x, y1, z);
-            if (block != null && !block.canBeReplacedByLeaves(world, x, y1, z))
-                break;
-            
-            // If there is an air block here place a root log
-            setBlockAndNotifyAdequately(world, x, y1, z, logBlock, logs.getItemDamage());
+            if (block.canBeReplacedByLeaves(world, x, y1, z)) {
+            	// If there is an air block here place a root log
+            	setBlockAndNotifyAdequately(world, x, y1, z, logBlock, logs.getItemDamage());
+            }
         }
         
         for (int y1 = y; y1 < y + height - 1; y1++)
         {
-            setBlockAndNotifyAdequately(world, x, y1, z, logBlock, logs.getItemDamage());
+        	Block block = world.getBlock(x, y1, z);
+            if (block.canBeReplacedByLeaves(world, x, y1, z)) {
+            	setBlockAndNotifyAdequately(world, x, y1, z, logBlock, logs.getItemDamage());
+            }
         }
         
         // Place the knee on top
-        setBlockAndNotifyAdequately(world, x, y + height - 1, z, Block.getBlockFromItem(knees.getItem()), orientation);
+        Block block = world.getBlock(x, y + height - 1, z);
+        if (block.canBeReplacedByLeaves(world, x, y + height - 1, z)) {
+        	setBlockAndNotifyAdequately(world, x, y + height - 1, z, Block.getBlockFromItem(knees.getItem()), orientation);
+        }
         
         return true;
     }
