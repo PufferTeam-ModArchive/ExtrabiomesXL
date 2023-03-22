@@ -34,7 +34,6 @@ import extrabiomes.lib.BlockSettings;
 public class BlockQuarterLog extends BlockLog {
 
     public enum BarkOn {
-
         SW,
         SE,
         NW,
@@ -44,7 +43,6 @@ public class BlockQuarterLog extends BlockLog {
     }
 
     public enum BlockType {
-
         REDWOOD(0),
         FIR(1),
         OAK(2);
@@ -95,17 +93,15 @@ public class BlockQuarterLog extends BlockLog {
 
     private BlockSettings settings;
     private HashMap<Integer, IIcon> textures;
-    private IIcon[] textureArray = { null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-            null, null, null, null, null, null, null, null, null, null };
+    private IIcon[] textureArray = new IIcon[24];
     private int index;
 
     public BlockQuarterLog(BlockSettings settings, int index, BarkOn barkOnSides) {
         super();
         this.settings = settings;
         this.barkOnSides = barkOnSides;
-        // barkOnSides = blockID; // TODO: huh?
         this.index = index;
-        textures = new HashMap<Integer, IIcon>();
+        textures = new HashMap<>();
     }
 
     @Override
@@ -288,8 +284,7 @@ public class BlockQuarterLog extends BlockLog {
                 break;
             default:
                 offset = 49;
-        }
-        else if (orientation == 4) switch (side) {
+        } else if (orientation == 4) switch (side) {
             case 0:
                 offset = 48;
                 break;
@@ -307,8 +302,7 @@ public class BlockQuarterLog extends BlockLog {
                 break;
             default:
                 offset = 16;
-        }
-        else if (orientation == 8) switch (side) {
+        } else if (orientation == 8) switch (side) {
             case 0:
                 offset = 48;
                 break;
@@ -334,7 +328,7 @@ public class BlockQuarterLog extends BlockLog {
     public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
         int meta = world.getBlockMetadata(x, y, z);
         Item pickItem;
-        int pickMeta = 0;
+        int pickMeta;
 
         switch (meta) {
             case 1:
@@ -351,8 +345,7 @@ public class BlockQuarterLog extends BlockLog {
                 break;
         }
 
-        final ItemStack itemstack = new ItemStack(pickItem, 1, pickMeta);// super.getPickBlock(target, world, x, y, z);
-        // itemstack.itemID = BarkOn.SE;
+        final ItemStack itemstack = new ItemStack(pickItem, 1, pickMeta);
         return itemstack;
     }
 
@@ -491,8 +484,6 @@ public class BlockQuarterLog extends BlockLog {
 
     @Override
     public Item getItemDropped(int metadata, Random rand, int unused) {
-        // LogHelper.info("Unused: %d", unused);
-
         metadata &= 3;
         switch (metadata) {
             case 1:
@@ -502,8 +493,6 @@ public class BlockQuarterLog extends BlockLog {
             default:
                 return BlockSettings.NEWLOG.getItem();
         }
-
-        // return BarkOn.SE;
     }
 
     @Override

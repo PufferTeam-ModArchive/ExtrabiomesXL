@@ -28,7 +28,6 @@ import extrabiomes.utility.IDRestrictionAnnotation;
 public class BlockRedRock extends Block {
 
     public enum BlockType {
-
         RED_ROCK(0),
         RED_COBBLE(1),
         RED_ROCK_BRICK(2);
@@ -44,7 +43,7 @@ public class BlockRedRock extends Block {
         }
     }
 
-    private final IIcon[] textures = { null, null, null };
+    private final IIcon[] textures = new IIcon[3];
 
     public BlockRedRock() {
         super(Material.rock);

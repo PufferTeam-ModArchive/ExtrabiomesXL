@@ -45,8 +45,8 @@ public class WorldGenRainbowEucalyptusTree extends WorldGenNewTreeBase {
 
     }
 
-    public WorldGenRainbowEucalyptusTree(boolean par1) {
-        super(par1);
+    public WorldGenRainbowEucalyptusTree(boolean doBlockNotify) {
+        super(doBlockNotify);
     }
 
     // Store the last seed that was used to generate a tree

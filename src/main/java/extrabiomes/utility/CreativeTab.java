@@ -7,8 +7,8 @@ import extrabiomes.api.Stuff;
 
 public class CreativeTab extends CreativeTabs {
 
-    public CreativeTab(String par2Str) {
-        super(par2Str);
+    public CreativeTab(String label) {
+        super(label);
     }
 
     @Override

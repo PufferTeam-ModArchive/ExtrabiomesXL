@@ -21,20 +21,20 @@ public class CustomFenceRender implements ISimpleBlockRenderingHandler {
 
             if (k == 0) {
                 renderer.setRenderBounds(
-                        (double) (0.5F - f2),
+                        (0.5F - f2),
                         0.0D,
                         0.0D,
-                        (double) (0.5F + f2),
+                        (0.5F + f2),
                         1.0D,
-                        (double) (f2 * 2.0F));
+                        (f2 * 2.0F));
             }
 
             if (k == 1) {
                 renderer.setRenderBounds(
-                        (double) (0.5F - f2),
+                        (0.5F - f2),
                         0.0D,
-                        (double) (1.0F - f2 * 2.0F),
-                        (double) (0.5F + f2),
+                        (1.0F - f2 * 2.0F),
+                        (0.5F + f2),
                         1.0D,
                         1.0D);
             }
@@ -43,22 +43,22 @@ public class CustomFenceRender implements ISimpleBlockRenderingHandler {
 
             if (k == 2) {
                 renderer.setRenderBounds(
-                        (double) (0.5F - f2),
-                        (double) (1.0F - f2 * 3.0F),
-                        (double) (-f2 * 2.0F),
-                        (double) (0.5F + f2),
-                        (double) (1.0F - f2),
-                        (double) (1.0F + f2 * 2.0F));
+                        (0.5F - f2),
+                        (1.0F - f2 * 3.0F),
+                        (-f2 * 2.0F),
+                        (0.5F + f2),
+                        (1.0F - f2),
+                        (1.0F + f2 * 2.0F));
             }
 
             if (k == 3) {
                 renderer.setRenderBounds(
-                        (double) (0.5F - f2),
-                        (double) (0.5F - f2 * 3.0F),
-                        (double) (-f2 * 2.0F),
-                        (double) (0.5F + f2),
-                        (double) (0.5F - f2),
-                        (double) (1.0F + f2 * 2.0F));
+                        (0.5F - f2),
+                        (0.5F - f2 * 3.0F),
+                        (-f2 * 2.0F),
+                        (0.5F + f2),
+                        (0.5F - f2),
+                        (1.0F + f2 * 2.0F));
             }
 
             GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
@@ -98,7 +98,7 @@ public class CustomFenceRender implements ISimpleBlockRenderingHandler {
         boolean flag = false;
         float f = 0.375F;
         float f1 = 0.625F;
-        renderer.setRenderBounds((double) f, 0.0D, (double) f, (double) f1, 1.0D, (double) f1);
+        renderer.setRenderBounds( f, 0.0D,  f, f1, 1.0D, f1);
         renderer.renderStandardBlock(block, x, y, z);
         flag = true;
         boolean flag1 = false;
@@ -134,13 +134,13 @@ public class CustomFenceRender implements ISimpleBlockRenderingHandler {
         renderer.field_152631_f = true;
 
         if (flag1) {
-            renderer.setRenderBounds((double) f4, (double) f2, (double) f, (double) f5, (double) f3, (double) f1);
+            renderer.setRenderBounds(f4, f2, f, f5, f3, f1);
             renderer.renderStandardBlock(block, x, y, z);
             flag = true;
         }
 
         if (flag2) {
-            renderer.setRenderBounds((double) f, (double) f2, (double) f6, (double) f1, (double) f3, (double) f7);
+            renderer.setRenderBounds(f, f2, f6, f1, f3, f7);
             renderer.renderStandardBlock(block, x, y, z);
             flag = true;
         }
@@ -149,13 +149,13 @@ public class CustomFenceRender implements ISimpleBlockRenderingHandler {
         f3 = 0.5625F;
 
         if (flag1) {
-            renderer.setRenderBounds((double) f4, (double) f2, (double) f, (double) f5, (double) f3, (double) f1);
+            renderer.setRenderBounds(f4, f2, f, f5, f3, f1);
             renderer.renderStandardBlock(block, x, y, z);
             flag = true;
         }
 
         if (flag2) {
-            renderer.setRenderBounds((double) f, (double) f2, (double) f6, (double) f1, (double) f3, (double) f7);
+            renderer.setRenderBounds(f, f2, f6, f1, f3, f7);
             renderer.renderStandardBlock(block, x, y, z);
             flag = true;
         }

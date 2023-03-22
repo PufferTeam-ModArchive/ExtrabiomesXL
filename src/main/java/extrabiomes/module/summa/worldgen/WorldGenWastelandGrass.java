@@ -23,7 +23,7 @@ public class WorldGenWastelandGrass extends WorldGenerator {
 
     @Override
     public boolean generate(World world, Random rand, int x, int y, int z) {
-        Block block = null;
+        Block block;
 
         for (int i = 0; i < 128; ++i) {
             final int x1 = x + rand.nextInt(8) - rand.nextInt(8);

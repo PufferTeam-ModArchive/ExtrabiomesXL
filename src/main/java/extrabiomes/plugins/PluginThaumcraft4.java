@@ -12,10 +12,6 @@ import extrabiomes.module.fabrica.scarecrow.ItemScarecrow;
 
 public class PluginThaumcraft4 {
 
-    public static void preInit() {
-
-    }
-
     public static boolean isEnabled() {
         return Extrabiomes.proxy.isModLoaded("Thaumcraft");
     }

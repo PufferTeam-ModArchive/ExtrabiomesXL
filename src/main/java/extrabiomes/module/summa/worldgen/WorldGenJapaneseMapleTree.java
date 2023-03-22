@@ -1,6 +1,5 @@
 package extrabiomes.module.summa.worldgen;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
@@ -79,8 +78,6 @@ public class WorldGenJapaneseMapleTree extends WorldGenNewTreeBase {
     private static final int CANOPY_WIDTH = 8; // How many blocks will this tree cover
     private static final int CANOPY_WIDTH_VARIANCE = 6; // How many extra blocks may this tree cover
 
-    static int last = 0;
-
     private boolean checkTree(World world, Random rand, int x, int y, int z) {
         final int height = rand.nextInt(BASE_HEIGHT_VARIANCE) + BASE_HEIGHT;
         final double radius = (CANOPY_WIDTH + rand.nextInt(CANOPY_WIDTH_VARIANCE)) / 2.0D;
@@ -108,17 +105,14 @@ public class WorldGenJapaneseMapleTree extends WorldGenNewTreeBase {
         // Draw the main trunk
         if (!check1x1Trunk(x, y, z, (int) (height * TRUNK_HEIGHT_PERCENT), TreeBlock.TRUNK.get(), world)) return false;
         // Generate the branches
-        if (!checkBranches(
-                world,
-                rand,
-                x,
-                y + (int) (height * TRUNK_HEIGHT_PERCENT),
-                z,
-                height - (int) (height * TRUNK_HEIGHT_PERCENT) - 2,
-                radius))
-            return false;
-
-        return true;
+        return checkBranches(
+            world,
+            rand,
+            x,
+            y + (int) (height * TRUNK_HEIGHT_PERCENT),
+            z,
+            height - (int) (height * TRUNK_HEIGHT_PERCENT) - 2,
+            radius);
     }
 
     private boolean generateTree(World world, Random rand, int x, int y, int z) {
@@ -169,7 +163,7 @@ public class WorldGenJapaneseMapleTree extends WorldGenNewTreeBase {
 
         double[] average = { 0, 0, 0 };
         int[] start = { x, y, z };
-        Queue<int[]> branches = new LinkedList<int[]>();
+        Queue<int[]> branches = new LinkedList<>();
 
         // Generate the branches
         for (int i = 0; i < branchCount; i++) {
@@ -185,7 +179,7 @@ public class WorldGenJapaneseMapleTree extends WorldGenNewTreeBase {
             int x1 = (int) ((thisRadius) * Math.cos(curAngle));
             int z1 = (int) ((thisRadius) * Math.sin(curAngle));
 
-            // Add the the average count
+            // Add the average count
             average[0] += x1;
             average[1] += thisHeight;
             average[2] += z1;
@@ -201,9 +195,7 @@ public class WorldGenJapaneseMapleTree extends WorldGenNewTreeBase {
         }
 
         // Place the branch tips
-        Iterator<int[]> itt = branches.iterator();
-        while (itt.hasNext()) {
-            int[] cluster = itt.next();
+        for (int[] cluster : branches) {
             if (!checkLeafCluster(world, cluster[0], cluster[1], cluster[2], 2, 1)) return false;
         }
 
@@ -213,9 +205,7 @@ public class WorldGenJapaneseMapleTree extends WorldGenNewTreeBase {
         average[2] /= branchCount;
 
         // Generate the canopy
-        if (!checkCanopy(world, average[0] + x, y, average[2] + z, radius, height)) return false;
-
-        return true;
+        return checkCanopy(world, average[0] + x, y, average[2] + z, radius, height);
 
     }
 
@@ -225,7 +215,7 @@ public class WorldGenJapaneseMapleTree extends WorldGenNewTreeBase {
 
         double[] average = { 0, 0, 0 };
         int[] start = { x, y, z };
-        Queue<int[]> branches = new LinkedList<int[]>();
+        Queue<int[]> branches = new LinkedList<>();
 
         // Generate the branches
         for (int i = 0; i < branchCount; i++) {
@@ -241,7 +231,7 @@ public class WorldGenJapaneseMapleTree extends WorldGenNewTreeBase {
             int x1 = (int) ((thisRadius) * Math.cos(curAngle));
             int z1 = (int) ((thisRadius) * Math.sin(curAngle));
 
-            // Add the the average count
+            // Add the average count
             average[0] += x1;
             average[1] += thisHeight;
             average[2] += z1;
@@ -257,9 +247,7 @@ public class WorldGenJapaneseMapleTree extends WorldGenNewTreeBase {
         }
 
         // Place the branch tips
-        Iterator<int[]> itt = branches.iterator();
-        while (itt.hasNext()) {
-            int[] cluster = itt.next();
+        for (int[] cluster : branches) {
             generateLeafCluster(world, cluster[0], cluster[1], cluster[2], 2, 1, TreeBlock.LEAVES.get());
         }
 
@@ -325,7 +313,7 @@ public class WorldGenJapaneseMapleTree extends WorldGenNewTreeBase {
                 try {
                     block = world.getBlock((int) (x1 + x), (int) y, (int) (z1 + z));
                 } catch (Exception e) {
-                    LogHelper.info("Japanese Maple tree tried to generate in an ungenerated chunk.");
+                    LogHelper.info("Japanese Maple tree tried to generate in an un-generated chunk.");
                     return false;
                 }
 

@@ -36,7 +36,6 @@ import extrabiomes.lib.GeneralSettings;
 public class BlockNewLeaves extends BlockLeavesBase implements IShearable {
 
     public enum BlockType {
-
         BALD_CYPRESS(0),
         JAPANESE_MAPLE(1),
         JAPANESE_MAPLE_SHRUB(2),

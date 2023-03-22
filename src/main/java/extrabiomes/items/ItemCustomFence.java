@@ -36,4 +36,5 @@ public class ItemCustomFence extends MultiItemBlock {
     public IIcon getIconFromDamage(int metadata) {
         return this.field_150939_a.getIcon(0, metadata);
     }
+
 }

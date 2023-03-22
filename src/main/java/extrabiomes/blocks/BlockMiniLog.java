@@ -43,7 +43,7 @@ public class BlockMiniLog extends BlockLog {
     }
 
     private BlockSettings settings;
-    private IIcon[] textures = { null, null, null, null, null, null, null, null };
+    private IIcon[] textures = new IIcon[6];
     private static int renderId = 33;
 
     public BlockMiniLog(BlockSettings settings) {
@@ -53,7 +53,7 @@ public class BlockMiniLog extends BlockLog {
 
         // opaqueCubeLookup = true; // TODO: update
         useNeighborBrightness = false;
-        this.setLightOpacity(0);
+        setLightOpacity(0);
     }
 
     @Override
@@ -67,7 +67,6 @@ public class BlockMiniLog extends BlockLog {
 
         textures[4] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + "logautumnside");
         textures[5] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + "logsakuratop");
-
     }
 
     @Override

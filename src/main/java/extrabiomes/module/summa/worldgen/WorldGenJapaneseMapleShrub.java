@@ -1,6 +1,5 @@
 package extrabiomes.module.summa.worldgen;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
@@ -79,8 +78,6 @@ public class WorldGenJapaneseMapleShrub extends WorldGenNewTreeBase {
     private static final int CANOPY_WIDTH = 4; // How many blocks will this tree cover
     private static final int CANOPY_WIDTH_VARIANCE = 3; // How many extra blocks may this tree cover
 
-    static int last = 0;
-
     private boolean generateTree(World world, Random rand, int x, int y, int z) {
         final int height = rand.nextInt(BASE_HEIGHT_VARIANCE) + BASE_HEIGHT;
         final double radius = (CANOPY_WIDTH + rand.nextInt(CANOPY_WIDTH_VARIANCE)) / 2.0D;
@@ -129,7 +126,7 @@ public class WorldGenJapaneseMapleShrub extends WorldGenNewTreeBase {
 
         double[] average = { 0, 0, 0 };
         int[] start = { x, y, z };
-        Queue<int[]> branches = new LinkedList<int[]>();
+        Queue<int[]> branches = new LinkedList<>();
 
         // Generate the branches
         for (int i = 0; i < branchCount; i++) {
@@ -145,7 +142,7 @@ public class WorldGenJapaneseMapleShrub extends WorldGenNewTreeBase {
             int x1 = (int) ((thisRadius) * Math.cos(curAngle));
             int z1 = (int) ((thisRadius) * Math.sin(curAngle));
 
-            // Add the the average count
+            // Add the average count
             average[0] += x1;
             average[1] += thisHeight;
             average[2] += z1;
@@ -161,9 +158,7 @@ public class WorldGenJapaneseMapleShrub extends WorldGenNewTreeBase {
         }
 
         // Place the branch tips
-        Iterator<int[]> itt = branches.iterator();
-        while (itt.hasNext()) {
-            int[] cluster = itt.next();
+        for (int[] cluster : branches) {
             if (!checkLeafCluster(world, cluster[0], cluster[1], cluster[2], 1, 2)) return false;
         }
 
@@ -173,9 +168,7 @@ public class WorldGenJapaneseMapleShrub extends WorldGenNewTreeBase {
         average[2] /= branchCount;
 
         // Generate the canopy
-        if (!checkCanopy(world, average[0] + x, y, average[2] + z, radius, height)) return false;
-
-        return true;
+        return checkCanopy(world, average[0] + x, y, average[2] + z, radius, height);
 
     }
 
@@ -185,7 +178,7 @@ public class WorldGenJapaneseMapleShrub extends WorldGenNewTreeBase {
 
         double[] average = { 0, 0, 0 };
         int[] start = { x, y, z };
-        Queue<int[]> branches = new LinkedList<int[]>();
+        Queue<int[]> branches = new LinkedList<>();
 
         // Generate the branches
         for (int i = 0; i < branchCount; i++) {
@@ -201,7 +194,7 @@ public class WorldGenJapaneseMapleShrub extends WorldGenNewTreeBase {
             int x1 = (int) ((thisRadius) * Math.cos(curAngle));
             int z1 = (int) ((thisRadius) * Math.sin(curAngle));
 
-            // Add the the average count
+            // Add the average count
             average[0] += x1;
             average[1] += thisHeight;
             average[2] += z1;
@@ -217,17 +210,15 @@ public class WorldGenJapaneseMapleShrub extends WorldGenNewTreeBase {
         }
 
         // Place the branch tips
-        Iterator<int[]> itt = branches.iterator();
-        while (itt.hasNext()) {
-            int[] cluster = itt.next();
+        for (int[] cluster : branches) {
             generateLeafCluster(
-                    world,
-                    cluster[0],
-                    cluster[1],
-                    cluster[2],
-                    1 + rand.nextInt(2),
-                    2,
-                    TreeBlock.LEAVES.get());
+                world,
+                cluster[0],
+                cluster[1],
+                cluster[2],
+                1 + rand.nextInt(2),
+                2,
+                TreeBlock.LEAVES.get());
         }
 
         // Calculate the center position
@@ -253,6 +244,7 @@ public class WorldGenJapaneseMapleShrub extends WorldGenNewTreeBase {
             ItemStack leaves) {
         int layers = height + 2;
         for (int y1 = (int) y, layer = 0; layer < layers; layer++, y1++) {
+            double layerRadius = radius * Math.cos((layer) / (height / 1.3));
             if (layer < 2) {
                 generateCanopyLayer(
                         world,
@@ -260,11 +252,11 @@ public class WorldGenJapaneseMapleShrub extends WorldGenNewTreeBase {
                         x,
                         y1,
                         z,
-                        radius * Math.cos((layer) / (height / 1.3)),
+                    layerRadius,
                         2 + (layer * 5),
                         leaves);
             } else {
-                generateCanopyLayer(world, rand, x, y1, z, radius * Math.cos((layer) / (height / 1.3)), 1000, leaves);
+                generateCanopyLayer(world, rand, x, y1, z, layerRadius, 1000, leaves);
             }
         }
     }

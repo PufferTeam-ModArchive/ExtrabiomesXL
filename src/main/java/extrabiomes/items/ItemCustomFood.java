@@ -24,9 +24,8 @@ public class ItemCustomFood extends ItemFood {
     public enum FoodType {
 
         // @formatter:off
-		//						 idx   hung  sat   text
-		CHOCOLATE			 	(0,    3,    0.5f, "chocolate" ),
-		CHOCOLATE_STRAWBERRY	(1,    7,    1.0f, "ch_strawberry" );
+		CHOCOLATE			 	(0, 3, 0.5f, "chocolate" ),
+		CHOCOLATE_STRAWBERRY	(1, 7, 1.0f, "ch_strawberry" );
 		// @formatter:on
 
         public final int meta;
@@ -37,14 +36,14 @@ public class ItemCustomFood extends ItemFood {
 
         public boolean alwaysEdible = false;
 
-        private FoodType(int meta, Integer hunger, Float saturation, String texture) {
+        FoodType(int meta, Integer hunger, Float saturation, String texture) {
             this.meta = meta;
             this.hunger = (hunger == null ? DEFAULT_HUNGER : hunger);
             this.saturation = (saturation == null ? DEFAULT_SATURATION : saturation);
             this.texture = texture;
         }
 
-        private FoodType(int meta, Integer hunger, Float saturation, String texture, boolean alwaysEdible) {
+        FoodType(int meta, Integer hunger, Float saturation, String texture, boolean alwaysEdible) {
             this(meta, hunger, saturation, texture);
             this.alwaysEdible = alwaysEdible;
         }

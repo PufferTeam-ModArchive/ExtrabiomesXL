@@ -15,11 +15,10 @@ public class BlockCustomFenceGate extends BlockFenceGate {
 
     public BlockCustomFenceGate(String name) {
         super();
-
-        this.setHardness(2.0F);
-        this.setResistance(5.0F);
-        this.setBlockName("extrabiomes.fencegate." + name);
-        this.textureName = "planks" + name;
+        setHardness(2.0F);
+        setResistance(5.0F);
+        setBlockName("extrabiomes.fencegate." + name);
+        textureName = "planks" + name;
         setCreativeTab(Extrabiomes.tabsEBXL);
     }
 

@@ -9,24 +9,24 @@ import net.minecraft.world.World;
 
 public class SubBlockWaterPlant extends SubBlock {
 
-    private int maxHeight;
+    private final int maxHeight;
 
     private List<Block> groundBlocks;
 
     /**
-     * Creates an underwater plant subblock with a max height of one block.
-     * 
-     * @param Name A string name of the texture/unlocalized block name.
+     * Creates an underwater plant sub-block with a max height of one block.
+     *
+     * @param name A string name of the texture/unlocalized block name.
      */
     public SubBlockWaterPlant(String name) {
         this(name, 1);
     }
 
     /**
-     * Creates an underwater plant subblock with a user defined max block height.
-     * 
-     * @param Name   A string name of the texture/unlocalized block name.
-     * @param Height An integer specify the maxt height that this plant can grow to.
+     * Creates an underwater plant sub-block with a user defined max block height.
+     *
+     * @param name   A string name of the texture/unlocalized block name.
+     * @param height An integer specify the max height that this plant can grow to.
      */
     public SubBlockWaterPlant(String name, int height) {
         super(name);
@@ -45,7 +45,7 @@ public class SubBlockWaterPlant extends SubBlock {
         final Block top = world.getBlock(x, y + 1, z);
         // final int curId = world.getBlock(x, y, z);
 
-        // We need to be under water
+        // We need to be underwater
         if (maxHeight > 1 && top.equals(parent) && this.metaData == world.getBlockMetadata(x, y + 1, z)) {
 
         } else if (!top.equals(Blocks.water)) {
@@ -54,7 +54,7 @@ public class SubBlockWaterPlant extends SubBlock {
 
         while (maxHeight >= offset) {
             base = world.getBlock(x, y - offset, z);
-            if (groundBlocks.isEmpty() || groundBlocks.contains((Object) base)) {
+            if (groundBlocks.isEmpty() || groundBlocks.contains(base)) {
                 return true;
             } else if (!base.equals(parent) || this.metaData != world.getBlockMetadata(x, y - offset, z)) {
                 return false;
@@ -77,13 +77,12 @@ public class SubBlockWaterPlant extends SubBlock {
 
     public SubBlockWaterPlant addPlaceableBlock(Block newBlock) {
         groundBlocks.add(newBlock);
-
         return this;
     }
 
     public SubBlockWaterPlant removePlaceableBlock(Block newBlock) {
         groundBlocks.remove(newBlock);
-
         return this;
     }
+
 }

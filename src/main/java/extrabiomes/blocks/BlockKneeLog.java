@@ -27,7 +27,7 @@ public class BlockKneeLog extends BlockLog {
 
     private BlockSettings settings;
 
-    private IIcon[] textures = { null, null, null, null, null, null, null, null, null };
+    private IIcon[] textures = new IIcon[9];
     private static int renderId = 32;
     private String treeType = "knee";
     private ItemStack droppedItem;
@@ -78,10 +78,9 @@ public class BlockKneeLog extends BlockLog {
                 return textures[eastIIcon(orientation)];
             case 5:
                 return textures[westIIcon(orientation)];
+            default:
+                return textures[4];
         }
-
-        return textures[4];
-
     }
 
     private int topIIcon(int orientation) {

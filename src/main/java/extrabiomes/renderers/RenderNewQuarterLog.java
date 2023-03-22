@@ -23,12 +23,12 @@ public class RenderNewQuarterLog implements ISimpleBlockRenderingHandler {
     }
 
     @Override
-    public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
+    public void renderInventoryBlock(Block block, int meta, int modelID, RenderBlocks renderer) {
         try {
             final Tessellator var4 = Tessellator.instance;
 
             if (renderer.useInventoryTint) {
-                final int renderColor = block.getRenderColor(metadata);
+                final int renderColor = block.getRenderColor(meta);
                 final float red = (renderColor >> 16 & 255) / 255.0F;
                 final float green = (renderColor >> 8 & 255) / 255.0F;
                 final float blue = (renderColor & 255) / 255.0F;
@@ -69,13 +69,13 @@ public class RenderNewQuarterLog implements ISimpleBlockRenderingHandler {
             var4.draw();
 
             GL11.glTranslatef(0.5F, 0.5F, 0.5F);
-        } catch (Exception e) {
+        } catch (Exception exception) {
             LogHelper.severe("Block: " + block.toString());
-            LogHelper.severe("metaData: " + metadata);
+            LogHelper.severe("Meta: " + meta);
             LogHelper.severe("ModelID: " + modelID);
             LogHelper.severe("Renderer: " + renderer.toString());
 
-            e.printStackTrace();
+            exception.printStackTrace();
 
         }
     }
@@ -87,40 +87,15 @@ public class RenderNewQuarterLog implements ISimpleBlockRenderingHandler {
 
         switch (metadata) {
             case 0:
-                renderer.uvRotateTop = 0;
-                renderer.uvRotateBottom = 0;
-                break;
             case 1:
-                renderer.uvRotateTop = 0;
-                renderer.uvRotateBottom = 0;
-                break;
             case 2:
-                renderer.uvRotateTop = 0;
-                renderer.uvRotateBottom = 0;
-                break;
             case 3:
                 renderer.uvRotateTop = 0;
                 renderer.uvRotateBottom = 0;
                 break;
             case 4:
-                // Edit here
-                renderer.uvRotateEast = 0;
-                renderer.uvRotateWest = 0;
-                renderer.uvRotateNorth = 1;
-                renderer.uvRotateSouth = 1;
-                break;
             case 5:
-                renderer.uvRotateEast = 0;
-                renderer.uvRotateWest = 0;
-                renderer.uvRotateNorth = 1;
-                renderer.uvRotateSouth = 1;
-                break;
             case 6:
-                renderer.uvRotateEast = 0;
-                renderer.uvRotateWest = 0;
-                renderer.uvRotateNorth = 1;
-                renderer.uvRotateSouth = 1;
-                break;
             case 7:
                 renderer.uvRotateEast = 0;
                 renderer.uvRotateWest = 0;
@@ -128,29 +103,8 @@ public class RenderNewQuarterLog implements ISimpleBlockRenderingHandler {
                 renderer.uvRotateSouth = 1;
                 break;
             case 8:
-                renderer.uvRotateTop = 1;
-                renderer.uvRotateBottom = 1;
-                renderer.uvRotateEast = 1;
-                renderer.uvRotateWest = 1;
-                renderer.uvRotateNorth = 0;
-                renderer.uvRotateSouth = 0;
-                break;
             case 9:
-                renderer.uvRotateTop = 1;
-                renderer.uvRotateBottom = 1;
-                renderer.uvRotateEast = 1;
-                renderer.uvRotateWest = 1;
-                renderer.uvRotateNorth = 0;
-                renderer.uvRotateSouth = 0;// 1
-                break;
             case 10:
-                renderer.uvRotateTop = 1;
-                renderer.uvRotateBottom = 1;
-                renderer.uvRotateEast = 1;
-                renderer.uvRotateWest = 1;
-                renderer.uvRotateNorth = 0;
-                renderer.uvRotateSouth = 0;
-                break;
             case 11:
                 renderer.uvRotateTop = 1;
                 renderer.uvRotateBottom = 1;
@@ -161,22 +115,7 @@ public class RenderNewQuarterLog implements ISimpleBlockRenderingHandler {
                 break;
         }
 
-        // renderer.flipTexture = true;
-
-        // renderer.uvRotateTop = metadata & 3;
-
-        // if (orientation == 4) {
-        // renderer.uvRotateEast = 1;
-        // renderer.uvRotateWest = 1;
-        // renderer.uvRotateTop = 1;
-        // renderer.uvRotateBottom = 1;
-        // } else if (orientation == 8) {
-        // renderer.uvRotateSouth = 1;
-        // renderer.uvRotateNorth = 2;
-        // }
-
         final boolean didRender = renderer.renderStandardBlock(block, x, y, z);
-        // renderer.render
         renderer.uvRotateSouth = 0;
         renderer.uvRotateEast = 0;
         renderer.uvRotateWest = 0;

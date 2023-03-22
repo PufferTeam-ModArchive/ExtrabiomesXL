@@ -42,7 +42,6 @@ import extrabiomes.module.summa.worldgen.WorldGenSakuraBlossomTree;
 public class BlockNewSapling extends BlockFlower {
 
     public enum BlockType {
-
         BALD_CYPRESS(0, new String[] { "2x2" }),
         JAPANESE_MAPLE(1, new String[] { "1x1" }),
         JAPANESE_MAPLE_SHRUB(2, new String[] { "1x1" }),
@@ -68,7 +67,7 @@ public class BlockNewSapling extends BlockFlower {
 
     static int saplingLifespan = 5000;
 
-    private IIcon[] textures = { null, null, null, null, null, null, null, null };
+    private IIcon[] textures = new IIcon[5];
 
     private static final int METADATA_BITMASK = 0x7;
     private static final int METADATA_MARKBIT = 0x8;

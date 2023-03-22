@@ -18,7 +18,7 @@ public class BlockCustomVine extends BlockVine {
 
     public enum BlockType {
         GLORIOSA,
-        SPANISH_MOSS;
+        SPANISH_MOSS
     }
 
     public final BlockType type;

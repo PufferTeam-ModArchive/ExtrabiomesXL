@@ -15,8 +15,8 @@ public abstract class WorldGenNewTreeBase extends WorldGenAbstractTree {
 
     int leafCount = 0;
 
-    public WorldGenNewTreeBase(boolean par1) {
-        super(par1);
+    public WorldGenNewTreeBase(boolean doBlockNotify) {
+        super(doBlockNotify);
     }
 
     public boolean check1x1Trunk(int x, int y, int z, int height, ItemStack logs, World world) {

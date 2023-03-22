@@ -85,9 +85,9 @@ public class BiomeManagerImpl extends BiomeManager {
     private static final WorldGenerator RAINBOW_EUCALYPTUS_GEN = new WorldGenRainbowEucalyptusTree(false);
     private static final WorldGenerator SAKURA_BLOSSOM_GEN = new WorldGenSakuraBlossomTree(false);
 
-    private static final Collection<BiomeGenBase> disableDefaultGrassBiomes = new ArrayList<BiomeGenBase>();
+    private static final Collection<BiomeGenBase> disableDefaultGrassBiomes = new ArrayList<>();
 
-    private final static Map<GenType, Multimap<BiomeGenBase, WeightedWorldGenerator>> weightedChoices = new EnumMap<GenType, Multimap<BiomeGenBase, WeightedWorldGenerator>>(
+    private final static Map<GenType, Multimap<BiomeGenBase, WeightedWorldGenerator>> weightedChoices = new EnumMap<>(
             GenType.class);
 
     private static void addAlpineTrees(Optional<? extends BiomeGenBase> biome) {

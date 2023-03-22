@@ -39,8 +39,6 @@ import extrabiomes.proxy.CommonProxy;
 // TODO: make this extend BlockFlower
 public class BlockCustomFlower extends Block implements IPlantable {
 
-    public static int NUM_GROUPS = 2; // number of flower groups
-
     public enum BlockType {
 
         // group 0 - original flowers
@@ -176,12 +174,12 @@ public class BlockCustomFlower extends Block implements IPlantable {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconRegister) {
-        LogHelper.fine(this.toString() + ": registerIcons");
+        LogHelper.fine(this + ": registerIcons");
         for (BlockType type : groupMap.values()) {
             final IIcon IIcon = type.registerIcon(iconRegister);
             if (IIcon == null)
                 LogHelper.warning("No IIcon found for " + type + " (" + type.group + "," + type.metadata + ")");
-            else LogHelper.fine(this.toString() + ": " + type + " = " + IIcon);
+            else LogHelper.fine(this + ": " + type + " = " + IIcon);
         }
     }
 
@@ -298,7 +296,7 @@ public class BlockCustomFlower extends Block implements IPlantable {
         checkFlowerChange(world, x, y, z);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings("rawtypes")
     public void addInformation(int metaData, List listOfLines) {
         if (groupMap.containsKey(metaData)) {
             String line = LanguageRegistry.instance().getStringLocalization(

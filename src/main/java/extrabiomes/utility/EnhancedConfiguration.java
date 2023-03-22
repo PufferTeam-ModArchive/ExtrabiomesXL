@@ -15,7 +15,7 @@ import extrabiomes.helpers.LogHelper;
 
 /**
  * Adds functionality to the Forge {@link net.minecraftforge.common.config.Configuration Configuration} class
- * 
+ *
  */
 public class EnhancedConfiguration extends Configuration {
 
@@ -43,7 +43,6 @@ public class EnhancedConfiguration extends Configuration {
         final Property prop = get(category, key, defaultID);
 
         if (prop.getInt() == -1) {
-            // configBiomes[prop.getInt()] = true;
             return prop;
         }
 

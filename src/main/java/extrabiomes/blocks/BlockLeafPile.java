@@ -31,9 +31,7 @@ public class BlockLeafPile extends Block {
 
     public BlockLeafPile(int index, Material material) {
         super(material);
-        final float f = 0.5F;
-        final float f1 = 0.015625F;
-        setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f1, 0.5F + f);
+        setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.015625F, 1.0F);
     }
 
     @Override

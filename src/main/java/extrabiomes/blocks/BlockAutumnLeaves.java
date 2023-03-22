@@ -93,7 +93,7 @@ public class BlockAutumnLeaves extends BlockLeavesBase implements IShearable {
         }
     }
 
-    private IIcon[] textures = { null, null, null, null, null, null, null, null, null, null, null, null };
+    private IIcon[] textures = new IIcon[12];
 
     @Override
     @SideOnly(Side.CLIENT)
@@ -330,48 +330,29 @@ public class BlockAutumnLeaves extends BlockLeavesBase implements IShearable {
                                             + var11] = var12;
                                 }
 
-                                if (adjacentTreeBlocks[(var13 + var11 + 1) * var10 + (var14 + var11) * var9
-                                        + var15
-                                        + var11] == -2) {
-                                    adjacentTreeBlocks[(var13 + var11 + 1) * var10 + (var14 + var11) * var9
-                                            + var15
-                                            + var11] = var12;
+                                int i = (var13 + var11 + 1) * var10 + (var14 + var11) * var9 + var15 + var11;
+                                if (adjacentTreeBlocks[i] == -2) {
+                                    adjacentTreeBlocks[i] = var12;
                                 }
 
-                                if (adjacentTreeBlocks[(var13 + var11) * var10 + (var14 + var11 - 1) * var9
-                                        + var15
-                                        + var11] == -2) {
-                                    adjacentTreeBlocks[(var13 + var11) * var10 + (var14 + var11 - 1) * var9
-                                            + var15
-                                            + var11] = var12;
+                                i = (var13 + var11) * var10 + (var14 + var11 - 1) * var9 + var15 + var11;
+                                if (adjacentTreeBlocks[i] == -2) {
+                                    adjacentTreeBlocks[i] = var12;
                                 }
 
-                                if (adjacentTreeBlocks[(var13 + var11) * var10 + (var14 + var11 + 1) * var9
-                                        + var15
-                                        + var11] == -2) {
-                                    adjacentTreeBlocks[(var13 + var11) * var10 + (var14 + var11 + 1) * var9
-                                            + var15
-                                            + var11] = var12;
+                                i = (var13 + var11) * var10 + (var14 + var11 + 1) * var9 + var15 + var11;
+                                if (adjacentTreeBlocks[i] == -2) {
+                                    adjacentTreeBlocks[i] = var12;
                                 }
 
-                                if (adjacentTreeBlocks[(var13 + var11) * var10 + (var14 + var11) * var9
-                                        + var15
-                                        + var11
-                                        - 1] == -2) {
-                                    adjacentTreeBlocks[(var13 + var11) * var10 + (var14 + var11) * var9
-                                            + var15
-                                            + var11
-                                            - 1] = var12;
+                                i = (var13 + var11) * var10 + (var14 + var11) * var9 + var15 + var11 - 1;
+                                if (adjacentTreeBlocks[i] == -2) {
+                                    adjacentTreeBlocks[i] = var12;
                                 }
 
-                                if (adjacentTreeBlocks[(var13 + var11) * var10 + (var14 + var11) * var9
-                                        + var15
-                                        + var11
-                                        + 1] == -2) {
-                                    adjacentTreeBlocks[(var13 + var11) * var10 + (var14 + var11) * var9
-                                            + var15
-                                            + var11
-                                            + 1] = var12;
+                                i = (var13 + var11) * var10 + (var14 + var11) * var9 + var15 + var11 + 1;
+                                if (adjacentTreeBlocks[i] == -2) {
+                                    adjacentTreeBlocks[i] = var12;
                                 }
                             }
                         }

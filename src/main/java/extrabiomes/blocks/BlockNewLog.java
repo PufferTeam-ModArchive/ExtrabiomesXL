@@ -27,7 +27,6 @@ import extrabiomes.lib.BlockSettings;
 public class BlockNewLog extends BlockLog {
 
     public enum BlockType {
-
         RAINBOW_EUCALYPTUS(0),
         AUTUMN(1),
         BALD_CYPRESS(2),
@@ -45,7 +44,7 @@ public class BlockNewLog extends BlockLog {
     }
 
     private BlockSettings settings;
-    private IIcon[] textures = { null, null, null, null, null, null, null, null };
+    private IIcon[] textures = new IIcon[8];
 
     public BlockNewLog(BlockSettings settings) {
         super();

@@ -29,6 +29,7 @@ public class LogTurner extends ItemTool {
 
     public LogTurner() {
         super(0.0f, ToolMaterial.WOOD, Sets.newHashSet());
+        setMaxDamage(0);
     }
 
     @Override
@@ -37,12 +38,7 @@ public class LogTurner extends ItemTool {
     }
 
     @Override
-    public boolean isDamageable() {
-        return false;
-    }
-
-    @Override
-    public boolean isItemTool(ItemStack par1ItemStack) {
+    public boolean isItemTool(ItemStack stack) {
         return true;
     }
 

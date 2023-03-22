@@ -1,6 +1,5 @@
 package extrabiomes.module.summa.worldgen;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
@@ -104,12 +103,10 @@ public class WorldGenBaldCypressTree extends WorldGenNewTreeBase {
     private static final int BRANCHES_EXTRA = 10; // The how many extra branches can occur on the tree
     private static final int CANOPY_WIDTH = 15; // How many blocks will this tree cover
     private static final int CANOPY_WIDTH_VARIANCE = 5; // How many extra blocks may this tree cover
-    private static final int CLUSTER_DIAMATER = 3; // How wide should the leaf cluster be generated
-    private static final int CLUSTER_DIAMATER_VARIANCE = 3; // How many extra blocks can be added to the leaf cluster.
+    private static final int CLUSTER_DIAMETER = 3; // How wide should the leaf cluster be generated
+    private static final int CLUSTER_DIAMETER_VARIANCE = 3; // How many extra blocks can be added to the leaf cluster.
     private static final int CLUSTER_HEIGHT = 1; // How tall should the leaf cluster be generated
     private static final int CLUSTER_HEIGHT_VARIANCE = 3; // How many extra layers can be added to the leaf cluster.
-
-    static int last = 0;
 
     private boolean checkTree(World world, Random rand, int x, int y, int z, int waterLevel) {
         final int height = rand.nextInt(BASE_HEIGHT_VARIANCE) + BASE_HEIGHT;
@@ -128,7 +125,7 @@ public class WorldGenBaldCypressTree extends WorldGenNewTreeBase {
         // Make sure that the tree can fit in the world
         if (y < 1 || y + height + 4 > 256) return false;
 
-        // Make sure the cunks are loaded
+        // Make sure the chunks are loaded
         if (!world.checkChunksExist(
                 x - chunkCheck,
                 y - chunkCheck,
@@ -153,16 +150,13 @@ public class WorldGenBaldCypressTree extends WorldGenNewTreeBase {
         if (!checkBranches(world, rand, x, y, z, height, width, waterLevel)) return false;
 
         // Place the topper leaves
-        if (!checkLeafCluster(
-                world,
-                x,
-                (int) (height * TRUNK_HEIGHT_PERCENT) + y,
-                z,
-                4 + rand.nextInt(CLUSTER_HEIGHT_VARIANCE),
-                4 + rand.nextInt(CLUSTER_DIAMATER_VARIANCE)))
-            return false;
-
-        return true;
+        return checkLeafCluster(
+            world,
+            x,
+            (int) (height * TRUNK_HEIGHT_PERCENT) + y,
+            z,
+            4 + rand.nextInt(CLUSTER_HEIGHT_VARIANCE),
+            4 + rand.nextInt(CLUSTER_DIAMETER_VARIANCE));
     }
 
     private boolean generateTree(World world, Random rand, int x, int y, int z, int waterLevel) {
@@ -183,7 +177,7 @@ public class WorldGenBaldCypressTree extends WorldGenNewTreeBase {
         // Make sure that the tree can fit in the world
         if (y < 1 || y + height + 4 > 256) return false;
 
-        // Make sure the cunks are loaded
+        // Make sure the chunks are loaded
         if (!world.checkChunksExist(
                 x - chunkCheck,
                 y - chunkCheck,
@@ -208,7 +202,7 @@ public class WorldGenBaldCypressTree extends WorldGenNewTreeBase {
                     (int) (height * TRUNK_HEIGHT_PERCENT) + y,
                     z,
                     4 + rand.nextInt(CLUSTER_HEIGHT_VARIANCE),
-                    4 + rand.nextInt(CLUSTER_DIAMATER_VARIANCE),
+                    4 + rand.nextInt(CLUSTER_DIAMETER_VARIANCE),
                     TreeBlock.LEAVES.get());
 
             // We generated a tree
@@ -233,7 +227,7 @@ public class WorldGenBaldCypressTree extends WorldGenNewTreeBase {
         int maxBranchHeight = height - ((int) (height * TRUNK_BRANCHES_START)) - 3;
         int[] start = { 0, 0, 0 };
         int[] end = { 0, 0, 0 };
-        Queue<int[]> branches = new LinkedList<int[]>();
+        Queue<int[]> branches = new LinkedList<>();
 
         // Generate some test branches
         for (int branch = 0; branch < branchCount; branch++) {
@@ -271,16 +265,14 @@ public class WorldGenBaldCypressTree extends WorldGenNewTreeBase {
         }
 
         // Generate the leaf clusters
-        Iterator<int[]> itt = branches.iterator();
-        while (itt.hasNext()) {
-            int[] cluster = itt.next();
+        for (int[] cluster : branches) {
             if (!checkLeafCluster(
-                    world,
-                    cluster[0],
-                    cluster[1],
-                    cluster[2],
-                    CLUSTER_HEIGHT + rand.nextInt(CLUSTER_HEIGHT_VARIANCE),
-                    CLUSTER_DIAMATER + rand.nextInt(CLUSTER_DIAMATER_VARIANCE)))
+                world,
+                cluster[0],
+                cluster[1],
+                cluster[2],
+                CLUSTER_HEIGHT + rand.nextInt(CLUSTER_HEIGHT_VARIANCE),
+                CLUSTER_DIAMETER + rand.nextInt(CLUSTER_DIAMETER_VARIANCE)))
                 return false;
         }
 
@@ -302,7 +294,7 @@ public class WorldGenBaldCypressTree extends WorldGenNewTreeBase {
         int maxBranchHeight = height - ((int) (height * TRUNK_BRANCHES_START)) - 3;
         int[] start = { 0, 0, 0 };
         int[] end = { 0, 0, 0 };
-        Queue<int[]> branches = new LinkedList<int[]>();
+        Queue<int[]> branches = new LinkedList<>();
 
         // generate the corner markers
         // setBlockAndNotifyAdequately(world, x-width, y + 10, z-width, TreeBlock.TRUNK.getID(), 0);
@@ -346,17 +338,15 @@ public class WorldGenBaldCypressTree extends WorldGenNewTreeBase {
         }
 
         // Generate the leaf clusters
-        Iterator<int[]> itt = branches.iterator();
-        while (itt.hasNext()) {
-            int[] cluster = itt.next();
+        for (int[] cluster : branches) {
             generateLeafCluster(
-                    world,
-                    cluster[0],
-                    cluster[1],
-                    cluster[2],
-                    CLUSTER_HEIGHT + rand.nextInt(CLUSTER_HEIGHT_VARIANCE),
-                    CLUSTER_DIAMATER + rand.nextInt(CLUSTER_DIAMATER_VARIANCE),
-                    TreeBlock.LEAVES.get());
+                world,
+                cluster[0],
+                cluster[1],
+                cluster[2],
+                CLUSTER_HEIGHT + rand.nextInt(CLUSTER_HEIGHT_VARIANCE),
+                CLUSTER_DIAMETER + rand.nextInt(CLUSTER_DIAMETER_VARIANCE),
+                TreeBlock.LEAVES.get());
         }
     }
 

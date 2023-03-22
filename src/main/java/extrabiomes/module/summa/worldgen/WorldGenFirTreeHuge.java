@@ -65,8 +65,8 @@ public class WorldGenFirTreeHuge extends WorldGenAbstractTree {
         }
     }
 
-    public WorldGenFirTreeHuge(boolean doNotify) {
-        super(doNotify);
+    public WorldGenFirTreeHuge(boolean doBlockNotify) {
+        super(doBlockNotify);
     }
 
     // Store the last seed that was used to generate a tree
@@ -99,7 +99,7 @@ public class WorldGenFirTreeHuge extends WorldGenAbstractTree {
 
             if (y1 < 0 && y1 >= 256) return false;
 
-            int k1 = 1;
+            int k1;
 
             if (y1 - y < j) {
                 k1 = 0;

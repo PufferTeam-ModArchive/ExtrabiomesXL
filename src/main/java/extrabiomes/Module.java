@@ -16,7 +16,6 @@ import extrabiomes.module.cautia.Cautia;
 import extrabiomes.module.fabrica.Fabrica;
 
 enum Module {
-
     CAUTIA(Cautia.class),
     FABRICA(Fabrica.class),
     AMICA(Amica.class);
@@ -24,7 +23,7 @@ enum Module {
     private static Optional<EventBus> eventBus = Optional.of(new EventBus());
 
     public static boolean postEvent(Event event) {
-        return eventBus.isPresent() ? eventBus.get().post(event) : false;
+        return eventBus.isPresent() && eventBus.get().post(event);
     }
 
     static void registerModules() throws InstantiationException, IllegalAccessException {

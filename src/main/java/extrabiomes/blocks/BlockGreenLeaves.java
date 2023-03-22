@@ -139,7 +139,7 @@ public class BlockGreenLeaves extends BlockLeavesBase implements IShearable {
 
     int[] adjacentTreeBlocks;
 
-    private IIcon[] textures = { null, null, null, null, null, null, null, null, null, null, null, null };
+    private IIcon[] textures = new IIcon[12];
 
     public BlockGreenLeaves(Material material, boolean useFastGraphics) {
         super(material, useFastGraphics);

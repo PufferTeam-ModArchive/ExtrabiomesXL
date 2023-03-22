@@ -25,7 +25,6 @@ import extrabiomes.lib.Element;
 public class ItemCustomDye extends Item {
 
     public enum Color {
-
         BLACK("black", 0, 0x1E1B1B, 0),
         BLUE("blue", 1, 0x253192, 4),
         BROWN("brown", 2, 0x51301A, 3),
@@ -51,8 +50,8 @@ public class ItemCustomDye extends Item {
 
     public ItemCustomDye() {
         super();
-        this.setHasSubtypes(true);
-        this.setMaxDamage(0);
+        setHasSubtypes(true);
+        setMaxDamage(0);
 
         if (Color.values().length != elements.length) {
             LogHelper.severe("Dye color vs elements count mismatch!");
@@ -82,17 +81,12 @@ public class ItemCustomDye extends Item {
     public boolean itemInteractionForEntity(ItemStack itemStack, EntityPlayer player, EntityLivingBase target) {
         if (target instanceof EntitySheep) {
             final EntitySheep sheep = (EntitySheep) target;
-            final int damage = itemStack.getItemDamage();
-            final Color color = Color.values()[damage];
-            final int i = BlockColored.func_150031_c(color.mcDamage);
+            final int color = BlockColored.func_150031_c(Color.values()[itemStack.getItemDamage()].mcDamage);
 
-            // LogHelper.info("Dying sheep " + damage + "/" + color + " = " + i);
-
-            if (!sheep.getSheared() && sheep.getFleeceColor() != i) {
-                sheep.setFleeceColor(i);
+            if (!sheep.getSheared() && sheep.getFleeceColor() != color) {
+                sheep.setFleeceColor(color);
                 --itemStack.stackSize;
             }
-
             return true;
         } else {
             return false;
@@ -105,8 +99,8 @@ public class ItemCustomDye extends Item {
      * Gets an IIcon index based on an item's damage value
      */
     public IIcon getIconFromDamage(int meta) {
-        int j = MathHelper.clamp_int(meta, 0, Color.values().length);
-        return this.dyeIIcons[j];
+        int color = MathHelper.clamp_int(meta, 0, Color.values().length);
+        return dyeIIcons[color];
     }
 
     /**
@@ -138,7 +132,6 @@ public class ItemCustomDye extends Item {
 
         for (int i = 0; i < colors.length; ++i) {
             final String IIconPath = Extrabiomes.TEXTURE_PATH + "dye_" + colors[i].name;
-            // LogHelper.info("Registering " + IIconPath);
             dyeIIcons[i] = iconRegister.registerIcon(IIconPath);
         }
     }

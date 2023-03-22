@@ -86,10 +86,7 @@ public class WorldGenFirTree extends WorldGenAbstractTree {
         for (int i1 = y; i1 <= y + 1 + height; i1++) {
             if (i1 < 0 || i1 >= 256) return false;
 
-            int k1 = 1;
-
-            if (i1 - y < j) k1 = 0;
-            else k1 = l;
+            int k1 = (i1 - y < j) ? 0 : l;
 
             for (int x1 = x - k1; x1 <= x + k1; x1++) {
                 for (int z1 = z - k1; z1 <= z + k1; z1++) {

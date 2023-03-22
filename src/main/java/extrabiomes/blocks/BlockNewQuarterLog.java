@@ -27,7 +27,7 @@ import extrabiomes.lib.BlockSettings;
 public class BlockNewQuarterLog extends BlockLog {
 
     private BlockSettings settings;
-    private final IIcon[] textures = { null, null, null, null, null, null, null, null, null };
+    private final IIcon[] textures = new IIcon[8];
     private static int renderId = 32;
     private String treeType = "quarter";
     private ItemStack droppedItem;
@@ -41,19 +41,17 @@ public class BlockNewQuarterLog extends BlockLog {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconRegister) {
+        String iconPath = Extrabiomes.TEXTURE_PATH + treeType;
 
-        textures[0] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + treeType + "top1");
-        textures[1] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + treeType + "top2");
-        textures[2] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + treeType + "top3");
-        textures[3] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + treeType + "top4");
+        textures[0] = iconRegister.registerIcon(iconPath + "top1");
+        textures[1] = iconRegister.registerIcon(iconPath + "top2");
+        textures[2] = iconRegister.registerIcon(iconPath + "top3");
+        textures[3] = iconRegister.registerIcon(iconPath + "top4");
 
-        textures[4] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + treeType + "log1");
-        textures[5] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + treeType + "log2");
-        textures[6] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + treeType + "side1");
-        textures[7] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + treeType + "side2");
-
-        // textures[8] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + "todo");
-
+        textures[4] = iconRegister.registerIcon(iconPath + "log1");
+        textures[5] = iconRegister.registerIcon(iconPath + "log2");
+        textures[6] = iconRegister.registerIcon(iconPath + "side1");
+        textures[7] = iconRegister.registerIcon(iconPath + "side2");
     }
 
     @Override
@@ -73,10 +71,9 @@ public class BlockNewQuarterLog extends BlockLog {
                 return textures[eastIIcon(orientation)];
             case 5:
                 return textures[westIIcon(orientation)];
+            default:
+                return textures[4];
         }
-
-        return textures[4];
-
     }
 
     private int topIIcon(int orientation) {

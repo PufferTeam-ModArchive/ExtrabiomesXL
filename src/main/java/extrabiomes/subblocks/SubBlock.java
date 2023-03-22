@@ -31,7 +31,7 @@ public class SubBlock {
         texture = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + textureName);
     }
 
-    public IIcon getIcon(int side, int metaData) {
+    public IIcon getIcon(int side, int meta) {
         return texture;
     }
 

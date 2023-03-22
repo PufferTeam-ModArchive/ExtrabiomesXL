@@ -15,11 +15,11 @@ import extrabiomes.lib.Blocks;
 public class RenderMiniLog implements ISimpleBlockRenderingHandler {
 
     @Override
-    public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
-        final Tessellator var4 = Tessellator.instance;
+    public void renderInventoryBlock(Block block, int meta, int modelID, RenderBlocks renderer) {
+        final Tessellator tessellator = Tessellator.instance;
 
         if (renderer.useInventoryTint) {
-            final int renderColor = block.getRenderColor(metadata);
+            final int renderColor = block.getRenderColor(meta);
             final float red = (renderColor >> 16 & 255) / 255.0F;
             final float green = (renderColor >> 8 & 255) / 255.0F;
             final float blue = (renderColor & 255) / 255.0F;
@@ -29,35 +29,31 @@ public class RenderMiniLog implements ISimpleBlockRenderingHandler {
         block.setBlockBoundsForItemRender();
         GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
         GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-        // var4.startDrawingQuads();
-        // var4.setNormal(0.0F, -1.0F, 0.0F);
-        // renderer.renderFaceYNeg(block, 0.0D, 0.0D, 0.0D, block.getIcon(0, metadata));
-        // var4.draw();
 
-        var4.startDrawingQuads();
-        var4.setNormal(0.0F, 1.0F, 0.0F);
+        tessellator.startDrawingQuads();
+        tessellator.setNormal(0.0F, 1.0F, 0.0F);
         renderer.renderFaceYPos(block, 0.0D, 0.0D, 0.0D, block.getIcon(1, 0));
-        var4.draw();
+        tessellator.draw();
 
-        var4.startDrawingQuads();
-        var4.setNormal(0.0F, 0.0F, -1.0F);
+        tessellator.startDrawingQuads();
+        tessellator.setNormal(0.0F, 0.0F, -1.0F);
         renderer.renderFaceZNeg(block, 0.0D, 0.0D, 0.1875D, block.getIcon(2, 0));
-        var4.draw();
+        tessellator.draw();
 
-        var4.startDrawingQuads();
-        var4.setNormal(0.0F, 0.0F, 1.0F);
+        tessellator.startDrawingQuads();
+        tessellator.setNormal(0.0F, 0.0F, 1.0F);
         renderer.renderFaceZPos(block, 0.0D, 0.0D, -0.1875D, block.getIcon(3, 0));
-        var4.draw();
+        tessellator.draw();
 
-        var4.startDrawingQuads();
-        var4.setNormal(-1.0F, 0.0F, 0.0F);
+        tessellator.startDrawingQuads();
+        tessellator.setNormal(-1.0F, 0.0F, 0.0F);
         renderer.renderFaceXNeg(block, 0.1875D, 0.0D, 0.0D, block.getIcon(4, 0));
-        var4.draw();
+        tessellator.draw();
 
-        var4.startDrawingQuads();
-        var4.setNormal(1.0F, 0.0F, 0.0F);
+        tessellator.startDrawingQuads();
+        tessellator.setNormal(1.0F, 0.0F, 0.0F);
         renderer.renderFaceXPos(block, -0.1875D, 0.0D, 0.0D, block.getIcon(5, 0));
-        var4.draw();
+        tessellator.draw();
 
         GL11.glTranslatef(0.5F, 0.5F, 0.5F);
     }

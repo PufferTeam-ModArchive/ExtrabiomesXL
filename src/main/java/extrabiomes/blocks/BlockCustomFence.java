@@ -23,7 +23,6 @@ import extrabiomes.module.fabrica.block.BlockCustomWall.BlockType;
 public class BlockCustomFence extends BlockFence {
 
     public enum BlockType {
-
         Acacia(2),
         Autumn(6),
         Baldcypress(7),
@@ -51,11 +50,11 @@ public class BlockCustomFence extends BlockFence {
 
     public BlockCustomFence() {
         super("fence", Material.wood);
-        this.setHardness(2.0F);
-        this.setResistance(5.0F);
-        this.setBlockName("extrabiomes.fence");
-        this.disableStats();
-        this.setCreativeTab(Extrabiomes.tabsEBXL);
+        setHardness(2.0F);
+        setResistance(5.0F);
+        setBlockName("extrabiomes.fence");
+        disableStats();
+        setCreativeTab(Extrabiomes.tabsEBXL);
     }
 
     @Override

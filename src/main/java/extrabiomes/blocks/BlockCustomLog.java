@@ -44,7 +44,7 @@ public class BlockCustomLog extends BlockLog {
         }
     }
 
-    private IIcon[] textures = { null, null, null, null, null, null, null, null };
+    private IIcon[] textures = new IIcon[8];
     private HashMap<Integer, IIcon> texturesMap;
     private int index = 97;
 

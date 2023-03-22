@@ -14,7 +14,6 @@ import extrabiomes.module.summa.TreeSoilRegistry;
 public class WorldGenNewRedwood extends WorldGenAbstractTree {
 
     private enum TreeBlock {
-
         LEAVES(new ItemStack(Blocks.leaves)),
         TRUNK(new ItemStack(Blocks.log, 1, 1)),
         BRANCH(new ItemStack(Blocks.log, 1, 1));
@@ -81,8 +80,6 @@ public class WorldGenNewRedwood extends WorldGenAbstractTree {
 
     private boolean generateTree(World world, Random rand, int x, int y, int z) {
         final int height = rand.nextInt(23) + 26;
-        byte b0 = 1;
-        int flag1 = 1;
         int chunkCheck = 13;
 
         if (y < 1 || y + height + 5 > 256) return false;

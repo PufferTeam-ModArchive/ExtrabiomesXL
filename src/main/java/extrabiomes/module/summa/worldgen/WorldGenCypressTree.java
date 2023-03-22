@@ -38,8 +38,8 @@ public class WorldGenCypressTree extends WorldGenNewTreeBase {
 
     }
 
-    public WorldGenCypressTree(boolean par1) {
-        super(par1);
+    public WorldGenCypressTree(boolean doBlockNotify) {
+        super(doBlockNotify);
     }
 
     // Store the last seed that was used to generate a tree
@@ -102,7 +102,7 @@ public class WorldGenCypressTree extends WorldGenNewTreeBase {
         // See if we can generate the tree
         if (!check1x1Trunk(x, y, z, height, TreeBlock.TRUNK.get(), world)) return false;
 
-        // Check the leaves the leaves
+        // Check the leaves
         for (int layer = 0; layer < 4 + height - start; layer++) {
             double offset = factor * layer;
             double offset2 = offset * offset;

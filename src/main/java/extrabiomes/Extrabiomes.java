@@ -146,10 +146,8 @@ public class Extrabiomes {
     public void serverStart(FMLServerStartingEvent event) {
         if (GeneralSettings.consoleCommandsDisabled) return;
 
-        // Gets current server
-        MinecraftServer server = MinecraftServer.getServer();
         // Gets the command manager to use for server
-        ICommandManager command = server.getCommandManager();
+        ICommandManager command = MinecraftServer.getServer().getCommandManager();
         // Turns it into another form to use
         ServerCommandManager serverCommand = ((ServerCommandManager) command);
 

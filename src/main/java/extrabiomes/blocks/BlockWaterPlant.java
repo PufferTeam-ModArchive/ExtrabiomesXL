@@ -27,20 +27,14 @@ public class BlockWaterPlant extends Block {
     protected SubBlock[] subBlocks;
     protected String blockName;
 
-    // private int renderType;
-
     public BlockWaterPlant(BlockSettings settings, String name) {
         super(Material.water);
 
-        this.setTickRandomly(true);
-        this.disableStats();
+        setTickRandomly(true);
+        disableStats();
 
         this.settings = settings;
-
-        // Store the block name
         blockName = name;
-
-        // Create the list of subblocks
         subBlocks = new SubBlock[16];
     }
 
