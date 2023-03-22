@@ -1,6 +1,5 @@
 /**
- * This work is licensed under the Creative Commons
- * Attribution-ShareAlike 3.0 Unported License. To view a copy of this
+ * This work is licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License. To view a copy of this
  * license, visit http://creativecommons.org/licenses/by-sa/3.0/.
  */
 
@@ -12,12 +11,11 @@ import java.util.Map;
 import net.minecraftforge.common.config.Property;
 
 import com.google.common.collect.Maps;
-
 import extrabiomes.utility.EnhancedConfiguration;
 
-public enum DecorationSettings
-{
-	// @formatter:off
+public enum DecorationSettings {
+
+    // @formatter:off
     //   				 lily, tree, flow, gras, dead, mush, reed, cact, sand, snd2, clay, bigm, nFlw
     ALPINE				(null, 7,    null, 0,    null, null, null, null, null, null, null, null, 4   ), // 5
     AUTUMNWOODS			(null, 6,    null, 6,    null, 3,    null, null, null, null, null, null, 5   ), // 2
@@ -53,13 +51,13 @@ public enum DecorationSettings
     WASTELAND			(null, null, null, 1,    3,    null, null, null, null, null, null, null, null),
     WOODLANDS			(null, 8,    null, 3,    null, null, null, null, null, null, null, null, 6   ), // 11
 	// @formatter:on
-	DEFAULT();
-    
-    public enum Decoration
-    {
+    DEFAULT();
+
+    public enum Decoration {
+
         WATERLILY(".waterlily", 0),
         TREES(".trees", 0),
-        FLOWERS(".flowers", 0),	// was 2, by default we don't want vanilla flowers any more
+        FLOWERS(".flowers", 0), // was 2, by default we don't want vanilla flowers any more
         GRASS(".grass", 1),
         DEADBUSH(".deadBush", 0),
         MUSHROOMS(".mushrooms", 0),
@@ -68,33 +66,27 @@ public enum DecorationSettings
         SAND(".sand", 1),
         SAND2(".sandTwo", 3),
         CLAY(".clay", 1),
-		BIGMUSHROOMS(".bigMushrooms", 0),
-		NEW_FLOWERS(".newFlowers", 0);
-        
+        BIGMUSHROOMS(".bigMushrooms", 0),
+        NEW_FLOWERS(".newFlowers", 0);
+
         public final String key; // config file key
-        public final int    def; // default value
-                                 
-        private Decoration(String key, int def)
-        {
+        public final int def; // default value
+
+        private Decoration(String key, int def) {
             this.key = key;
             this.def = def;
         }
     };
-    
+
     private final Map<Decoration, Integer> settings = Maps.newHashMap();
-    
-    private DecorationSettings()
-    {
-		this(null, null, null, null, null, null, null, null, null, null, null,
-				null, null);
+
+    private DecorationSettings() {
+        this(null, null, null, null, null, null, null, null, null, null, null, null, null);
     }
-    
-	private DecorationSettings(Integer waterlily, Integer trees,
-			Integer flowers, Integer grass, Integer deadBush,
-			Integer mushrooms, Integer reeds, Integer cacti, Integer sand,
-			Integer sand2, Integer clay, Integer bigMushrooms,
-			Integer newFlowers)
-    {
+
+    private DecorationSettings(Integer waterlily, Integer trees, Integer flowers, Integer grass, Integer deadBush,
+            Integer mushrooms, Integer reeds, Integer cacti, Integer sand, Integer sand2, Integer clay,
+            Integer bigMushrooms, Integer newFlowers) {
         initSetting(Decoration.WATERLILY, waterlily);
         initSetting(Decoration.TREES, trees);
         initSetting(Decoration.FLOWERS, flowers);
@@ -107,20 +99,17 @@ public enum DecorationSettings
         initSetting(Decoration.SAND2, sand2);
         initSetting(Decoration.CLAY, clay);
         initSetting(Decoration.BIGMUSHROOMS, bigMushrooms);
-		initSetting(Decoration.NEW_FLOWERS, newFlowers);
+        initSetting(Decoration.NEW_FLOWERS, newFlowers);
     }
-    
-    private void initSetting(Decoration key, Integer val)
-    {
+
+    private void initSetting(Decoration key, Integer val) {
         // only init if not default
-        if (val != null && !val.equals(key.def))
-        {
+        if (val != null && !val.equals(key.def)) {
             settings.put(key, val);
         }
     }
-    
-    public void load(EnhancedConfiguration configuration)
-    {
+
+    public void load(EnhancedConfiguration configuration) {
         parseProperty(configuration, Decoration.WATERLILY);
         parseProperty(configuration, Decoration.TREES);
         parseProperty(configuration, Decoration.FLOWERS);
@@ -133,40 +122,33 @@ public enum DecorationSettings
         parseProperty(configuration, Decoration.SAND2);
         parseProperty(configuration, Decoration.CLAY);
         parseProperty(configuration, Decoration.BIGMUSHROOMS);
-		parseProperty(configuration, Decoration.NEW_FLOWERS);
+        parseProperty(configuration, Decoration.NEW_FLOWERS);
     }
-    
-    private void parseProperty(EnhancedConfiguration configuration, Decoration decoration)
-    {
+
+    private void parseProperty(EnhancedConfiguration configuration, Decoration decoration) {
         // only handle non-defaults
-        if (!settings.containsKey(decoration))
-            return;
-        
-        Property property = configuration.get(EnhancedConfiguration.CATEGORY_DECORATION, toString() + decoration.key, settings.get(decoration));
+        if (!settings.containsKey(decoration)) return;
+
+        Property property = configuration
+                .get(EnhancedConfiguration.CATEGORY_DECORATION, toString() + decoration.key, settings.get(decoration));
         settings.put(decoration, property.getInt());
     }
-    
-	public int getSetting(Decoration decoration)
-    {
-		if (settings.containsKey(decoration))
-        {
+
+    public int getSetting(Decoration decoration) {
+        if (settings.containsKey(decoration)) {
             return settings.get(decoration).intValue();
-        }
-        else
-        {
+        } else {
             return decoration.def;
         }
     }
-    
-    public Map<Decoration, Integer> getSettings()
-    {
+
+    public Map<Decoration, Integer> getSettings() {
         return settings;
     }
-    
+
     @Override
-    public String toString()
-    {
+    public String toString() {
         return super.toString().toLowerCase(Locale.ENGLISH);
     }
-    
+
 }

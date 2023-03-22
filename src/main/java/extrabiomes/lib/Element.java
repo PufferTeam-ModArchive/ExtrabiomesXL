@@ -1,6 +1,5 @@
 /**
- * This work is licensed under the Creative Commons
- * Attribution-ShareAlike 3.0 Unported License. To view a copy of this
+ * This work is licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License. To view a copy of this
  * license, visit http://creativecommons.org/licenses/by-sa/3.0/.
  */
 
@@ -9,11 +8,10 @@ package extrabiomes.lib;
 import net.minecraft.item.ItemStack;
 
 import com.google.common.base.Optional;
-
 import cpw.mods.fml.common.registry.GameData;
 
-public enum Element
-{
+public enum Element {
+
     // @formatter:off
 	ALLIUM,
     AMARYLLIS_PINK,
@@ -134,32 +132,25 @@ public enum Element
 
     private Optional<ItemStack> stack = Optional.absent();
 
-    public ItemStack get()
-    {
+    public ItemStack get() {
         return stack.get();
     }
 
-    public boolean isPresent()
-    {
+    public boolean isPresent() {
         return stack.isPresent();
     }
 
-    public String getID()
-    {
-        if (isPresent())
-            return GameData.getItemRegistry().getNameForObject(get().getItem());
+    public String getID() {
+        if (isPresent()) return GameData.getItemRegistry().getNameForObject(get().getItem());
         return null;
     }
 
-    public int getMetadata()
-    {
-        if (isPresent())
-            return get().getItemDamage();
+    public int getMetadata() {
+        if (isPresent()) return get().getItemDamage();
         return 0;
     }
 
-    public void set(ItemStack stack)
-    {
+    public void set(ItemStack stack) {
         this.stack = Optional.of(stack);
     }
 }

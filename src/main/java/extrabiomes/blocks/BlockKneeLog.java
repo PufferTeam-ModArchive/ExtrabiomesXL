@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -22,19 +23,18 @@ import extrabiomes.Extrabiomes;
 import extrabiomes.api.UseLogTurnerEvent;
 import extrabiomes.lib.BlockSettings;
 
-public class BlockKneeLog extends BlockLog
-{   
+public class BlockKneeLog extends BlockLog {
+
     private BlockSettings settings;
-    
-    private IIcon[]     textures = { null, null, null, null, null, null, null, null, null };
+
+    private IIcon[] textures = { null, null, null, null, null, null, null, null, null };
     private static int renderId = 32;
-    private String     treeType = "knee";
+    private String treeType = "knee";
     private ItemStack droppedItem;
-    
-    public BlockKneeLog(BlockSettings settings, String treeType)
-    {
+
+    public BlockKneeLog(BlockSettings settings, String treeType) {
         super();
-        
+
         this.settings = settings;
         this.treeType = treeType;
         setStepSound(Block.soundTypeWood);
@@ -42,33 +42,30 @@ public class BlockKneeLog extends BlockLog
         setResistance(Blocks.log.getExplosionResistance(null) * 5.0F);
         setCreativeTab(Extrabiomes.tabsEBXL);
     }
-    
+
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconRegister)
-    {
-        
+    public void registerBlockIcons(IIconRegister iconRegister) {
+
         textures[0] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + "log" + treeType + "knee1");
         textures[1] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + "log" + treeType + "knee2");
         textures[2] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + "log" + treeType + "knee3");
         textures[3] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + "log" + treeType + "knee4");
-        
+
         textures[4] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + "log" + treeType + "side1");
         textures[5] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + "log" + treeType + "side2");
         textures[6] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + "log" + treeType + "top");
         textures[7] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + "log" + treeType + "top");
-        
+
         textures[8] = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + "todo");
-        
+
     }
-    
+
     @Override
-    public IIcon getIcon(int side, int metadata)
-    {
+    public IIcon getIcon(int side, int metadata) {
         final int orientation = metadata;
-        
-        switch (side)
-        {
+
+        switch (side) {
             case 0:
                 return textures[bottopIIcon(orientation)];
             case 1:
@@ -82,15 +79,13 @@ public class BlockKneeLog extends BlockLog
             case 5:
                 return textures[westIIcon(orientation)];
         }
-        
+
         return textures[4];
-        
+
     }
-    
-    private int topIIcon(int orientation)
-    {
-        switch (orientation)
-        {
+
+    private int topIIcon(int orientation) {
+        switch (orientation) {
             case 0:
                 return 0;
             case 1:
@@ -119,11 +114,9 @@ public class BlockKneeLog extends BlockLog
                 return 8;
         }
     }
-    
-    private int bottopIIcon(int orientation)
-    {
-        switch (orientation)
-        {
+
+    private int bottopIIcon(int orientation) {
+        switch (orientation) {
             case 0:
                 return 0;
             case 1:
@@ -148,16 +141,14 @@ public class BlockKneeLog extends BlockLog
                 return 5;
             case 11:
                 return 4;
-                
+
             default:
                 return 8;
         }
     }
-    
-    private int eastIIcon(int orientation)
-    {
-        switch (orientation)
-        {
+
+    private int eastIIcon(int orientation) {
+        switch (orientation) {
             case 0:
                 return 5;
             case 1:
@@ -186,11 +177,9 @@ public class BlockKneeLog extends BlockLog
                 return 8;
         }
     }
-    
-    private int westIIcon(int orientation)
-    {
-        switch (orientation)
-        {
+
+    private int westIIcon(int orientation) {
+        switch (orientation) {
             case 0:
                 return 6;
             case 1:
@@ -219,11 +208,9 @@ public class BlockKneeLog extends BlockLog
                 return 8;
         }
     }
-    
-    private int southIIcon(int orientation)
-    {
-        switch (orientation)
-        {
+
+    private int southIIcon(int orientation) {
+        switch (orientation) {
             case 0:
                 return 4;
             case 1:
@@ -252,11 +239,9 @@ public class BlockKneeLog extends BlockLog
                 return 8;
         }
     }
-    
-    private int northIIcon(int orientation)
-    {
-        switch (orientation)
-        {
+
+    private int northIIcon(int orientation) {
+        switch (orientation) {
             case 0:
                 return 7;
             case 1:
@@ -285,72 +270,69 @@ public class BlockKneeLog extends BlockLog
                 return 8;
         }
     }
-    
-    public static void setRenderId(int renderId)
-    {
+
+    public static void setRenderId(int renderId) {
         BlockKneeLog.renderId = renderId;
     }
-    
+
     @Override
-    public int getRenderType()
-    {
+    public int getRenderType() {
         return renderId;
     }
-    
+
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item item, CreativeTabs par2CreativeTabs, List list)
-    {
-      list.add(new ItemStack(item, 1, 0));
+    public void getSubBlocks(Item item, CreativeTabs par2CreativeTabs, List list) {
+        list.add(new ItemStack(item, 1, 0));
     }
-    
+
     public BlockKneeLog setDroppedItemStack(ItemStack stack) {
-      this.droppedItem = stack;
-      
-      return this;
+        this.droppedItem = stack;
+
+        return this;
     }
-    
+
     @Override
     public Item getItemDropped(int metadata, Random rand, int unused) {
-      if(this.droppedItem != null) {
-        return this.droppedItem.getItem();
-      } else {
-        return Item.getItemFromBlock(this);
-      }
+        if (this.droppedItem != null) {
+            return this.droppedItem.getItem();
+        } else {
+            return Item.getItemFromBlock(this);
+        }
     }
-    
+
     @Override
-    public int damageDropped(int metadata)
-    {
-      if(this.droppedItem != null) {
-        return this.droppedItem.getItemDamage();
-      } else {
-        return 0;
-      }
+    public int damageDropped(int metadata) {
+        if (this.droppedItem != null) {
+            return this.droppedItem.getItemDamage();
+        } else {
+            return 0;
+        }
     }
-    
+
     @SubscribeEvent
-    public void onUseLogTurnerEvent(UseLogTurnerEvent event)
-    {
+    public void onUseLogTurnerEvent(UseLogTurnerEvent event) {
         Block block = event.world.getBlock(event.x, event.y, event.z);
-        
-        if (block == this)
-        {
+
+        if (block == this) {
             final Block wood = Blocks.log;
-            event.world.playSoundEffect(event.x + 0.5F, event.y + 0.5F, event.z + 0.5F, wood.stepSound.soundName, (wood.stepSound.getVolume() + 1.0F) / 2.0F, wood.stepSound.getPitch() * 1.55F);
-            
-            if (!event.world.isRemote)
-            {
+            event.world.playSoundEffect(
+                    event.x + 0.5F,
+                    event.y + 0.5F,
+                    event.z + 0.5F,
+                    wood.stepSound.soundName,
+                    (wood.stepSound.getVolume() + 1.0F) / 2.0F,
+                    wood.stepSound.getPitch() * 1.55F);
+
+            if (!event.world.isRemote) {
                 int metadata = event.world.getBlockMetadata(event.x, event.y, event.z);
-                
-                if (event.entityPlayer.isSneaking() == true)
-                {
-                    switch (BlockPistonBase.determineOrientation(event.world, event.x, event.y, event.z, event.entityLiving))
-                    {
+
+                if (event.entityPlayer.isSneaking() == true) {
+                    switch (BlockPistonBase
+                            .determineOrientation(event.world, event.x, event.y, event.z, event.entityLiving)) {
                         case 0:
-                            switch (metadata)
-                            {
+                            switch (metadata) {
                                 case 9:
                                     metadata = 4;
                                     break;
@@ -369,8 +351,7 @@ public class BlockKneeLog extends BlockLog
                             }
                             break;
                         case 1:
-                            switch (metadata)
-                            {
+                            switch (metadata) {
                                 case 6:
                                     metadata = 11;
                                     break;
@@ -389,8 +370,7 @@ public class BlockKneeLog extends BlockLog
                             }
                             break;
                         case 2:
-                            switch (metadata)
-                            {
+                            switch (metadata) {
                                 case 3:
                                     metadata = 10;
                                     break;
@@ -409,8 +389,7 @@ public class BlockKneeLog extends BlockLog
                             }
                             break;
                         case 3:
-                            switch (metadata)
-                            {
+                            switch (metadata) {
                                 case 1:
                                     metadata = 11;
                                     break;
@@ -429,8 +408,7 @@ public class BlockKneeLog extends BlockLog
                             }
                             break;
                         case 4:
-                            switch (metadata)
-                            {
+                            switch (metadata) {
                                 case 2:
                                     metadata = 7;
                                     break;
@@ -449,8 +427,7 @@ public class BlockKneeLog extends BlockLog
                             }
                             break;
                         default:
-                            switch (metadata)
-                            {
+                            switch (metadata) {
                                 case 0:
                                     metadata = 6;
                                     break;
@@ -469,48 +446,41 @@ public class BlockKneeLog extends BlockLog
                             }
                             break;
                     }
-                }
-                else
-                {
+                } else {
                     // Increment the orentation
-                    if (BlockPistonBase.determineOrientation(event.world, event.x, event.y, event.z, event.entityLiving) % 2 == 0)
-                    {
+                    if (BlockPistonBase.determineOrientation(event.world, event.x, event.y, event.z, event.entityLiving)
+                            % 2 == 0) {
                         metadata = (++metadata > 11) ? 0 : metadata;
-                    }
-                    else
-                    {
+                    } else {
                         metadata = (--metadata < 0) ? 11 : metadata;
                     }
                 }
-                
+
                 event.world.setBlock(event.x, event.y, event.z, block, metadata, 3);
-                
-                //unturned = false;
+
+                // unturned = false;
             }
             event.setHandled();
-            
+
             // Patch for skipping over block ids that are out of order
             event.setCanceled(true);
         }
     }
-    
+
     @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack)
-    {
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
         super.onBlockPlacedBy(world, x, y, z, entity, stack);
-        
+
         world.setBlock(x, y, z, this, 3, 3);
     }
 
     @Override
-    public boolean canSustainLeaves(IBlockAccess world, int x, int y, int z)
-    {
+    public boolean canSustainLeaves(IBlockAccess world, int x, int y, int z) {
         return true;
     }
 
     @Override
-    public boolean isWood(IBlockAccess world, int x, int y, int z)
-    {
+    public boolean isWood(IBlockAccess world, int x, int y, int z) {
         return true;
     }
 }

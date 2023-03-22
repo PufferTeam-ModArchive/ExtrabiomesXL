@@ -1,6 +1,5 @@
 /**
- * This work is licensed under the Creative Commons
- * Attribution-ShareAlike 3.0 Unported License. To view a copy of this
+ * This work is licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License. To view a copy of this
  * license, visit http://creativecommons.org/licenses/by-sa/3.0/.
  */
 
@@ -16,6 +15,7 @@ import net.minecraftforge.common.config.Property;
 
 import com.google.common.base.Optional;
 
+import extrabiomes.helpers.LogHelper;
 import extrabiomes.module.summa.biome.BiomeAlpine;
 import extrabiomes.module.summa.biome.BiomeAutumnWoods;
 import extrabiomes.module.summa.biome.BiomeBirchForest;
@@ -46,11 +46,18 @@ import extrabiomes.module.summa.biome.BiomeWasteland;
 import extrabiomes.module.summa.biome.BiomeWoodlands;
 import extrabiomes.module.summa.biome.ExtrabiomeGenBase;
 import extrabiomes.utility.EnhancedConfiguration;
-import extrabiomes.helpers.LogHelper;
 
 public enum BiomeSettings {
-	DESERT, EXTREMEHILLS, FOREST, JUNGLE, PLAINS, SWAMPLAND, TAIGA, OCEAN,
-/* @formatter:off */
+
+    DESERT,
+    EXTREMEHILLS,
+    FOREST,
+    JUNGLE,
+    PLAINS,
+    SWAMPLAND,
+    TAIGA,
+    OCEAN,
+    /* @formatter:off */
 	ALPINE				(60, BiomeAlpine.class),
 	AUTUMNWOODS			(61, BiomeAutumnWoods.class),
 	BIRCHFOREST			(62, BiomeBirchForest.class),
@@ -81,171 +88,174 @@ public enum BiomeSettings {
 	WOODLANDS			(59, BiomeWoodlands.class,				Weights.HEAVY);
 /* @formatter:on */
 
-	private final int defaultID;
+    private final int defaultID;
 
-	private int biomeID = 0;
-	private int weight = Weights.NORMAL.value;
-	private boolean enabled = true;
-	private boolean allowVillages = true;
-	
-	private final Optional<? extends Class<? extends BiomeGenBase>> biomeClass;
-	private Optional<? extends BiomeGenBase> biome = Optional.absent();
+    private int biomeID = 0;
+    private int weight = Weights.NORMAL.value;
+    private boolean enabled = true;
+    private boolean allowVillages = true;
 
-	static {
-		EXTREMEJUNGLE.allowVillages = false;
-		GLACIER.allowVillages = false;
-		RAINFOREST.allowVillages = false;
-		REDWOODFOREST.allowVillages = false;
-		REDWOODLUSH.allowVillages = false;
-		SNOWYRAINFOREST.allowVillages = false;
-		TEMPORATERAINFOREST.allowVillages = false;
-	}
+    private final Optional<? extends Class<? extends BiomeGenBase>> biomeClass;
+    private Optional<? extends BiomeGenBase> biome = Optional.absent();
 
-	private enum Weights {
-		NONE(0), LIGHT(5), NORMAL(10), HEAVY(20);
+    static {
+        EXTREMEJUNGLE.allowVillages = false;
+        GLACIER.allowVillages = false;
+        RAINFOREST.allowVillages = false;
+        REDWOODFOREST.allowVillages = false;
+        REDWOODLUSH.allowVillages = false;
+        SNOWYRAINFOREST.allowVillages = false;
+        TEMPORATERAINFOREST.allowVillages = false;
+    }
 
-		public int value;
+    private enum Weights {
 
-		Weights(int value) {
-			this.value = value;
-		}
-	}
+        NONE(0),
+        LIGHT(5),
+        NORMAL(10),
+        HEAVY(20);
 
-	private BiomeSettings() {
-		this(0, null);
-	}
+        public int value;
 
-	private BiomeSettings(int defaultID, Class<? extends BiomeGenBase> biomeClass) {
-		this.defaultID = defaultID;
-		this.biomeID = this.defaultID;
-		this.biomeClass = Optional.fromNullable(biomeClass);
-	}
+        Weights(int value) {
+            this.value = value;
+        }
+    }
 
-	private BiomeSettings(int defaultID, Class<? extends BiomeGenBase> biomeClass, Weights defaultWeight) {
-		this(defaultID, biomeClass);
-		this.weight = defaultWeight.value;
-	}
+    private BiomeSettings() {
+        this(0, null);
+    }
 
-	private BiomeSettings(int defaultID, Class<? extends BiomeGenBase> biomeClass, boolean defaultGen) {
-		this(defaultID, biomeClass);
-		this.enabled = defaultGen;
-		if (!this.enabled) {
-			this.weight = Weights.NONE.value;
-		}
-	}
+    private BiomeSettings(int defaultID, Class<? extends BiomeGenBase> biomeClass) {
+        this.defaultID = defaultID;
+        this.biomeID = this.defaultID;
+        this.biomeClass = Optional.fromNullable(biomeClass);
+    }
 
-	public static BiomeSettings findBiomeSettings(int id) {
-		for (BiomeSettings settings : BiomeSettings.values()) {
-			if (settings.biomeID == id)
-				return settings;
-		}
-		return null;
-	}
+    private BiomeSettings(int defaultID, Class<? extends BiomeGenBase> biomeClass, Weights defaultWeight) {
+        this(defaultID, biomeClass);
+        this.weight = defaultWeight.value;
+    }
 
-	public boolean allowVillages() {
-		return allowVillages;
-	}
+    private BiomeSettings(int defaultID, Class<? extends BiomeGenBase> biomeClass, boolean defaultGen) {
+        this(defaultID, biomeClass);
+        this.enabled = defaultGen;
+        if (!this.enabled) {
+            this.weight = Weights.NONE.value;
+        }
+    }
 
-	public void createBiome() throws Exception {
-		if (biomeClass.isPresent() && !biome.isPresent()) {
-			biome = Optional.of(biomeClass.get().newInstance());
-		}
-	}
+    public static BiomeSettings findBiomeSettings(int id) {
+        for (BiomeSettings settings : BiomeSettings.values()) {
+            if (settings.biomeID == id) return settings;
+        }
+        return null;
+    }
 
-	public void postLoad() {
-		if (!isVanilla() && biome.isPresent()) {
-			final ExtrabiomeGenBase egb = (ExtrabiomeGenBase) biome.get();
-			BiomeDictionary.registerBiomeType(egb, egb.getBiomeTypeFlags());
-			LogHelper.fine("registering " + this.name() + " with dictionary");
+    public boolean allowVillages() {
+        return allowVillages;
+    }
 
-			// register ourselves with the biome manager
-			BiomeManager.BiomeEntry entry = new BiomeManager.BiomeEntry(egb, weight);
-			if (egb.temperature > 0.5f) {
-				if (egb.isHighHumidity()) {
-					BiomeManager.addBiome(BiomeType.WARM, entry);
-				} else {
-					BiomeManager.addBiome(BiomeType.DESERT, entry);
-				}
-			} else {
-				if (egb.getEnableSnow()) {
-					BiomeManager.addBiome(BiomeType.ICY, entry);
-				} else {
-					BiomeManager.addBiome(BiomeType.COOL, entry);
-				}
-			}
+    public void createBiome() throws Exception {
+        if (biomeClass.isPresent() && !biome.isPresent()) {
+            biome = Optional.of(biomeClass.get().newInstance());
+        }
+    }
 
-		} else {
-			LogHelper.fine("NOT registering " + this.name() + " with dictionary, biome = " + biome);
-		}
-	}
+    public void postLoad() {
+        if (!isVanilla() && biome.isPresent()) {
+            final ExtrabiomeGenBase egb = (ExtrabiomeGenBase) biome.get();
+            BiomeDictionary.registerBiomeType(egb, egb.getBiomeTypeFlags());
+            LogHelper.fine("registering " + this.name() + " with dictionary");
 
-	public Optional<? extends BiomeGenBase> getBiome() {
-		return biome;
-	}
+            // register ourselves with the biome manager
+            BiomeManager.BiomeEntry entry = new BiomeManager.BiomeEntry(egb, weight);
+            if (egb.temperature > 0.5f) {
+                if (egb.isHighHumidity()) {
+                    BiomeManager.addBiome(BiomeType.WARM, entry);
+                } else {
+                    BiomeManager.addBiome(BiomeType.DESERT, entry);
+                }
+            } else {
+                if (egb.getEnableSnow()) {
+                    BiomeManager.addBiome(BiomeType.ICY, entry);
+                } else {
+                    BiomeManager.addBiome(BiomeType.COOL, entry);
+                }
+            }
 
-	public int getID() {
-		return biomeID;
-	}
+        } else {
+            LogHelper.fine("NOT registering " + this.name() + " with dictionary, biome = " + biome);
+        }
+    }
 
-	public boolean isEnabled() {
-		return enabled;
-	}
+    public Optional<? extends BiomeGenBase> getBiome() {
+        return biome;
+    }
 
-	public boolean isVanilla() {
-		return !biomeClass.isPresent();
-	}
+    public int getID() {
+        return biomeID;
+    }
 
-	private String keyWeight() {
-		return keyVanillaPrefix() + toString() + ".weight";
-	}
+    public boolean isEnabled() {
+        return enabled;
+    }
 
-	private String keyAllowVillages() {
-		return keyVanillaPrefix() + toString() + ".allowvillages";
-	}
+    public boolean isVanilla() {
+        return !biomeClass.isPresent();
+    }
 
-	private String keyEnabled() {
-		return keyVanillaPrefix() + toString() + ".enablegeneration";
-	}
+    private String keyWeight() {
+        return keyVanillaPrefix() + toString() + ".weight";
+    }
 
-	private String keyID() {
-		return toString() + ".id";
-	}
+    private String keyAllowVillages() {
+        return keyVanillaPrefix() + toString() + ".allowvillages";
+    }
 
-	private String keyVanillaPrefix() {
-		return isVanilla() ? "vanilla." : "";
-	}
+    private String keyEnabled() {
+        return keyVanillaPrefix() + toString() + ".enablegeneration";
+    }
 
-	public void load(EnhancedConfiguration configuration) {
-		Property property;
+    private String keyID() {
+        return toString() + ".id";
+    }
 
-		if (!isVanilla()) {
-			property = configuration.getBiome(keyID(), biomeID);
-			biomeID = property.getInt(0);
-		}
+    private String keyVanillaPrefix() {
+        return isVanilla() ? "vanilla." : "";
+    }
 
-		property = configuration.get(EnhancedConfiguration.CATEGORY_BIOME, keyEnabled(), enabled);
-		if (!isVanilla() && biomeID < 1) {
-			property.set(Boolean.toString(false));
-		}
-		enabled = property.getBoolean(false);
+    public void load(EnhancedConfiguration configuration) {
+        Property property;
 
-		if (!isVanilla() && biomeID > -1) {
-			property = configuration.get(EnhancedConfiguration.CATEGORY_BIOME, keyWeight(), weight);
-			weight = property.getInt(Weights.NONE.value);
-		}
+        if (!isVanilla()) {
+            property = configuration.getBiome(keyID(), biomeID);
+            biomeID = property.getInt(0);
+        }
 
-		if (enabled) {
-			property = configuration.get(EnhancedConfiguration.CATEGORY_BIOME, keyAllowVillages(), allowVillages);
-			if (!isVanilla() && biomeID < 1) {
-				property.set(Boolean.toString(false));
-			}
-			allowVillages = property.getBoolean(false);
-		}
-	}
+        property = configuration.get(EnhancedConfiguration.CATEGORY_BIOME, keyEnabled(), enabled);
+        if (!isVanilla() && biomeID < 1) {
+            property.set(Boolean.toString(false));
+        }
+        enabled = property.getBoolean(false);
 
-	@Override
-	public String toString() {
-		return super.toString().toLowerCase(Locale.ENGLISH);
-	}
+        if (!isVanilla() && biomeID > -1) {
+            property = configuration.get(EnhancedConfiguration.CATEGORY_BIOME, keyWeight(), weight);
+            weight = property.getInt(Weights.NONE.value);
+        }
+
+        if (enabled) {
+            property = configuration.get(EnhancedConfiguration.CATEGORY_BIOME, keyAllowVillages(), allowVillages);
+            if (!isVanilla() && biomeID < 1) {
+                property.set(Boolean.toString(false));
+            }
+            allowVillages = property.getBoolean(false);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return super.toString().toLowerCase(Locale.ENGLISH);
+    }
 
 }

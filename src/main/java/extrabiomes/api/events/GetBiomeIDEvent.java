@@ -1,6 +1,5 @@
 /**
- * This work is licensed under the Creative Commons
- * Attribution-ShareAlike 3.0 Unported License. To view a copy of this
+ * This work is licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License. To view a copy of this
  * license, visit http://creativecommons.org/licenses/by-sa/3.0/.
  */
 
@@ -14,9 +13,8 @@ import cpw.mods.fml.common.eventhandler.Event;
  * @author Scott
  * 
  */
-public class GetBiomeIDEvent extends Event
-{
-    
+public class GetBiomeIDEvent extends Event {
+
     /**
      * Valid values:
      * 
@@ -52,11 +50,10 @@ public class GetBiomeIDEvent extends Event
      * </pre>
      */
     public final String targetBiome;
-    public int          biomeID;
-    
-    public GetBiomeIDEvent(String targetBiome)
-    {
+    public int biomeID;
+
+    public GetBiomeIDEvent(String targetBiome) {
         this.targetBiome = targetBiome;
     }
-    
+
 }

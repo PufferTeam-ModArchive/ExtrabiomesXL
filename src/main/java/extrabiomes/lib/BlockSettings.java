@@ -1,6 +1,5 @@
 /**
- * This work is licensed under the Creative Commons
- * Attribution-ShareAlike 3.0 Unported License. To view a copy of this
+ * This work is licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License. To view a copy of this
  * license, visit http://creativecommons.org/licenses/by-sa/3.0/.
  */
 
@@ -9,13 +8,12 @@ package extrabiomes.lib;
 import java.util.Locale;
 
 import net.minecraft.item.Item;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
-import extrabiomes.helpers.LogHelper;
+
 import extrabiomes.utility.EnhancedConfiguration;
 
-public enum BlockSettings
-{
+public enum BlockSettings {
+
     // @formatter:off
     REDROCK,
     CRACKEDSAND,

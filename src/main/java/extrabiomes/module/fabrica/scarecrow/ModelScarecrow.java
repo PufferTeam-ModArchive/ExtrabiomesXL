@@ -1,6 +1,5 @@
 /**
- * This work is licensed under the Creative Commons
- * Attribution-ShareAlike 3.0 Unported License. To view a copy of this
+ * This work is licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License. To view a copy of this
  * license, visit http://creativecommons.org/licenses/by-sa/3.0/.
  */
 
@@ -10,18 +9,17 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-public class ModelScarecrow extends ModelBase
-{
+public class ModelScarecrow extends ModelBase {
+
     private final ModelRenderer leg;
     private final ModelRenderer body;
     private final ModelRenderer head;
     private final ModelRenderer arms;
-    
-    public ModelScarecrow()
-    {
+
+    public ModelScarecrow() {
         textureWidth = 128;
         textureHeight = 64;
-        
+
         leg = new ModelRenderer(this, 0, 16);
         leg.addBox(-1F, -29F, -1F, 2, 30, 2);
         leg.setRotationPoint(0F, 23F, 0F);
@@ -47,18 +45,16 @@ public class ModelScarecrow extends ModelBase
         arms.mirror = true;
         setRotation(arms, 0F, 0F, 0.10F);
     }
-    
+
     @Override
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
-    {
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
         leg.render(f5);
         body.render(f5);
         head.render(f5);
         arms.render(f5);
     }
-    
-    private void setRotation(ModelRenderer model, float x, float y, float z)
-    {
+
+    private void setRotation(ModelRenderer model, float x, float y, float z) {
         model.rotateAngleX = x;
         model.rotateAngleY = y;
         model.rotateAngleZ = z;
