@@ -30,7 +30,7 @@ public class BiomeGreenHills extends ExtrabiomeGenBase {
         setBiomeName("Green Hills");
         temperature = BiomeGenBase.forest.temperature - 0.1F;
         rainfall = BiomeGenBase.forest.rainfall + 0.1F;
-        this.setHeight(new Height(0.9F, 0.3F));
+        setHeight(new Height(0.9F, 0.3F));
     }
 
     @Override

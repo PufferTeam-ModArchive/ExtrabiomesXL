@@ -16,37 +16,31 @@ import extrabiomes.utility.EnhancedConfiguration;
 public enum DecorationSettings {
 
     // @formatter:off
-    //   				 lily, tree, flow, gras, dead, mush, reed, cact, sand, snd2, clay, bigm, nFlw
     ALPINE				(null, 7,    null, 0,    null, null, null, null, null, null, null, null, 4   ), // 5
     AUTUMNWOODS			(null, 6,    null, 6,    null, 3,    null, null, null, null, null, null, 5   ), // 2
     BIRCHFOREST			(null, 7,    null, 1,    null, null, null, null, null, null, null, null, 6   ), // 10
     EXTREMEJUNGLE		(null, 50,   null, 25,   null, null, null, null, null, null, null, null, 7   ), // 1
     FORESTEDHILLS		(null, 7,    null, 5,    null, null, null, null, null, null, null, null, 5   ), // 12
-    //   				 lily, tree, flow, gras, dead, mush, reed, cact, sand, snd2, clay, bigm, nFlw
     FORESTEDISLAND		(null, 7,    1,    3,    null, null, null, null, null, null, null, null, 6   ), // 8
     GLACIER				(null, null, null, null, null, null, null, null, null, null, null, null, null),
     GREENHILLS			(null, 1,    null, null, null, null, null, null, null, null, null, null, 5   ), // 11
     GREENSWAMP			(4,    4,    null, null, 0,    8,    10,   null, 0,    0,    1,    null, 6   ), // 8
     ICEWASTELAND		(null, 0,    null, null, null, null, null, null, null, null, null, null, null),
-    //   				 lily, tree, flow, gras, dead, mush, reed, cact, sand, snd2, clay, bigm, nFlw
     MARSH				(null, 0,    null, 32,   null, null, 10,   null, null, null, null, null, null),
     MEADOW				(null, 0,    2,    12,   null, null, null, null, null, null, null, null, 8   ), // 12
     MINIJUNGLE			(12,   15,   null, null, null, 2,    70,   null, null, null, 3,    null, 7   ), // 1
     MOUNTAINDESERT		(null, 0,    null, null, 2,    null, 50,   10,   null, null, null, null, null),
     MOUNTAINRIDGE		(null, 0,    null, 12,   null, null, null, null, null, null, null, null, null),
-    //   				 lily, tree, flow, gras, dead, mush, reed, cact, sand, snd2, clay, bigm, nFlw
     MOUNTAINTAIGA		(null, 10,   null, 1,    null, null, null, null, null, null, null, null, 4   ), // 1
     PINEFOREST			(null, 10,   null, 1,    null, null, null, null, null, null, null, null, 4   ), // 6
     RAINFOREST			(null, 22,   null, 4,    null, null, null, null, null, null, null, null, 6   ), // 1
     REDWOODFOREST		(null, 7,    null, null, null, null, null, null, null, null, null, null, null),
     REDWOODLUSH			(null, 8,    1,    null, null, null, null, null, null, null, null, null, 5   ), // 3
-    //   				 lily, tree, flow, gras, dead, mush, reed, cact, sand, snd2, clay, bigm, nFlw
     SAVANNA				(null, 0,    null, 17,   null, null, null, null, null, null, null, null, 5   ), // 18
     SHRUBLAND			(null, 1,    1,    1,    null, null, null, null, null, null, null, null, 4   ), // 13
     SNOWYFOREST			(null, 8,    null, 4,    null, null, null, null, null, null, null, null, null),
     SNOWYRAINFOREST		(null, 17,   null, 16,   null, 2,    null, null, null, null, null, null, null),
     TEMPORATERAINFOREST	(null, 17,   null, 16,   null, 2,    null, null, null, null, null, null, null),
-    //   				 lily, tree, flow, gras, dead, mush, reed, cact, sand, snd2, clay, bigm, nFlw
     TUNDRA				(null, null, null, 0,    null, null, null, null, 0,    0,    null, null, null),
     WASTELAND			(null, null, null, 1,    3,    null, null, null, null, null, null, null, null),
     WOODLANDS			(null, 8,    null, 3,    null, null, null, null, null, null, null, null, 6   ), // 11
@@ -69,8 +63,10 @@ public enum DecorationSettings {
         BIGMUSHROOMS(".bigMushrooms", 0),
         NEW_FLOWERS(".newFlowers", 0);
 
-        public final String key; // config file key
-        public final int def; // default value
+        // config file key
+        public final String key;
+        // default value
+        public final int def;
 
         private Decoration(String key, int def) {
             this.key = key;

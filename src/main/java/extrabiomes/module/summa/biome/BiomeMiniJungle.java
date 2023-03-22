@@ -22,7 +22,6 @@ public class BiomeMiniJungle extends ExtrabiomeGenBase {
         return DecorationSettings.MINIJUNGLE;
     }
 
-    @SuppressWarnings("unchecked")
     public BiomeMiniJungle() {
         super(BiomeSettings.MINIJUNGLE, Type.JUNGLE);
 
@@ -30,7 +29,7 @@ public class BiomeMiniJungle extends ExtrabiomeGenBase {
         setBiomeName("Mini Jungle");
         temperature = BiomeGenBase.jungle.temperature;
         rainfall = BiomeGenBase.jungle.rainfall;
-        this.setHeight(new Height(0.4F, 0.2F));
+        setHeight(new Height(0.4F, 0.2F));
         waterColorMultiplier = 0x24b01c;
 
         spawnableMonsterList.add(new SpawnListEntry(EntityOcelot.class, 2, 1, 1));

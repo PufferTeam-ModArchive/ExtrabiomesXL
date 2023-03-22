@@ -25,7 +25,6 @@ public class BiomePineForest extends ExtrabiomeGenBase {
         return DecorationSettings.PINEFOREST;
     }
 
-    @SuppressWarnings("unchecked")
     public BiomePineForest() {
         super(BiomeSettings.PINEFOREST, Type.FOREST);
 
@@ -33,7 +32,7 @@ public class BiomePineForest extends ExtrabiomeGenBase {
         setBiomeName("Pine Forest");
         temperature = BiomeGenBase.forest.temperature;
         rainfall = BiomeGenBase.forest.rainfall;
-        this.setHeight(new Height(0.2F, 0.1F));
+        setHeight(new Height(0.2F, 0.1F));
 
         spawnableCreatureList.add(new SpawnListEntry(EntityWolf.class, 5, 4, 4));
     }

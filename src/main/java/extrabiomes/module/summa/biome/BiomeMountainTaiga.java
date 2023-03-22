@@ -21,7 +21,6 @@ public class BiomeMountainTaiga extends ExtrabiomeGenBase {
         return DecorationSettings.MOUNTAINTAIGA;
     }
 
-    @SuppressWarnings("unchecked")
     public BiomeMountainTaiga() {
         super(BiomeSettings.MOUNTAINTAIGA, Type.MOUNTAIN, Type.SNOWY, Type.FOREST);
 
@@ -29,7 +28,7 @@ public class BiomeMountainTaiga extends ExtrabiomeGenBase {
         setBiomeName("Mountain Taiga");
         temperature = 0.0F;
         rainfall = BiomeGenBase.taigaHills.rainfall;
-        this.setHeight(new Height(0.75F, 0.45F));
+        setHeight(new Height(0.75F, 0.45F));
 
         spawnableCreatureList.add(new SpawnListEntry(EntityWolf.class, 8, 4, 4));
     }

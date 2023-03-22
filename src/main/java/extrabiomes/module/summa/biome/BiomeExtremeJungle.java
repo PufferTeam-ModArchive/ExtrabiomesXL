@@ -21,7 +21,6 @@ public class BiomeExtremeJungle extends ExtrabiomeGenBase {
         return DecorationSettings.EXTREMEJUNGLE;
     }
 
-    @SuppressWarnings("unchecked")
     public BiomeExtremeJungle() {
         super(BiomeSettings.EXTREMEJUNGLE, Type.JUNGLE, Type.MOUNTAIN);
         setColor(0x2c4205);
@@ -29,7 +28,7 @@ public class BiomeExtremeJungle extends ExtrabiomeGenBase {
         temperature = BiomeGenBase.jungle.temperature;
         rainfall = BiomeGenBase.jungle.rainfall;
         // TODO: Check This new height
-        this.setHeight(new Height(1.2F, 0.1F));
+        setHeight(new Height(1.2F, 0.1F));
 
         spawnableMonsterList.add(new SpawnListEntry(EntityOcelot.class, 2, 1, 1));
         spawnableCreatureList.add(new SpawnListEntry(EntityChicken.class, 10, 4, 4));

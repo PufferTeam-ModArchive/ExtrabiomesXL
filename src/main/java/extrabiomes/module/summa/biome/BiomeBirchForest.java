@@ -18,7 +18,6 @@ public class BiomeBirchForest extends ExtrabiomeGenBase {
         return DecorationSettings.BIRCHFOREST;
     }
 
-    @SuppressWarnings("unchecked")
     public BiomeBirchForest() {
         super(BiomeSettings.BIRCHFOREST, Type.FOREST);
 
@@ -26,7 +25,7 @@ public class BiomeBirchForest extends ExtrabiomeGenBase {
         setBiomeName("Birch Forest");
         temperature = 0.4F;
         rainfall = 0.7F;
-        this.setHeight(new Height(0.2F, 0.2F));
+        setHeight(new Height(0.2F, 0.2F));
 
         spawnableCreatureList.add(new SpawnListEntry(net.minecraft.entity.passive.EntityWolf.class, 5, 4, 4));
     }

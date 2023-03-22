@@ -24,7 +24,6 @@ public class BiomeForestedHills extends ExtrabiomeGenBase {
         return DecorationSettings.FORESTEDHILLS;
     }
 
-    @SuppressWarnings("unchecked")
     public BiomeForestedHills() {
         super(BiomeSettings.FORESTEDHILLS, Type.FOREST, Type.HILLS);
 
@@ -32,7 +31,7 @@ public class BiomeForestedHills extends ExtrabiomeGenBase {
 
         temperature = BiomeGenBase.forest.temperature - 0.1F;
         rainfall = BiomeGenBase.forest.rainfall;
-        this.setHeight(new Height(1.0F, 0.8F));
+        setHeight(new Height(1.0F, 0.8F));
 
         spawnableCreatureList.add(new SpawnListEntry(EntityWolf.class, 5, 4, 4));
     }

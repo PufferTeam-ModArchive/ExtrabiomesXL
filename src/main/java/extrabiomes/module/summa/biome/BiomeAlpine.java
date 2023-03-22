@@ -30,7 +30,7 @@ public class BiomeAlpine extends ExtrabiomeGenBase {
         setBiomeName("Alpine");
         temperature = 0.0F;
         rainfall = 0.1F;
-        this.setHeight(new Height(1.7F, 0.4F));
+        setHeight(new Height(1.7F, 0.4F));
 
         spawnableCreatureList.add(new SpawnListEntry(EntityWolf.class, 8, 4, 4));
     }

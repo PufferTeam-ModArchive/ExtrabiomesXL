@@ -33,7 +33,7 @@ public class BiomeGreenSwamp extends ExtrabiomeGenBase {
         setBiomeName("Green Swamplands");
         temperature = BiomeGenBase.swampland.temperature - 0.1F;
         rainfall = BiomeGenBase.swampland.rainfall;
-        this.setHeight(new Height(-0.05F, 0.15F));
+        setHeight(new Height(-0.05F, 0.15F));
         spawnableMonsterList.add(new SpawnListEntry(EntitySlime.class, 1, 1, 1));
     }
 

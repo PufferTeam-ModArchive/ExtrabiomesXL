@@ -27,7 +27,7 @@ public class BiomeMountainDesert extends ExtrabiomeGenBase {
         setBiomeName("Mountainous Desert");
         temperature = BiomeGenBase.desertHills.temperature;
         rainfall = BiomeGenBase.desertHills.rainfall;
-        this.setHeight(new Height(0.9F, 0.5F));
+        setHeight(new Height(0.9F, 0.5F));
         topBlock = Blocks.sand;
         fillerBlock = Blocks.sand;
         spawnableCreatureList.clear();

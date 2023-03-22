@@ -24,7 +24,6 @@ public class BiomeForestedIsland extends ExtrabiomeGenBase {
         return DecorationSettings.FORESTEDISLAND;
     }
 
-    @SuppressWarnings("unchecked")
     public BiomeForestedIsland() {
         super(BiomeSettings.FORESTEDISLAND, Type.BEACH, Type.FOREST);
 
