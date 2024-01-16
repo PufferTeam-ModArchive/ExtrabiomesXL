@@ -93,22 +93,24 @@ public abstract class RecipeHandler {
                     case -1:
                         continue;
                     case 0:
-                        dye = Element.DYE_BLACK.get();
+                        dye = Element.DYE_BLACK.isPresent() ? Element.DYE_BLACK.get() : null;
                         break;
                     case 3:
-                        dye = Element.DYE_BROWN.get();
+                        dye = Element.DYE_BROWN.isPresent() ? Element.DYE_BROWN.get() : null;
                         break;
                     case 4:
-                        dye = Element.DYE_BLUE.get();
+                        dye = Element.DYE_BLUE.isPresent() ? Element.DYE_BLUE.get() : null;
                         break;
                     case 15:
-                        dye = Element.DYE_WHITE.get();
+                        dye = Element.DYE_WHITE.isPresent() ? Element.DYE_WHITE.get() : null;
                         break;
                     default:
                         dye = new ItemStack(Items.dye, 1, color);
                 }
-                final IRecipe recipe = new ShapelessOreRecipe(dye, element.get());
-                proxy.addRecipe(recipe);
+                if (dye != null) {
+                    final IRecipe recipe = new ShapelessOreRecipe(dye, element.get());
+                    proxy.addRecipe(recipe);
+                }
             }
         }
 
@@ -136,8 +138,10 @@ public abstract class RecipeHandler {
             proxy.addRecipe(recipe);
 
             // toadstool = brown dye
-            recipe = new ShapelessOreRecipe(Element.DYE_BROWN.get(), toadstool);
-            proxy.addRecipe(recipe);
+            if (Element.DYE_BROWN.isPresent()) {
+                recipe = new ShapelessOreRecipe(Element.DYE_BROWN.get(), toadstool);
+                proxy.addRecipe(recipe);
+            }
         }
     }
 
