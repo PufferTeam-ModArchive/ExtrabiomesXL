@@ -1,11 +1,11 @@
 package extrabiomes.module.amica.newdawn;
 
+import extrabiomes.lib.BiomeSettings;
 import two.newdawn.API.ChunkInformation;
 import two.newdawn.API.NewDawnBiome;
 import two.newdawn.API.NewDawnBiomeSelector;
 import two.newdawn.API.noise.NoiseStretch;
 import two.newdawn.API.noise.SimplexNoise;
-import extrabiomes.lib.BiomeSettings;
 
 public class EBXLAridSelector extends NewDawnBiomeSelector {
 

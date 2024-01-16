@@ -34,6 +34,7 @@ import extrabiomes.lib.BlockSettings;
 public class BlockQuarterLog extends BlockLog {
 
     public enum BarkOn {
+
         SW,
         SE,
         NW,
@@ -43,6 +44,7 @@ public class BlockQuarterLog extends BlockLog {
     }
 
     public enum BlockType {
+
         REDWOOD(0),
         FIR(1),
         OAK(2);
@@ -284,7 +286,8 @@ public class BlockQuarterLog extends BlockLog {
                 break;
             default:
                 offset = 49;
-        } else if (orientation == 4) switch (side) {
+        }
+        else if (orientation == 4) switch (side) {
             case 0:
                 offset = 48;
                 break;
@@ -302,7 +305,8 @@ public class BlockQuarterLog extends BlockLog {
                 break;
             default:
                 offset = 16;
-        } else if (orientation == 8) switch (side) {
+        }
+        else if (orientation == 8) switch (side) {
             case 0:
                 offset = 48;
                 break;

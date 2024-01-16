@@ -14,6 +14,7 @@ import extrabiomes.module.summa.TreeSoilRegistry;
 public class WorldGenNewRedwood extends WorldGenAbstractTree {
 
     private enum TreeBlock {
+
         LEAVES(new ItemStack(Blocks.leaves)),
         TRUNK(new ItemStack(Blocks.log, 1, 1)),
         BRANCH(new ItemStack(Blocks.log, 1, 1));

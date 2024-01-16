@@ -46,6 +46,7 @@ import extrabiomes.module.summa.worldgen.WorldGenRedwood;
 public class BlockCustomSapling extends BlockFlower {
 
     public enum BlockType {
+
         UMBER(0, new String[] { "1x1" }),
         GOLDENROD(1, new String[] { "1x1" }),
         VERMILLION(2, new String[] { "1x1" }),
@@ -332,33 +333,51 @@ public class BlockCustomSapling extends BlockFlower {
                 if (event.entityItem.worldObj.isAirBlock(posX, posY, posZ) && metadata == BlockType.ACACIA.metadata()
                         && chance <= SaplingSettings.ACACIA.chance()) {
                     event.entityItem.worldObj.setBlock(posX, posY, posZ, sapling, metadata, 2);
-                } else if (event.entityItem.worldObj.isAirBlock(posX, posY, posZ)
-                    && metadata == BlockType.UMBER.metadata()
-                    && chance <= SaplingSettings.UMBER.chance()) {
-                    event.entityItem.worldObj.setBlock(posX, posY, posZ, sapling, metadata, 2);
-                } else if (event.entityItem.worldObj.isAirBlock(posX, posY, posZ)
-                    && metadata == BlockType.CYPRESS.metadata()
-                    && chance <= SaplingSettings.CYPRESS.chance()) {
-                    event.entityItem.worldObj.setBlock(posX, posY, posZ, sapling, metadata, 2);
-                } else if (metadata == BlockType.FIR.metadata()
-                    && chance <= SaplingSettings.FIR.chance() * ratio) {
-                    plant2x2Sapling(posX, posY, posZ, event.entityItem.worldObj, event.entityItem.getEntityItem());
-                } else if (event.entityItem.worldObj.isAirBlock(posX, posY, posZ)
-                    && metadata == BlockType.GOLDENROD.metadata()
-                    && chance <= SaplingSettings.GOLDENROD.chance()) {
-                    event.entityItem.worldObj.setBlock(posX, posY, posZ, sapling, metadata, 2);
-                } else if (event.entityItem.worldObj.isAirBlock(posX, posY, posZ)
-                    && metadata == BlockType.VERMILLION.metadata()
-                    && chance <= SaplingSettings.VERMILLION.chance()) {
-                    event.entityItem.worldObj.setBlock(posX, posY, posZ, sapling, metadata, 2);
-                } else if (metadata == BlockType.REDWOOD.metadata()
-                    && chance <= SaplingSettings.REDWOOD.chance() * ratio) {
-                    plant2x2Sapling(posX, posY, posZ, event.entityItem.worldObj, event.entityItem.getEntityItem());
-                } else if (event.entityItem.worldObj.isAirBlock(posX, posY, posZ)
-                    && metadata == BlockType.CITRINE.metadata()
-                    && chance <= SaplingSettings.CITRINE.chance()) {
-                    event.entityItem.worldObj.setBlock(posX, posY, posZ, sapling, metadata, 2);
-                }
+                } else
+                    if (event.entityItem.worldObj.isAirBlock(posX, posY, posZ) && metadata == BlockType.UMBER.metadata()
+                            && chance <= SaplingSettings.UMBER.chance()) {
+                                event.entityItem.worldObj.setBlock(posX, posY, posZ, sapling, metadata, 2);
+                            } else
+                        if (event.entityItem.worldObj.isAirBlock(posX, posY, posZ)
+                                && metadata == BlockType.CYPRESS.metadata()
+                                && chance <= SaplingSettings.CYPRESS.chance()) {
+                                    event.entityItem.worldObj.setBlock(posX, posY, posZ, sapling, metadata, 2);
+                                } else
+                            if (metadata == BlockType.FIR.metadata()
+                                    && chance <= SaplingSettings.FIR.chance() * ratio) {
+                                        plant2x2Sapling(
+                                                posX,
+                                                posY,
+                                                posZ,
+                                                event.entityItem.worldObj,
+                                                event.entityItem.getEntityItem());
+                                    } else
+                                if (event.entityItem.worldObj.isAirBlock(posX, posY, posZ)
+                                        && metadata == BlockType.GOLDENROD.metadata()
+                                        && chance <= SaplingSettings.GOLDENROD.chance()) {
+                                            event.entityItem.worldObj.setBlock(posX, posY, posZ, sapling, metadata, 2);
+                                        } else
+                                    if (event.entityItem.worldObj.isAirBlock(posX, posY, posZ)
+                                            && metadata == BlockType.VERMILLION.metadata()
+                                            && chance <= SaplingSettings.VERMILLION.chance()) {
+                                                event.entityItem.worldObj
+                                                        .setBlock(posX, posY, posZ, sapling, metadata, 2);
+                                            } else
+                                        if (metadata == BlockType.REDWOOD.metadata()
+                                                && chance <= SaplingSettings.REDWOOD.chance() * ratio) {
+                                                    plant2x2Sapling(
+                                                            posX,
+                                                            posY,
+                                                            posZ,
+                                                            event.entityItem.worldObj,
+                                                            event.entityItem.getEntityItem());
+                                                } else
+                                            if (event.entityItem.worldObj.isAirBlock(posX, posY, posZ)
+                                                    && metadata == BlockType.CITRINE.metadata()
+                                                    && chance <= SaplingSettings.CITRINE.chance()) {
+                                                        event.entityItem.worldObj
+                                                                .setBlock(posX, posY, posZ, sapling, metadata, 2);
+                                                    }
             }
         }
     }

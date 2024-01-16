@@ -38,9 +38,7 @@ public class CustomDoorRender implements ISimpleBlockRenderingHandler {
                     renderer.renderMinY > 0.0D ? i1
                             : block.getMixedBrightnessForBlock(renderer.blockAccess, x, y - 1, z));
             tessellator.setColorOpaque_F(f, f, f);
-            renderer.renderFaceYNeg(
-                    block, x, y, z,
-                    renderer.getBlockIcon(block, renderer.blockAccess, x, y, z, 0));
+            renderer.renderFaceYNeg(block, x, y, z, renderer.getBlockIcon(block, renderer.blockAccess, x, y, z, 0));
             flag = true;
         }
 
@@ -49,9 +47,7 @@ public class CustomDoorRender implements ISimpleBlockRenderingHandler {
                     renderer.renderMaxY < 1.0D ? i1
                             : block.getMixedBrightnessForBlock(renderer.blockAccess, x, y + 1, z));
             tessellator.setColorOpaque_F(f1, f1, f1);
-            renderer.renderFaceYPos(
-                    block, x, y, z,
-                    renderer.getBlockIcon(block, renderer.blockAccess, x, y, z, 1));
+            renderer.renderFaceYPos(block, x, y, z, renderer.getBlockIcon(block, renderer.blockAccess, x, y, z, 1));
             flag = true;
         }
         tessellator.setBrightness(

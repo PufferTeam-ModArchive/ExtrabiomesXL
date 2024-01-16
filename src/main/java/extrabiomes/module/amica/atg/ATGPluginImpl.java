@@ -1,8 +1,8 @@
 package extrabiomes.module.amica.atg;
 
+import extrabiomes.lib.BiomeSettings;
 import ttftcuts.atg.api.ATGBiomes;
 import ttftcuts.atg.api.ATGBiomes.BiomeType;
-import extrabiomes.lib.BiomeSettings;
 
 public class ATGPluginImpl {
 

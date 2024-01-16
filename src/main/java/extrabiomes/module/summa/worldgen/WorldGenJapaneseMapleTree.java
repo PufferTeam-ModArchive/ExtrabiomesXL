@@ -106,13 +106,13 @@ public class WorldGenJapaneseMapleTree extends WorldGenNewTreeBase {
         if (!check1x1Trunk(x, y, z, (int) (height * TRUNK_HEIGHT_PERCENT), TreeBlock.TRUNK.get(), world)) return false;
         // Generate the branches
         return checkBranches(
-            world,
-            rand,
-            x,
-            y + (int) (height * TRUNK_HEIGHT_PERCENT),
-            z,
-            height - (int) (height * TRUNK_HEIGHT_PERCENT) - 2,
-            radius);
+                world,
+                rand,
+                x,
+                y + (int) (height * TRUNK_HEIGHT_PERCENT),
+                z,
+                height - (int) (height * TRUNK_HEIGHT_PERCENT) - 2,
+                radius);
     }
 
     private boolean generateTree(World world, Random rand, int x, int y, int z) {

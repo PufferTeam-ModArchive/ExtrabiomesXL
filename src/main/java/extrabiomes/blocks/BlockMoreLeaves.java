@@ -35,6 +35,7 @@ import extrabiomes.lib.Element;
 public class BlockMoreLeaves extends BlockLeavesBase implements IShearable {
 
     public enum BlockType {
+
         SAKURA_BLOSSOM(0);
 
         private final int metadata;

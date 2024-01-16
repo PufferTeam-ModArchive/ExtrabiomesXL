@@ -20,6 +20,7 @@ import extrabiomes.module.summa.TreeSoilRegistry;
 public class WorldGenAutumnTree extends WorldGenAbstractTree {
 
     public enum AutumnTreeType {
+
         BROWN,
         ORANGE,
         PURPLE,

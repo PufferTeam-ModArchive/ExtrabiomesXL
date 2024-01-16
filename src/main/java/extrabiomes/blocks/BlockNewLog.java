@@ -27,6 +27,7 @@ import extrabiomes.lib.BlockSettings;
 public class BlockNewLog extends BlockLog {
 
     public enum BlockType {
+
         RAINBOW_EUCALYPTUS(0),
         AUTUMN(1),
         BALD_CYPRESS(2),

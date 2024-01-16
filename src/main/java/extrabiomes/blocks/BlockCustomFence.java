@@ -23,6 +23,7 @@ import extrabiomes.module.fabrica.block.BlockCustomWall.BlockType;
 public class BlockCustomFence extends BlockFence {
 
     public enum BlockType {
+
         Acacia(2),
         Autumn(6),
         Baldcypress(7),

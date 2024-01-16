@@ -20,23 +20,11 @@ public class CustomFenceRender implements ISimpleBlockRenderingHandler {
             float f2 = 0.125F;
 
             if (k == 0) {
-                renderer.setRenderBounds(
-                        (0.5F - f2),
-                        0.0D,
-                        0.0D,
-                        (0.5F + f2),
-                        1.0D,
-                        (f2 * 2.0F));
+                renderer.setRenderBounds((0.5F - f2), 0.0D, 0.0D, (0.5F + f2), 1.0D, (f2 * 2.0F));
             }
 
             if (k == 1) {
-                renderer.setRenderBounds(
-                        (0.5F - f2),
-                        0.0D,
-                        (1.0F - f2 * 2.0F),
-                        (0.5F + f2),
-                        1.0D,
-                        1.0D);
+                renderer.setRenderBounds((0.5F - f2), 0.0D, (1.0F - f2 * 2.0F), (0.5F + f2), 1.0D, 1.0D);
             }
 
             f2 = 0.0625F;
@@ -98,7 +86,7 @@ public class CustomFenceRender implements ISimpleBlockRenderingHandler {
         boolean flag = false;
         float f = 0.375F;
         float f1 = 0.625F;
-        renderer.setRenderBounds( f, 0.0D,  f, f1, 1.0D, f1);
+        renderer.setRenderBounds(f, 0.0D, f, f1, 1.0D, f1);
         renderer.renderStandardBlock(block, x, y, z);
         flag = true;
         boolean flag1 = false;

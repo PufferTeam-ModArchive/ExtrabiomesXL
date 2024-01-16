@@ -1,6 +1,5 @@
 package extrabiomes.module.summa.worldgen;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
@@ -107,13 +106,13 @@ public class WorldGenSakuraBlossomTree extends WorldGenNewTreeBase {
         if (!check1x1Trunk(x, y, z, (int) (height * TRUNK_HEIGHT_PERCENT), TreeBlock.TRUNK.get(), world)) return false;
         // Generate the branches
         return checkBranches(
-            world,
-            rand,
-            x,
-            y + (int) (height * TRUNK_HEIGHT_PERCENT),
-            z,
-            height - (int) (height * TRUNK_HEIGHT_PERCENT) - 2,
-            radius);
+                world,
+                rand,
+                x,
+                y + (int) (height * TRUNK_HEIGHT_PERCENT),
+                z,
+                height - (int) (height * TRUNK_HEIGHT_PERCENT) - 2,
+                radius);
     }
 
     private boolean generateTree(World world, Random rand, int x, int y, int z) {
@@ -280,7 +279,7 @@ public class WorldGenSakuraBlossomTree extends WorldGenNewTreeBase {
         for (int y1 = (int) y, layer = 0; layer < layers; layer++, y1++) {
             double layerRadius = radius * Math.cos((layer) / (height / 1.3));
             if (layer < 2) {
-                generateCanopyLayer( world, rand, x, y1, z, layerRadius, 2 + (layer * 5), leaves);
+                generateCanopyLayer(world, rand, x, y1, z, layerRadius, 2 + (layer * 5), leaves);
             } else {
                 generateCanopyLayer(world, rand, x, y1, z, layerRadius, 1000, leaves);
             }

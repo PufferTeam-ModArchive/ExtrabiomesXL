@@ -10,6 +10,7 @@ import java.lang.reflect.Method;
 import net.minecraft.world.biome.BiomeGenBase;
 
 import com.google.common.base.Optional;
+
 import extrabiomes.helpers.LogHelper;
 
 class IC2API {

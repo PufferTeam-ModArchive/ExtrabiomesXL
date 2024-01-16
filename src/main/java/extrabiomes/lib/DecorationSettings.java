@@ -11,6 +11,7 @@ import java.util.Map;
 import net.minecraftforge.common.config.Property;
 
 import com.google.common.collect.Maps;
+
 import extrabiomes.utility.EnhancedConfiguration;
 
 public enum DecorationSettings {

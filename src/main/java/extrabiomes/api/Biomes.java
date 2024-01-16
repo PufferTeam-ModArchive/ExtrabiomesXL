@@ -8,6 +8,7 @@ package extrabiomes.api;
 import net.minecraft.world.biome.BiomeGenBase;
 
 import com.google.common.base.Optional;
+
 import extrabiomes.api.events.GetBiomeIDEvent;
 
 /**

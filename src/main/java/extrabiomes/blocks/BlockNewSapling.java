@@ -42,6 +42,7 @@ import extrabiomes.module.summa.worldgen.WorldGenSakuraBlossomTree;
 public class BlockNewSapling extends BlockFlower {
 
     public enum BlockType {
+
         BALD_CYPRESS(0, new String[] { "2x2" }),
         JAPANESE_MAPLE(1, new String[] { "1x1" }),
         JAPANESE_MAPLE_SHRUB(2, new String[] { "1x1" }),

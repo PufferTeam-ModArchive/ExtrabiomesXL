@@ -32,6 +32,7 @@ import extrabiomes.lib.BiomeSettings;
 public class BlockCustomTallGrass extends BlockFlower implements IShearable {
 
     public enum BlockType {
+
         BROWN(0),
         SHORT_BROWN(1),
         DEAD(2),

@@ -176,14 +176,14 @@ public class WorldGenBigAutumnTree extends WorldGenAutumnTree {
                     final double var13 = rand.nextFloat() * 2.0D * Math.PI;
                     final int var15 = MathHelper.floor_double(var11 * Math.sin(var13) + basePos[0] + var9);
                     final int var16 = MathHelper.floor_double(var11 * Math.cos(var13) + basePos[2] + var9);
-                    final int[] var17 = new int[]{var15, var3, var16};
-                    final int[] var18 = new int[]{var15, var3 + leafDistanceLimit, var16};
+                    final int[] var17 = new int[] { var15, var3, var16 };
+                    final int[] var18 = new int[] { var15, var3 + leafDistanceLimit, var16 };
 
                     if (checkBlockLine(var17, var18) == -1) {
-                        final int[] var19 = new int[]{basePos[0], basePos[1], basePos[2]};
+                        final int[] var19 = new int[] { basePos[0], basePos[1], basePos[2] };
                         final double var20 = Math.sqrt(
-                            Math.pow(Math.abs(basePos[0] - var17[0]), 2.0D)
-                                + Math.pow(Math.abs(basePos[2] - var17[2]), 2.0D));
+                                Math.pow(Math.abs(basePos[0] - var17[0]), 2.0D)
+                                        + Math.pow(Math.abs(basePos[2] - var17[2]), 2.0D));
                         final double var22 = var20 * branchSlope;
 
                         if (var17[1] - var22 > var5) {

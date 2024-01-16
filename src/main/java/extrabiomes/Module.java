@@ -16,6 +16,7 @@ import extrabiomes.module.cautia.Cautia;
 import extrabiomes.module.fabrica.Fabrica;
 
 enum Module {
+
     CAUTIA(Cautia.class),
     FABRICA(Fabrica.class),
     AMICA(Amica.class);

@@ -25,6 +25,7 @@ import extrabiomes.lib.Element;
 public class ItemCustomDye extends Item {
 
     public enum Color {
+
         BLACK("black", 0, 0x1E1B1B, 0),
         BLUE("blue", 1, 0x253192, 4),
         BROWN("brown", 2, 0x51301A, 3),
