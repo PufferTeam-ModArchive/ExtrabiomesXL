@@ -66,7 +66,7 @@ public abstract class BlockHandler {
     private static void createAutumnLeaves() {
         if (!ModuleControlSettings.SUMMA.isEnabled() || !BlockSettings.AUTUMNLEAVES.getEnabled()) return;
 
-        final BlockAutumnLeaves block = new BlockAutumnLeaves(3, Material.leaves, false);
+        final BlockAutumnLeaves block = new BlockAutumnLeaves(Material.leaves, false);
         block.setBlockName("extrabiomes.leaves").setTickRandomly(true).setHardness(0.2F).setLightOpacity(1)
                 .setStepSound(Block.soundTypeGrass).setCreativeTab(Extrabiomes.tabsEBXL);
 

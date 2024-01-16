@@ -15,7 +15,6 @@ import net.minecraft.block.BlockLeavesBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -140,7 +139,7 @@ public class BlockNewLeaves extends BlockLeavesBase implements IShearable {
 
     int[] adjacentTreeBlocks;
 
-    private IIcon[] textures = { null, null, null, null, null, null, null, null, null, null, null, null };
+    private IIcon[] textures = new IIcon[12];
 
     public BlockNewLeaves(Material material, boolean useFastGraphics) {
         super(material, useFastGraphics);
@@ -312,11 +311,6 @@ public class BlockNewLeaves extends BlockLeavesBase implements IShearable {
     }
 
     @Override
-    public boolean isLeaves(IBlockAccess world, int x, int y, int z) {
-        return true;
-    }
-
-    @Override
     public boolean isOpaqueCube() {
         return Blocks.leaves.isOpaqueCube();
     }
@@ -324,11 +318,6 @@ public class BlockNewLeaves extends BlockLeavesBase implements IShearable {
     @Override
     public boolean isShearable(ItemStack item, IBlockAccess world, int x, int y, int z) {
         return true;
-    }
-
-    @Override
-    public void onEntityWalking(World world, int x, int y, int z, Entity entity) {
-        beginLeavesDecay(world, x, y, z);
     }
 
     @Override
@@ -349,10 +338,8 @@ public class BlockNewLeaves extends BlockLeavesBase implements IShearable {
     }
 
     @Override
-    public boolean shouldSideBeRendered(IBlockAccess par1iBlockAccess, int par2, int par3, int par4, int par5) {
-        this.field_150121_P = !Blocks.leaves.isOpaqueCube(); // fix leaf render
-        // bug
-        return super.shouldSideBeRendered(par1iBlockAccess, par2, par3, par4, par5);
+    public boolean shouldSideBeRendered(IBlockAccess world, int x, int y, int z, int side) {
+        return Blocks.leaves.shouldSideBeRendered(world, x, y, z, side);
     }
 
     @Override
