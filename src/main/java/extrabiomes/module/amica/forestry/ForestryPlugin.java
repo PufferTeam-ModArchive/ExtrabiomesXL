@@ -9,14 +9,13 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-
-import com.google.common.base.Optional;
 
 import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.registry.GameData;
@@ -46,18 +45,18 @@ public class ForestryPlugin {
      * public void addRecipe(int packagingTime, LiquidStack liquid, ItemStack box, ItemStack product, Object
      * materials[]);
      */
-    private static Optional<Method> carpenterAddRecipe = Optional.absent();
+    private static Optional<Method> carpenterAddRecipe = Optional.empty();
 
     /**
      * public void addRecipe(ItemStack resource, int fermentationValue, float modifier, LiquidStack output, LiquidStack
      * liquid);
      */
-    private static Optional<Method> fermenterAddRecipe = Optional.absent();
+    private static Optional<Method> fermenterAddRecipe = Optional.empty();
 
     /**
      * public void registerPlantableFlower(Block flowerBlock, int flowerMeta, double weight, String... flowerTypes);
      */
-    private static Optional<Method> registerFlower = Optional.absent();
+    private static Optional<Method> registerFlower = Optional.empty();
 
     private static final int DIGGER = 1;
     private static final int FORESTER = 2;
@@ -161,7 +160,7 @@ public class ForestryPlugin {
     }
 
     private static void addSoils() {
-        final Optional<ItemStack> soil = Optional.fromNullable(getBlock("soil"));
+        final Optional<ItemStack> soil = Optional.ofNullable(getBlock("soil"));
         if (soil.isPresent()) {
             Block soilBlock = Block.getBlockFromItem(soil.get().getItem());
             TreeSoilRegistry.addValidSoil(soilBlock);
@@ -228,7 +227,7 @@ public class ForestryPlugin {
                 fld = cls.getField("flowerRegistry");
                 flowerRegistry = fld.get(null);
                 cls = Class.forName("forestry.api.genetics.IFlowerRegistry");
-                registerFlower = Optional.fromNullable(
+                registerFlower = Optional.ofNullable(
                         cls.getMethod("registerPlantableFlower", Block.class, int.class, double.class, String[].class));
             }
 
@@ -237,7 +236,7 @@ public class ForestryPlugin {
             backpackItems = (ArrayList[]) fld.get(null);
 
             cls = Class.forName("forestry.api.recipes.IFermenterManager");
-            fermenterAddRecipe = Optional.fromNullable(
+            fermenterAddRecipe = Optional.ofNullable(
                     cls.getMethod(
                             "addRecipe",
                             ItemStack.class,
@@ -246,7 +245,7 @@ public class ForestryPlugin {
                             FluidStack.class,
                             FluidStack.class));
             cls = Class.forName("forestry.api.recipes.ICarpenterManager");
-            carpenterAddRecipe = Optional.fromNullable(
+            carpenterAddRecipe = Optional.ofNullable(
                     cls.getMethod(
                             "addRecipe",
                             int.class,
@@ -259,8 +258,7 @@ public class ForestryPlugin {
             fld = cls.getField("activeMode");
             Object activeMode = fld.get(null);
             cls = Class.forName("forestry.api.core.IGameMode");
-            Optional<Method> getIntegerSetting = Optional
-                    .fromNullable(cls.getMethod("getIntegerSetting", String.class));
+            Optional<Method> getIntegerSetting = Optional.ofNullable(cls.getMethod("getIntegerSetting", String.class));
             BIOMASS_SAPLINGS = (Integer) getIntegerSetting.get().invoke(activeMode, "fermenter.yield.sapling");
         } catch (final Exception ex) {
             ex.printStackTrace();

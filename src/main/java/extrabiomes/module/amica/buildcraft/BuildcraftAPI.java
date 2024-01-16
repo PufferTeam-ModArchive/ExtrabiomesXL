@@ -6,8 +6,6 @@ import java.util.Random;
 
 import net.minecraft.world.World;
 
-import com.google.common.base.Optional;
-
 import extrabiomes.helpers.LogHelper;
 
 public class BuildcraftAPI {
@@ -17,7 +15,7 @@ public class BuildcraftAPI {
     /**
      * public static void generateSurfaceDeposit(World world, Random rand, int x, int y, int z, int radius);
      */
-    private static Optional<Method> generateSurfaceDeposit = Optional.absent();
+    private static Method generateSurfaceDeposit = null;
     boolean useRandom = false;
 
     BuildcraftAPI() {
@@ -32,39 +30,37 @@ public class BuildcraftAPI {
 
         try {
             cls = Class.forName("buildcraft.energy.OilPopulate");
-            generateSurfaceDeposit = Optional.fromNullable(
-                    cls.getMethod(
-                            "generateSurfaceDeposit",
-                            World.class,
-                            Integer.TYPE,
-                            Integer.TYPE,
-                            Integer.TYPE,
-                            Integer.TYPE));
+            generateSurfaceDeposit = cls.getMethod(
+                    "generateSurfaceDeposit",
+                    World.class,
+                    Integer.TYPE,
+                    Integer.TYPE,
+                    Integer.TYPE,
+                    Integer.TYPE);
         } catch (final Exception e) {
             try {
                 cls = Class.forName("buildcraft.energy.OilPopulate");
-                generateSurfaceDeposit = Optional.fromNullable(
-                        cls.getMethod(
-                                "generateSurfaceDeposit",
-                                World.class,
-                                Random.class,
-                                Integer.TYPE,
-                                Integer.TYPE,
-                                Integer.TYPE,
-                                Integer.TYPE));
+                generateSurfaceDeposit = cls.getMethod(
+                        "generateSurfaceDeposit",
+                        World.class,
+                        Random.class,
+                        Integer.TYPE,
+                        Integer.TYPE,
+                        Integer.TYPE,
+                        Integer.TYPE);
                 useRandom = true;
             } catch (final Exception ex) {
                 LogHelper.fine(
                         "Buildcraft Oil Generator could not be accessed. Extra oil in wastelands and mountainous deserts has been disabled.");
-                generateSurfaceDeposit = Optional.absent();
+                generateSurfaceDeposit = null;
             }
         }
     }
 
     void generateSurfaceDeposit(World world, Random rand, int x, int y, int z, int radius) {
         try {
-            if (useRandom) generateSurfaceDeposit.get().invoke(null, world, rand, x, y, z, radius);
-            else generateSurfaceDeposit.get().invoke(null, world, x, y, z, radius);
+            if (useRandom) generateSurfaceDeposit.invoke(null, world, rand, x, y, z, radius);
+            else generateSurfaceDeposit.invoke(null, world, x, y, z, radius);
         } catch (final IllegalStateException e) {} catch (final Exception e) {
             LogHelper.fine("Buildcraft oil generation failed. Exception caught.");
         }

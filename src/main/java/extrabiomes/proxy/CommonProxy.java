@@ -9,6 +9,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -26,8 +27,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
 
 import org.apache.logging.log4j.Logger;
-
-import com.google.common.base.Optional;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import cpw.mods.fml.common.FMLLog;
@@ -81,7 +80,7 @@ public class CommonProxy {
     }
 
     public Optional<ItemStack> getGrassSeed(World world) {
-        return Optional.fromNullable(ForgeHooks.getGrassSeed(world));
+        return Optional.ofNullable(ForgeHooks.getGrassSeed(world));
     }
 
     public ArrayList<ItemStack> getOres(String name) {

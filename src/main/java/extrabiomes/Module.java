@@ -5,7 +5,7 @@
 
 package extrabiomes;
 
-import com.google.common.base.Optional;
+import java.util.Optional;
 
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.EventBus;
@@ -54,7 +54,7 @@ enum Module {
     }
 
     public static void releaseStaticResources() {
-        eventBus = Optional.absent();
+        eventBus = Optional.empty();
     }
 
     private boolean enabled = false;

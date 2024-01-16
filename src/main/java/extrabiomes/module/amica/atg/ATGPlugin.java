@@ -1,7 +1,5 @@
 package extrabiomes.module.amica.atg;
 
-import com.google.common.base.Optional;
-
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import extrabiomes.Extrabiomes;
 import extrabiomes.api.PluginEvent;
@@ -10,7 +8,7 @@ import extrabiomes.helpers.LogHelper;
 public class ATGPlugin {
 
     private static final String MOD_ID = "ATG";
-    private static Optional<ATGPluginImpl> api = Optional.absent();
+    private static ATGPluginImpl api = null;
 
     @SubscribeEvent
     public void preInit(PluginEvent.Pre event) {
@@ -20,23 +18,24 @@ public class ATGPlugin {
 
         LogHelper.fine("Initializing %s plugin.", MOD_ID);
         try {
-            api = Optional.of(new ATGPluginImpl());
+            api = new ATGPluginImpl();
         } catch (final Exception ex) {
             ex.printStackTrace();
             LogHelper.fine("Could not communicate with %s. Disabling plugin.", MOD_ID);
-            api = Optional.absent();
+            api = null;
         }
     }
 
     @SubscribeEvent
     public void init(PluginEvent.Init event) {
-        if (!api.isPresent()) return;
+        if (api != null) {
+            api.init();
+        }
 
-        api.get().init();
     }
 
     @SubscribeEvent
     public void postInit(PluginEvent.Post event) {
-        api = Optional.absent();
+        api = null;
     }
 }

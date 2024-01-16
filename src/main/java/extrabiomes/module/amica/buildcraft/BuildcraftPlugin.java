@@ -5,8 +5,6 @@
 
 package extrabiomes.module.amica.buildcraft;
 
-import com.google.common.base.Optional;
-
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import extrabiomes.Extrabiomes;
 import extrabiomes.api.PluginEvent;
@@ -15,24 +13,24 @@ import extrabiomes.helpers.LogHelper;
 public class BuildcraftPlugin {
 
     private static final String MOD_NAME = "Buildcraft";
-    private Optional<BuildcraftAPI> api = Optional.absent();
+    private BuildcraftAPI api = null;
 
     private void addOilSpawns() {
-        if (!api.get().modifyWorld() || !api.isPresent()) return;
-
-        Extrabiomes.proxy.registerWorldGenerator(new OilGenerator(api.get()));
+        if (api != null && api.modifyWorld()) {
+            Extrabiomes.proxy.registerWorldGenerator(new OilGenerator(api));
+        }
     }
 
     @SubscribeEvent
     public void init(PluginEvent.Init event) {
-        if (!api.isPresent()) return;
-
-        addOilSpawns();
+        if (api != null) {
+            addOilSpawns();
+        }
     }
 
     @SubscribeEvent
     public void postInit(PluginEvent.Post event) {
-        api = Optional.absent();
+        api = null;
     }
 
     @SubscribeEvent
@@ -44,12 +42,12 @@ public class BuildcraftPlugin {
         // LogHelper.fine(Extrabiomes.proxy.getStringLocalization(LOG_MESSAGE_PLUGIN_INIT), MOD_NAME);
         LogHelper.fine("Initializing %s plugin.", MOD_NAME);
         try {
-            api = Optional.of(new BuildcraftAPI());
+            api = new BuildcraftAPI();
         } catch (final Exception ex) {
             ex.printStackTrace();
             // LogHelper.fine(Extrabiomes.proxy.getStringLocalization(LOG_MESSAGE_PLUGIN_ERROR), MOD_NAME);
             LogHelper.fine("Could not communicate with %s. Disabling plugin.", MOD_NAME);
-            api = Optional.absent();
+            api = null;
         }
     }
 
