@@ -6,9 +6,6 @@
 package extrabiomes.lib;
 
 import net.minecraft.item.ItemStack;
-
-import com.google.common.base.Optional;
-
 import cpw.mods.fml.common.registry.GameData;
 
 public enum Element {
@@ -125,33 +122,32 @@ public enum Element {
     VINE_SPANISH_MOSS,
     VIOLET,
     YARROW,
-    
+
     SEED_STRAWBERRY,
     PLANT_STRAWBERRY,
     CROP_STRAWBERRY;
     // @formatter:on
 
-    private Optional<ItemStack> stack = Optional.absent();
+    private ItemStack stack;
 
     public ItemStack get() {
-        return stack.get();
+        return stack;
     }
 
     public boolean isPresent() {
-        return stack.isPresent();
+        return stack != null;
     }
 
     public String getID() {
-        if (isPresent()) return GameData.getItemRegistry().getNameForObject(get().getItem());
-        return null;
+        return stack != null ? GameData.getItemRegistry().getNameForObject(stack.getItem()) : null;
     }
 
     public int getMetadata() {
-        if (isPresent()) return get().getItemDamage();
-        return 0;
+        return stack != null ? stack.getItemDamage() : 0;
     }
 
     public void set(ItemStack stack) {
-        this.stack = Optional.of(stack);
+        this.stack = stack;
     }
+
 }
