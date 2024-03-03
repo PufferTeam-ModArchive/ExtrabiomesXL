@@ -66,7 +66,7 @@ public abstract class BlockHandler {
     private static void createAutumnLeaves() {
         if (!ModuleControlSettings.SUMMA.isEnabled() || !BlockSettings.AUTUMNLEAVES.getEnabled()) return;
 
-        final BlockAutumnLeaves block = new BlockAutumnLeaves(Material.leaves, false);
+        final BlockAutumnLeaves block = new BlockAutumnLeaves();
         block.setBlockName("extrabiomes.leaves").setTickRandomly(true).setHardness(0.2F).setLightOpacity(1)
                 .setStepSound(Block.soundTypeGrass).setCreativeTab(Extrabiomes.tabsEBXL);
 
@@ -169,7 +169,7 @@ public abstract class BlockHandler {
     private static void createFlowers() {
         if (!ModuleControlSettings.SUMMA.isEnabled()) return;
 
-        final boolean enableds[] = { BlockSettings.FLOWER.getEnabled(), BlockSettings.FLOWER2.getEnabled(),
+        final boolean[] enableds = { BlockSettings.FLOWER.getEnabled(), BlockSettings.FLOWER2.getEnabled(),
                 BlockSettings.FLOWER3.getEnabled() };
 
         final CommonProxy proxy = Extrabiomes.proxy;
@@ -306,7 +306,7 @@ public abstract class BlockHandler {
     private static void createNewLeaves() {
         if (!ModuleControlSettings.SUMMA.isEnabled() || !BlockSettings.NEWLEAVES.getEnabled()) return;
 
-        final BlockNewLeaves block = new BlockNewLeaves(Material.leaves, false);
+        final BlockNewLeaves block = new BlockNewLeaves();
         block.setBlockName("extrabiomes.leaves").setTickRandomly(true).setHardness(0.2F).setLightOpacity(1)
                 .setStepSound(Block.soundTypeGrass).setCreativeTab(Extrabiomes.tabsEBXL);
 
@@ -330,7 +330,7 @@ public abstract class BlockHandler {
     private static void createMoreLeaves() {
         if (!ModuleControlSettings.SUMMA.isEnabled() || !BlockSettings.MORELEAVES.getEnabled()) return;
 
-        final BlockMoreLeaves block = new BlockMoreLeaves(Material.leaves, false);
+        final BlockMoreLeaves block = new BlockMoreLeaves();
         block.setBlockName("extrabiomes.leaves").setTickRandomly(true).setHardness(0.2F).setLightOpacity(1)
                 .setStepSound(Block.soundTypeGrass).setCreativeTab(Extrabiomes.tabsEBXL);
 
@@ -349,7 +349,7 @@ public abstract class BlockHandler {
     private static void createGreenLeaves() {
         if (!ModuleControlSettings.SUMMA.isEnabled() || !BlockSettings.GREENLEAVES.getEnabled()) return;
 
-        final BlockGreenLeaves block = new BlockGreenLeaves(Material.leaves, false);
+        final BlockGreenLeaves block = new BlockGreenLeaves();
         block.setBlockName("extrabiomes.leaves").setTickRandomly(true).setHardness(0.2F).setLightOpacity(1)
                 .setStepSound(Block.soundTypeGrass).setCreativeTab(Extrabiomes.tabsEBXL);
 
@@ -419,7 +419,7 @@ public abstract class BlockHandler {
         if (!ModuleControlSettings.SUMMA.isEnabled() || !BlockSettings.KNEELOG.getEnabled()) return;
 
         block.setBlockName("extrabiomes.cypresskneelog");
-        ((BlockKneeLog) block).setDroppedItemStack(Element.LOG_BALD_CYPRESS.get());
+        (block).setDroppedItemStack(Element.LOG_BALD_CYPRESS.get());
 
         final CommonProxy proxy = Extrabiomes.proxy;
         proxy.setBlockHarvestLevel(block, "axe", 0);
@@ -433,7 +433,7 @@ public abstract class BlockHandler {
         if (!ModuleControlSettings.SUMMA.isEnabled() || !BlockSettings.RAINBOWKNEELOG.getEnabled()) return;
 
         block2.setBlockName("extrabiomes.rainbowkneelog");
-        ((BlockKneeLog) block2).setDroppedItemStack(Element.LOG_RAINBOW_EUCALYPTUS.get());
+        (block2).setDroppedItemStack(Element.LOG_RAINBOW_EUCALYPTUS.get());
 
         proxy.setBlockHarvestLevel(block2, "axe", 0);
         proxy.registerBlock(block2, ItemKneeLog.class, "log_elbow_rainbow_eucalyptus");
@@ -463,7 +463,7 @@ public abstract class BlockHandler {
 
         block.setBlockName("extrabiomes.baldcypressquarter").setStepSound(Block.soundTypeWood).setHardness(2.0F)
                 .setResistance(Blocks.log.getExplosionResistance(null) * 5.0F).setCreativeTab(Extrabiomes.tabsEBXL);
-        ((BlockNewQuarterLog) block).setDroppedItemStack(Element.LOG_BALD_CYPRESS.get());
+        (block).setDroppedItemStack(Element.LOG_BALD_CYPRESS.get());
 
         proxy.setBlockHarvestLevel(block, "axe", 0);
         proxy.registerBlock(block, ItemNewQuarterLog.class, "cornerlog_baldcypress");
@@ -476,7 +476,7 @@ public abstract class BlockHandler {
 
         block2.setBlockName("extrabiomes.rainboweucalyptusquarter").setStepSound(Block.soundTypeWood).setHardness(2.0F)
                 .setResistance(Blocks.log.getExplosionResistance(null) * 5.0F).setCreativeTab(Extrabiomes.tabsEBXL);
-        ((BlockNewQuarterLog) block2).setDroppedItemStack(Element.LOG_RAINBOW_EUCALYPTUS.get());
+        (block2).setDroppedItemStack(Element.LOG_RAINBOW_EUCALYPTUS.get());
 
         proxy.setBlockHarvestLevel(block2, "axe", 0);
         proxy.registerBlock(block2, ItemNewQuarterLog.class, "cornerlog_rainboweucalyptus");
@@ -489,7 +489,7 @@ public abstract class BlockHandler {
 
         block3.setBlockName("extrabiomes.oakquarter").setStepSound(Block.soundTypeWood).setHardness(2.0F)
                 .setResistance(Blocks.log.getExplosionResistance(null) * 5.0F).setCreativeTab(Extrabiomes.tabsEBXL);
-        ((BlockNewQuarterLog) block3).setDroppedItemStack(new ItemStack(Item.getItemFromBlock(Blocks.log), 1, 0));
+        (block3).setDroppedItemStack(new ItemStack(Item.getItemFromBlock(Blocks.log), 1, 0));
 
         proxy.setBlockHarvestLevel(block3, "axe", 0);
         proxy.registerBlock(block3, ItemNewQuarterLog.class, "cornerlog_oak");
@@ -502,7 +502,7 @@ public abstract class BlockHandler {
 
         block4.setBlockName("extrabiomes.firquarter").setStepSound(Block.soundTypeWood).setHardness(2.0F)
                 .setResistance(Blocks.log.getExplosionResistance(null) * 5.0F).setCreativeTab(Extrabiomes.tabsEBXL);
-        ((BlockNewQuarterLog) block4).setDroppedItemStack(Element.LOG_FIR.get());
+        (block4).setDroppedItemStack(Element.LOG_FIR.get());
 
         proxy.setBlockHarvestLevel(block4, "axe", 0);
         proxy.registerBlock(block4, ItemNewQuarterLog.class, "cornerlog_fir");
@@ -515,7 +515,7 @@ public abstract class BlockHandler {
 
         block5.setBlockName("extrabiomes.redwoodquarter").setStepSound(Block.soundTypeWood).setHardness(2.0F)
                 .setResistance(Blocks.log.getExplosionResistance(null) * 5.0F).setCreativeTab(Extrabiomes.tabsEBXL);
-        ((BlockNewQuarterLog) block5).setDroppedItemStack(Element.LOG_REDWOOD.get());
+        (block5).setDroppedItemStack(Element.LOG_REDWOOD.get());
         // block5.setRenderId(renderId);
 
         proxy.setBlockHarvestLevel(block5, "axe", 0);
