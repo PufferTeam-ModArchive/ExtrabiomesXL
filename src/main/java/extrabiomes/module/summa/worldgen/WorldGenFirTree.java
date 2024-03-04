@@ -18,8 +18,7 @@ import extrabiomes.module.summa.TreeSoilRegistry;
 
 public class WorldGenFirTree extends WorldGenAbstractTree {
 
-    private enum TreeBlock {
-
+    public enum TreeBlock {
         LEAVES(new ItemStack(Blocks.leaves, 1, 1)),
         TRUNK(new ItemStack(Blocks.log, 1, 1));
 
@@ -59,96 +58,100 @@ public class WorldGenFirTree extends WorldGenAbstractTree {
 
     @Override
     public boolean generate(World world, Random rand, int x, int y, int z) {
-        // Store the seed
         lastSeed = rand.nextLong();
-
         return generateTree(world, new Random(lastSeed), x, y, z);
     }
 
     public boolean generate(World world, long seed, int x, int y, int z) {
-        // Store the seed
         lastSeed = seed;
-
         return generateTree(world, new Random(seed), x, y, z);
     }
 
-    private boolean generateTree(World world, Random rand, int x, int y, int z) {
-        final Block below = world.getBlock(x, y - 1, z);
+    private boolean generateTree(World world, Random rand, int originX, int originY, int originZ) {
         final int height = rand.nextInt(8) + 24;
 
-        if (!TreeSoilRegistry.isValidSoil(below) || y >= 256 - height - 1) return false;
+        if(originY < 1 || originY + height > 255) {
+            return false;
+        }
+        if(!TreeSoilRegistry.isValidSoil(world.getBlock(originX, originY - 1, originZ))) {
+            return false;
+        }
 
-        if (y < 1 || y + height + 1 > 256) return false;
+        final int trunkClearHeight = 1 + rand.nextInt(12);
+        final int leafSlopeHalfMax = 2 + rand.nextInt(6);
 
-        final int j = 1 + rand.nextInt(12);
-        final int l = 2 + rand.nextInt(6);
-
-        for (int i1 = y; i1 <= y + 1 + height; i1++) {
-            if (i1 < 0 || i1 >= 256) return false;
-
-            int k1 = (i1 - y < j) ? 0 : l;
-
-            for (int x1 = x - k1; x1 <= x + k1; x1++) {
-                for (int z1 = z - k1; z1 <= z + k1; z1++) {
-                    final Block block = world.getBlock(x1, i1, z1);
-
-                    if (block != null && !block.isReplaceable(world, x1, i1, z1)) return false;
+        //Check bounds before placement
+        for(int checkY = originY; checkY <= originY + 1 + height; ++checkY) {
+            int checkRamp = (checkY - originY < trunkClearHeight) ? 0 : leafSlopeHalfMax;
+            for(int checkX = originX - checkRamp; checkX <= originX + checkRamp; ++checkX) {
+                for(int checkZ = originZ - checkRamp; checkZ <= originZ + checkRamp; ++checkZ) {
+                    if(!world.getChunkProvider().chunkExists(checkX >> 4, checkZ >> 4)) {
+                        return false;
+                    }
+                    final Block block = world.getBlock(checkX, checkY, checkZ);
+                    if(!block.isLeaves(world, checkX, checkY, checkZ) && !block.isReplaceable(world, checkX, checkY, checkZ)) {
+                        return false;
+                    }
                 }
             }
         }
 
-        world.setBlock(x, y - 1, z, Blocks.dirt);
-        int l1 = rand.nextInt(2);
-        int j2 = 1;
-        boolean flag1 = false;
+        //Set dirt, but it may not be on dirt...
+        //world.setBlock(originX, originY - 1, originZ, Blocks.dirt);
 
-        for (int i3 = 0; i3 <= height - j; i3++) {
-            final int k3 = y + height - i3;
+        //Trunk
+        final Block trunk = TreeBlock.TRUNK.getBlock();
+        final int trunkMeta = TreeBlock.TRUNK.getMetadata();
+        final int randomTrunkHeightReduction = rand.nextInt(3);
+        for (int relativeTrunkLevel = 0; relativeTrunkLevel < height - randomTrunkHeightReduction; relativeTrunkLevel++) {
+            final int actualTrunkLevel = originY + relativeTrunkLevel;
+            final Block block = world.getBlock(originX, actualTrunkLevel, originZ);
+            if(block.isLeaves(world, originX, actualTrunkLevel, originZ) || block.isReplaceable(world, originX, actualTrunkLevel, originZ)) {
+                setBlockAndNotifyAdequately(world, originX, actualTrunkLevel, originZ, trunk, trunkMeta);
+            }
+        }
 
-            for (int i4 = x - l1; i4 <= x + l1; i4++) {
-                final int k4 = i4 - x;
+        int cornerLimit = rand.nextInt(2);
+        int leafSlopeHalf = 1;
+        boolean cornerFlag = false;
 
-                for (int l4 = z - l1; l4 <= z + l1; l4++) {
-                    final int i5 = l4 - z;
-
-                    final Block block = world.getBlock(i4, k3, l4);
-
-                    if ((Math.abs(k4) != l1 || Math.abs(i5) != l1 || l1 <= 0)
-                            && (block == null || block.canBeReplacedByLeaves(world, i4, k3, l4))) {
-                        setBlockAndNotifyAdequately(
-                                world,
-                                i4,
-                                k3,
-                                l4,
-                                TreeBlock.LEAVES.getBlock(),
-                                TreeBlock.LEAVES.getMetadata());
+        final int minLeafHeight = height - trunkClearHeight;
+        final Block leaves = TreeBlock.LEAVES.getBlock();
+        final int leavesMeta = TreeBlock.LEAVES.getMetadata();
+        for(int relativeY = 0; relativeY <= minLeafHeight; ++relativeY) {
+            final int actualY = originY + height - relativeY;
+            for(int actualX = originX - cornerLimit; actualX <= originX + cornerLimit; ++actualX) {
+                final int cornerCheckX = actualX - originX;
+                for(int actualZ = originZ - cornerLimit; actualZ <= originZ + cornerLimit; ++actualZ) {
+                    final int cornerCheckZ = actualZ - originZ;
+                    //Corner skip
+                    if(cornerLimit > 0 && (Math.abs(cornerCheckX) == cornerLimit && Math.abs(cornerCheckZ) == cornerLimit)) {
+                        continue;
+                    }
+                    //Arms
+                    final Block other = world.getBlock(actualX, actualY, actualZ);
+                    if(cornerLimit < leafSlopeHalf && relativeY < minLeafHeight && (Math.abs(cornerCheckX) == cornerLimit - 2 && Math.abs(cornerCheckZ) == cornerLimit - 2)) {
+                        if(other.isLeaves(world, originX, actualY, originZ) || other.isReplaceable(world, originX, actualY, originZ)) {
+                            setBlockAndNotifyAdequately(world, actualX, actualY, actualZ, trunk, trunkMeta);
+                            continue;
+                        }
+                    }
+                    //Leaves
+                    if(other.isAir(world, actualX, actualY, actualZ)
+                        || other.canBeReplacedByLeaves(world, actualX, actualY, actualZ)) {
+                        setBlockAndNotifyAdequately(world, actualX, actualY, actualZ, leaves, leavesMeta);
                     }
                 }
             }
 
-            if (l1 >= j2) {
-                l1 = flag1 ? 1 : 0;
-                flag1 = true;
-
-                if (++j2 > l) j2 = l;
+            if(cornerLimit >= leafSlopeHalf) {
+                cornerLimit = cornerFlag ? 1 : 0;
+                cornerFlag = true;
+                if (++leafSlopeHalf > leafSlopeHalfMax) {
+                    leafSlopeHalf = leafSlopeHalfMax;
+                }
             } else {
-                l1++;
-            }
-        }
-
-        final int j3 = rand.nextInt(3);
-
-        for (int l3 = 0; l3 < height - j3; l3++) {
-            final Block block = world.getBlock(x, y + l3, z);
-
-            if (block == null || block.isLeaves(world, x, y + l3, z) || block.isAir(world, x, y + l3, z)) {
-                setBlockAndNotifyAdequately(
-                        world,
-                        x,
-                        y + l3,
-                        z,
-                        TreeBlock.TRUNK.getBlock(),
-                        TreeBlock.TRUNK.getMetadata());
+                ++cornerLimit;
             }
         }
 
