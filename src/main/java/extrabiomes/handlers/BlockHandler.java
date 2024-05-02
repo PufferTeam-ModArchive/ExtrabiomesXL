@@ -14,6 +14,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.gen.feature.WorldGenTallGrass;
+import net.minecraftforge.oredict.OreDictionary;
 
 import extrabiomes.Extrabiomes;
 import extrabiomes.blocks.BlockAutumnLeaves;
@@ -614,6 +615,8 @@ public abstract class BlockHandler {
         for (final BlockRedRock.BlockType type : BlockRedRock.BlockType.values()) {
             // FacadeHelper.addBuildcraftFacade(block, type.metadata());
         }
+
+        OreDictionary.registerOre("cobblestone", new ItemStack(block, 1, 1));
     }
 
     private static void createSapling() {
