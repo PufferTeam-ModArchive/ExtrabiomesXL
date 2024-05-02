@@ -7,12 +7,14 @@ package extrabiomes.blocks;
 
 import java.util.Optional;
 import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.ColorizerFoliage;
 import net.minecraft.world.IBlockAccess;
+
 import extrabiomes.lib.Element;
 
 public class BlockNewLeaves extends BlockLeafEbxl {
@@ -29,20 +31,19 @@ public class BlockNewLeaves extends BlockLeafEbxl {
         private static boolean loadedCustomBlocks = false;
 
         static BlockType fromMetadata(int metadata) {
-            for(final BlockType type : BlockType.values()) {
-                if(type.metadata() == (metadata & 3)) return type;
+            for (final BlockType type : BlockType.values()) {
+                if (type.metadata() == (metadata & 3)) return type;
             }
             return null;
         }
 
         private static void loadCustomBlocks() {
-            if(Element.SAPLING_BALD_CYPRESS.isPresent())
-                BALD_CYPRESS.sapling = Element.SAPLING_BALD_CYPRESS.get();
-            if(Element.SAPLING_JAPANESE_MAPLE.isPresent())
+            if (Element.SAPLING_BALD_CYPRESS.isPresent()) BALD_CYPRESS.sapling = Element.SAPLING_BALD_CYPRESS.get();
+            if (Element.SAPLING_JAPANESE_MAPLE.isPresent())
                 JAPANESE_MAPLE.sapling = Element.SAPLING_JAPANESE_MAPLE.get();
-            if(Element.SAPLING_JAPANESE_MAPLE_SHRUB.isPresent())
+            if (Element.SAPLING_JAPANESE_MAPLE_SHRUB.isPresent())
                 JAPANESE_MAPLE_SHRUB.sapling = Element.SAPLING_JAPANESE_MAPLE_SHRUB.get();
-            if(Element.SAPLING_RAINBOW_EUCALYPTUS.isPresent())
+            if (Element.SAPLING_RAINBOW_EUCALYPTUS.isPresent())
                 RAINBOW_EUCALYPTUS.sapling = Element.SAPLING_RAINBOW_EUCALYPTUS.get();
 
             loadedCustomBlocks = true;
@@ -53,7 +54,7 @@ public class BlockNewLeaves extends BlockLeafEbxl {
         }
 
         Item getSaplingItem() {
-            if(!loadedCustomBlocks) {
+            if (!loadedCustomBlocks) {
                 loadCustomBlocks();
             }
             return sapling.getItem();
@@ -92,7 +93,7 @@ public class BlockNewLeaves extends BlockLeafEbxl {
     @Override
     public int colorMultiplier(IBlockAccess iBlockAccess, int x, int y, int z) {
         final int metadata = iBlockAccess.getBlockMetadata(x, y, z) & 3;
-        if(metadata == BlockType.JAPANESE_MAPLE.metadata() || metadata == BlockType.JAPANESE_MAPLE_SHRUB.metadata()) {
+        if (metadata == BlockType.JAPANESE_MAPLE.metadata() || metadata == BlockType.JAPANESE_MAPLE_SHRUB.metadata()) {
             return getRenderColor(metadata);
         } else {
             return calcSmoothedBiomeFoliageColor(iBlockAccess, x, z);
@@ -111,7 +112,7 @@ public class BlockNewLeaves extends BlockLeafEbxl {
         return type.isPresent() ? type.get().getSaplingItem() : Item.getItemFromBlock(Blocks.sapling);
     }
 
-    //Better Foliage (?) compat
+    // Better Foliage (?) compat
     public float getSpawnChanceFallingLeaves(int metadata) {
         return 0.01F;
     }
@@ -124,7 +125,7 @@ public class BlockNewLeaves extends BlockLeafEbxl {
         for (int z1 = -1; z1 <= 1; ++z1) {
             for (int x1 = -1; x1 <= 1; ++x1) {
                 final int foliageColor = iBlockAccess.getBiomeGenForCoords(x + x1, z + z1)
-                    .getBiomeFoliageColor(x + x1, 96, z + z1);
+                        .getBiomeFoliageColor(x + x1, 96, z + z1);
                 red += (foliageColor & 16711680) >> 16;
                 green += (foliageColor & 65280) >> 8;
                 blue += foliageColor & 255;

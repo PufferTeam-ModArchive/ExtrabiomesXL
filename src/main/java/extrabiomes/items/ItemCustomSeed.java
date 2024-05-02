@@ -32,7 +32,7 @@ public class ItemCustomSeed extends Item implements IPlantable {
         public BlockFlower cropType;
         public IIcon IIcon;
 
-        private SeedType(int meta) {
+        SeedType(int meta) {
             this.meta = meta;
         }
     }

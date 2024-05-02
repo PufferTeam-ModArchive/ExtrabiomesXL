@@ -1154,10 +1154,10 @@ public enum BlockManager {
     private boolean blockCreated = false;
 
     private Block _block = null;
-    private boolean _flammable = false;
-    private Optional _stuff = null;
+    private boolean _flammable;
+    private Optional _stuff;
 
-    private BlockManager(Optional stuff, boolean flammable) {
+    BlockManager(Optional stuff, boolean flammable) {
         _stuff = stuff;
         _flammable = flammable;
     }

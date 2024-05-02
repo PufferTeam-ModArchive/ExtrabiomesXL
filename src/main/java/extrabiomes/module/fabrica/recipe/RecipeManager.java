@@ -66,16 +66,16 @@ public class RecipeManager {
     private Optional<ItemStack> redCobbleItem = Optional.absent();
     private Optional<ItemStack> redRockBrickItem = Optional.absent();
 
-    private final List<ItemStack> acaciaLogs = new ArrayList<ItemStack>();
-    private final List<ItemStack> firLogs = new ArrayList<ItemStack>();
-    private final List<ItemStack> oakLogs = new ArrayList<ItemStack>();
-    private final List<ItemStack> redwoodLogs = new ArrayList<ItemStack>();
-    private final List<ItemStack> cypressLogs = new ArrayList<ItemStack>();
-    private final List<ItemStack> baldCypressLogs = new ArrayList<ItemStack>();
-    private final List<ItemStack> autumnLogs = new ArrayList<ItemStack>();
-    private final List<ItemStack> japanesemapleLogs = new ArrayList<ItemStack>();
-    private final List<ItemStack> rainboweucalyptusLogs = new ArrayList<ItemStack>();
-    private final List<ItemStack> sakurablossomLogs = new ArrayList<ItemStack>();
+    private final List<ItemStack> acaciaLogs = new ArrayList<>();
+    private final List<ItemStack> firLogs = new ArrayList<>();
+    private final List<ItemStack> oakLogs = new ArrayList<>();
+    private final List<ItemStack> redwoodLogs = new ArrayList<>();
+    private final List<ItemStack> cypressLogs = new ArrayList<>();
+    private final List<ItemStack> baldCypressLogs = new ArrayList<>();
+    private final List<ItemStack> autumnLogs = new ArrayList<>();
+    private final List<ItemStack> japanesemapleLogs = new ArrayList<>();
+    private final List<ItemStack> rainboweucalyptusLogs = new ArrayList<>();
+    private final List<ItemStack> sakurablossomLogs = new ArrayList<>();
 
     @SubscribeEvent
     public void acaciaStairsRecipeHandler(AcaciaStairsActiveEvent event) {

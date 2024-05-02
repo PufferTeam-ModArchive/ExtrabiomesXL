@@ -36,7 +36,7 @@ public class ItemCustomDye extends Item {
         public final int hex;
         public final int mcDamage;
 
-        private Color(String name, int meta, int hex, int mcDamage) {
+        Color(String name, int meta, int hex, int mcDamage) {
             this.name = name;
             this.meta = meta;
             this.hex = hex;
@@ -64,15 +64,10 @@ public class ItemCustomDye extends Item {
             final Color color = Color.values()[idx];
             final Element element = elements[idx];
 
-            // LogHelper.info(color + " = " + element);
-
             element.set(new ItemStack(this, 1, color.meta));
             OreDictionary.registerOre("dye" + StringUtils.capitalize(color.name), element.get());
         }
         OreDictionary.registerOre("dye", new ItemStack(this, 1, OreDictionary.WILDCARD_VALUE));
-        /*
-         * // make sure wool recipes are good OreDictionary.initVanillaEntries();
-         */
     }
 
     /**

@@ -32,7 +32,7 @@ public class QuicksandGenerator implements IWorldGenerator {
         if (!BiomeSettings.MINIJUNGLE.getBiome().isPresent() || biome != BiomeSettings.MINIJUNGLE.getBiome().get())
             return;
 
-        // 1 to 3 attempts with with a bias toward 2
+        // 1 to 3 attempts with a bias toward 2
         final int attempts = random.nextInt(1) + random.nextInt(1) + 1;
         for (int i = 0; i < attempts; i++) if (random.nextInt(1) == 0) {
             final int x = randomizedCoord(random, chunkX);
