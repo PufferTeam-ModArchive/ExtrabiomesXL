@@ -108,6 +108,8 @@ public class CropHandler {
                 LogHelper.severe("Missing plant element for " + type);
             }
         }
+
+        OreDictionary.registerOre("listAllseed", new ItemStack(item, 1, OreDictionary.WILDCARD_VALUE));
     }
 
     private static void createBasicCrops() {
