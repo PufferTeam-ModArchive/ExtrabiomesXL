@@ -253,7 +253,7 @@ public abstract class RecipeHandler {
                             Element.LOG_HUGE_FIR_SE.get()));
         }
 
-        if (Element.LOG_REDWOOD.isPresent() && Element.LOG_REDWOOD.isPresent()) {
+        if (Element.LOG_REDWOOD.isPresent() && Element.LOG_QUARTER_REDWOOD.isPresent()) {
             proxy.addRecipe(
                     new ShapedOreRecipe(
                             new ItemStack(
