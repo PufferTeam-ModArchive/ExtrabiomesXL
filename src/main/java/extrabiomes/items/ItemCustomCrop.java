@@ -38,13 +38,13 @@ public class ItemCustomCrop extends ItemFood {
 
         public Edible edible = Edible.YES;
 
-        private CropType(int meta, Integer hunger, Float saturation) {
+        CropType(int meta, Integer hunger, Float saturation) {
             this.meta = meta;
             this.hunger = (hunger == null ? DEFAULT_HUNGER : hunger);
             this.saturation = (saturation == null ? DEFAULT_SATURATION : saturation);
         }
 
-        private CropType(int meta, Integer hunger, Float saturation, Edible edible) {
+        CropType(int meta, Integer hunger, Float saturation, Edible edible) {
             this(meta, hunger, saturation);
             this.edible = edible;
         }

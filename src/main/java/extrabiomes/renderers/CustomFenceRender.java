@@ -83,7 +83,7 @@ public class CustomFenceRender implements ISimpleBlockRenderingHandler {
     @Override
     public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId,
             RenderBlocks renderer) {
-        boolean flag = false;
+        boolean flag;
         float f = 0.375F;
         float f1 = 0.625F;
         renderer.setRenderBounds(f, 0.0D, f, f1, 1.0D, f1);
@@ -106,10 +106,6 @@ public class CustomFenceRender implements ISimpleBlockRenderingHandler {
         boolean flag4 = ((BlockFence) block).canConnectFenceTo(world, x + 1, y, z);
         boolean flag5 = ((BlockFence) block).canConnectFenceTo(world, x, y, z - 1);
         boolean flag6 = ((BlockFence) block).canConnectFenceTo(world, x, y, z + 1);
-
-        if (!flag1 && !flag2) {
-            flag1 = true;
-        }
 
         f = 0.4375F;
         f1 = 0.5625F;

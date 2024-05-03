@@ -154,7 +154,7 @@ public class WorldGenJapaneseMapleShrub extends WorldGenNewTreeBase {
             branches.add(node);
 
             // Generate the branch
-            if (!checkBlockLine(start, node, TreeBlock.TRUNK.get(), world)) return false;
+            if (!checkBlockLine(start, node, world)) return false;
         }
 
         // Place the branch tips

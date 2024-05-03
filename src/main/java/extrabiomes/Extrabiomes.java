@@ -45,7 +45,7 @@ import extrabiomes.proxy.CommonProxy;
 import extrabiomes.utility.CreativeTab;
 import extrabiomes.utility.EnhancedConfiguration;
 
-@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.MOD_VERSION, dependencies = "")
+@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.MOD_VERSION)
 public class Extrabiomes {
 
     @Instance(Reference.MOD_ID)
@@ -88,7 +88,7 @@ public class Extrabiomes {
     }
 
     public static boolean postInitEvent(Event event) {
-        return initBus != null ? initBus.post(event) : false;
+        return initBus != null && initBus.post(event);
     }
 
     @Mod.EventHandler

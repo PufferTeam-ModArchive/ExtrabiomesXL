@@ -297,31 +297,31 @@ public class BlockCustomFlower extends Block implements IPlantable {
     }
 
     @SuppressWarnings("rawtypes")
-    public void addInformation(int metaData, List listOfLines) {
-        if (groupMap.containsKey(metaData)) {
-            String line = LanguageRegistry.instance().getStringLocalization(
-                    this.getUnlocalizedName() + "."
-                            + groupMap.get(metaData).name().toLowerCase(Locale.ENGLISH)
-                            + ".description");
+    public void addInformation(int metadata, List tooltip) {
+        if (!groupMap.containsKey(metadata)) {
+            return;
+        }
+        String unlocalizedName = getUnlocalizedName() + "."
+                + groupMap.get(metadata).name().toLowerCase(Locale.ENGLISH)
+                + ".description";
+        String localizedName = LanguageRegistry.instance().getStringLocalization(unlocalizedName);
 
-            if (!line.equals(
-                    this.getUnlocalizedName() + "."
-                            + groupMap.get(metaData).name().toLowerCase(Locale.ENGLISH)
-                            + ".description")) {
-                if (listOfLines.size() > 0 && ((String) listOfLines.get(0)).length() > 20) {
-                    ToolTipStringFormatter.Format(line, listOfLines, ((String) listOfLines.get(0)).length() + 5);
-                } else {
-                    ToolTipStringFormatter.Format(line, listOfLines);
-                }
+        if (!localizedName.equals(unlocalizedName)) {
+            if (tooltip.isEmpty() || ((String) tooltip.get(0)).length() <= 20) {
+                ToolTipStringFormatter.Format(localizedName, tooltip);
+            } else {
+                ToolTipStringFormatter.Format(localizedName, tooltip, ((String) tooltip.get(0)).length() + 5);
             }
         }
+
     }
 
     public String getUnlocalizedName(int metaData) {
         if (groupMap.containsKey(metaData)) {
-            return this.getUnlocalizedName() + "." + groupMap.get(metaData).name().toLowerCase(Locale.ENGLISH);
+            return getUnlocalizedName() + "." + groupMap.get(metaData).name().toLowerCase(Locale.ENGLISH);
         } else {
             return "";
         }
     }
+
 }

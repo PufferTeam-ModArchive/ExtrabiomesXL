@@ -64,7 +64,6 @@ public class WorldGenRainbowEucalyptusTree extends WorldGenNewTreeBase {
     }
 
     public boolean generate(World world, long seed, int x, int y, int z) {
-        // Store the seed
         lastSeed = seed;
 
         // Make sure that we can generate the tree
@@ -82,12 +81,10 @@ public class WorldGenRainbowEucalyptusTree extends WorldGenNewTreeBase {
     private static final int BRANCHES_EXTRA = 10; // The how many extra branches can occur on the tree
     private static final int CANOPY_WIDTH = 12; // How many blocks will this tree cover
     private static final int CANOPY_WIDTH_VARIANCE = 3; // How many extra blocks may this tree cover
-    private static final int CLUSTER_DIAMATER = 2; // How wide should the leaf cluster be generated
-    private static final int CLUSTER_DIAMATER_VARIANCE = 4; // How many extra blocks can be added to the leaf cluster.
+    private static final int CLUSTER_DIAMETER = 2; // How wide should the leaf cluster be generated
+    private static final int CLUSTER_DIAMETER_VARIANCE = 4; // How many extra blocks can be added to the leaf cluster.
     private static final int CLUSTER_HEIGHT = 2; // How tall should the leaf cluster be generated
     private static final int CLUSTER_HEIGHT_VARIANCE = 1; // How many extra layers can be added to the leaf cluster.
-
-    static int last = 0;
 
     private boolean checkTree(World world, Random rand, int x, int y, int z) {
         final int height = rand.nextInt(BASE_HEIGHT_VARIANCE) + BASE_HEIGHT;
@@ -107,7 +104,7 @@ public class WorldGenRainbowEucalyptusTree extends WorldGenNewTreeBase {
         // Make sure that the tree can fit in the world
         if (y < 1 || y + height + 4 > 256) return false;
 
-        // Make sure the cunks are loaded
+        // Make sure the chunks are loaded
         if (!world.checkChunksExist(
                 x - chunkCheck,
                 y - chunkCheck,
@@ -118,23 +115,19 @@ public class WorldGenRainbowEucalyptusTree extends WorldGenNewTreeBase {
             return false;
 
         // Draw the main trunk
-        if (!check2x2Trunk(x, y, z, (int) (height * TRUNK_HEIGHT_PERCENT), TreeBlock.TRUNK.get(), world, false))
-            return false;
+        if (!check2x2Trunk(x, y, z, (int) (height * TRUNK_HEIGHT_PERCENT), world, false)) return false;
 
         // Generate the branches
         if (!checkBranches(world, rand, x, y, z, height, width)) return false;
 
         // Place the topper leaves
-        if (!checkLeafCluster(
+        return checkLeafCluster(
                 world,
                 x,
                 (int) (height * TRUNK_HEIGHT_PERCENT) + y,
                 z,
                 4 + rand.nextInt(CLUSTER_HEIGHT_VARIANCE),
-                4 + rand.nextInt(CLUSTER_DIAMATER_VARIANCE)))
-            return false;
-
-        return true;
+                4 + rand.nextInt(CLUSTER_DIAMETER_VARIANCE));
     }
 
     private boolean generateTree(World world, Random rand, int x, int y, int z) {
@@ -155,7 +148,7 @@ public class WorldGenRainbowEucalyptusTree extends WorldGenNewTreeBase {
         // Make sure that the tree can fit in the world
         if (y < 1 || y + height + 4 > 256) return false;
 
-        // Make sure the cunks are loaded
+        // Make sure the chunks are loaded
         if (!world.checkChunksExist(
                 x - chunkCheck,
                 y - chunkCheck,
@@ -176,12 +169,11 @@ public class WorldGenRainbowEucalyptusTree extends WorldGenNewTreeBase {
             // Place the topper leaves
             generateLeafCluster(
                     world,
-                    rand,
                     x,
                     (int) (height * TRUNK_HEIGHT_PERCENT) + y,
                     z,
                     4 + rand.nextInt(CLUSTER_HEIGHT_VARIANCE),
-                    4 + rand.nextInt(CLUSTER_DIAMATER_VARIANCE));
+                    4 + rand.nextInt(CLUSTER_DIAMETER_VARIANCE));
 
             return true;
         }
@@ -204,7 +196,7 @@ public class WorldGenRainbowEucalyptusTree extends WorldGenNewTreeBase {
         int trunkEnd = (int) (height * TRUNK_HEIGHT_PERCENT);
         int[] start = { 0, 0, 0 };
         int[] end = { 0, 0, 0 };
-        Queue<int[]> branches = new LinkedList<int[]>();
+        Queue<int[]> branches = new LinkedList<>();
 
         // Generate some test branches
         for (int branch = 0; branch < branchCount; branch++) {
@@ -233,7 +225,7 @@ public class WorldGenRainbowEucalyptusTree extends WorldGenNewTreeBase {
             }
 
             // Place the branch
-            if (!checkBlockLine(start, end, TreeBlock.KNEE_LOG.get(), world)) return false;
+            if (!checkBlockLine(start, end, world)) return false;
 
             int[] node = new int[] { end[0], end[1], end[2] };
 
@@ -251,7 +243,7 @@ public class WorldGenRainbowEucalyptusTree extends WorldGenNewTreeBase {
                     cluster[1],
                     cluster[2],
                     CLUSTER_HEIGHT + rand.nextInt(CLUSTER_HEIGHT_VARIANCE),
-                    CLUSTER_DIAMATER + rand.nextInt(CLUSTER_DIAMATER_VARIANCE)))
+                    CLUSTER_DIAMETER + rand.nextInt(CLUSTER_DIAMETER_VARIANCE)))
                 return false;
         }
 
@@ -273,7 +265,7 @@ public class WorldGenRainbowEucalyptusTree extends WorldGenNewTreeBase {
         int trunkEnd = (int) (height * TRUNK_HEIGHT_PERCENT);
         int[] start = { 0, 0, 0 };
         int[] end = { 0, 0, 0 };
-        Queue<int[]> branches = new LinkedList<int[]>();
+        Queue<int[]> branches = new LinkedList<>();
 
         // Generate some test branches
         for (int branch = 0; branch < branchCount; branch++) {
@@ -316,21 +308,17 @@ public class WorldGenRainbowEucalyptusTree extends WorldGenNewTreeBase {
             int[] cluster = itt.next();
             generateLeafCluster(
                     world,
-                    rand,
                     cluster[0],
                     cluster[1],
                     cluster[2],
                     CLUSTER_HEIGHT + rand.nextInt(CLUSTER_HEIGHT_VARIANCE),
-                    CLUSTER_DIAMATER + rand.nextInt(CLUSTER_DIAMATER_VARIANCE));
+                    CLUSTER_DIAMETER + rand.nextInt(CLUSTER_DIAMETER_VARIANCE));
         }
     }
 
     public void generateKnees(World world, Random rand, int x, int y, int z) {
         switch (rand.nextInt(11)) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
+            case 0, 1, 2, 3:
                 placeKnee(
                         x - 1,
                         y,
@@ -341,10 +329,7 @@ public class WorldGenRainbowEucalyptusTree extends WorldGenNewTreeBase {
                         TreeBlock.KNEE.get(),
                         world);
                 break;
-            case 4:
-            case 5:
-            case 6:
-            case 7:
+            case 4, 5, 6, 7:
                 placeKnee(
                         x - 1,
                         y,
@@ -380,10 +365,7 @@ public class WorldGenRainbowEucalyptusTree extends WorldGenNewTreeBase {
         }
 
         switch (rand.nextInt(11)) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
+            case 0, 1, 2, 3:
                 placeKnee(
                         x,
                         y,
@@ -394,10 +376,7 @@ public class WorldGenRainbowEucalyptusTree extends WorldGenNewTreeBase {
                         TreeBlock.KNEE.get(),
                         world);
                 break;
-            case 4:
-            case 5:
-            case 6:
-            case 7:
+            case 4, 5, 6, 7:
                 placeKnee(
                         x + 1,
                         y,
@@ -433,10 +412,7 @@ public class WorldGenRainbowEucalyptusTree extends WorldGenNewTreeBase {
         }
 
         switch (rand.nextInt(11)) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
+            case 0, 1, 2, 3:
                 placeKnee(
                         x + 2,
                         y,
@@ -447,10 +423,7 @@ public class WorldGenRainbowEucalyptusTree extends WorldGenNewTreeBase {
                         TreeBlock.KNEE.get(),
                         world);
                 break;
-            case 4:
-            case 5:
-            case 6:
-            case 7:
+            case 4, 5, 6, 7:
                 placeKnee(
                         x + 2,
                         y,
@@ -486,10 +459,7 @@ public class WorldGenRainbowEucalyptusTree extends WorldGenNewTreeBase {
         }
 
         switch (rand.nextInt(11)) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
+            case 0, 1, 2, 3:
                 placeKnee(
                         x,
                         y,
@@ -500,10 +470,7 @@ public class WorldGenRainbowEucalyptusTree extends WorldGenNewTreeBase {
                         TreeBlock.KNEE.get(),
                         world);
                 break;
-            case 4:
-            case 5:
-            case 6:
-            case 7:
+            case 4, 5, 6, 7:
                 placeKnee(
                         x + 1,
                         y,
@@ -539,7 +506,7 @@ public class WorldGenRainbowEucalyptusTree extends WorldGenNewTreeBase {
         }
     }
 
-    public void generateLeafCluster(World world, Random rand, int x, int y, int z, int height, int radius) {
+    public void generateLeafCluster(World world, int x, int y, int z, int height, int radius) {
         for (int layer = -height; layer <= height; layer++) {
             this.placeLeavesCircle(
                     x,

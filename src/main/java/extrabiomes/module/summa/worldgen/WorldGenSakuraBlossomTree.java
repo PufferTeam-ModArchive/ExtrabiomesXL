@@ -103,7 +103,7 @@ public class WorldGenSakuraBlossomTree extends WorldGenNewTreeBase {
             return false;
 
         // Draw the main trunk
-        if (!check1x1Trunk(x, y, z, (int) (height * TRUNK_HEIGHT_PERCENT), TreeBlock.TRUNK.get(), world)) return false;
+        if (!check1x1Trunk(x, y, z, (int) (height * TRUNK_HEIGHT_PERCENT), world)) return false;
         // Generate the branches
         return checkBranches(
                 world,
@@ -191,7 +191,7 @@ public class WorldGenSakuraBlossomTree extends WorldGenNewTreeBase {
             branches.add(node);
 
             // Generate the branch
-            if (!checkBlockLine(start, node, TreeBlock.TRUNK.get(), world)) return false;
+            if (!checkBlockLine(start, node, world)) return false;
         }
 
         // Place the branch tips

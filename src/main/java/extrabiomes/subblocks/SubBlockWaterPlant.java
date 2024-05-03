@@ -11,7 +11,7 @@ public class SubBlockWaterPlant extends SubBlock {
 
     private final int maxHeight;
 
-    private List<Block> groundBlocks;
+    private final List<Block> groundBlocks;
 
     /**
      * Creates an underwater plant sub-block with a max height of one block.
@@ -32,7 +32,7 @@ public class SubBlockWaterPlant extends SubBlock {
         super(name);
         maxHeight = height;
 
-        groundBlocks = new LinkedList<Block>();
+        groundBlocks = new LinkedList<>();
 
         // Add dirt by default
         groundBlocks.add(Blocks.dirt);

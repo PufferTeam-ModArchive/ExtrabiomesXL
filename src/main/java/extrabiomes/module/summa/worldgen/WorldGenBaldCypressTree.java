@@ -136,15 +136,7 @@ public class WorldGenBaldCypressTree extends WorldGenNewTreeBase {
             return false;
 
         // Draw the main trunk
-        if (!check2x2Trunk(
-                x,
-                y,
-                z,
-                (int) (height * TRUNK_HEIGHT_PERCENT) + waterLevel,
-                TreeBlock.TRUNK.get(),
-                world,
-                true))
-            return false;
+        if (!check2x2Trunk(x, y, z, (int) (height * TRUNK_HEIGHT_PERCENT) + waterLevel, world, true)) return false;
 
         // Generate the branches
         if (!checkBranches(world, rand, x, y, z, height, width, waterLevel)) return false;
@@ -256,7 +248,7 @@ public class WorldGenBaldCypressTree extends WorldGenNewTreeBase {
             }
 
             // Place the branch
-            if (!checkBlockLine(start, end, TreeBlock.KNEE_LOG.get(), world)) return false;
+            if (!checkBlockLine(start, end, world)) return false;
 
             int[] node = new int[] { end[0], end[1], end[2] };
 
@@ -352,10 +344,7 @@ public class WorldGenBaldCypressTree extends WorldGenNewTreeBase {
 
     public void generateKnees(World world, Random rand, int x, int y, int z, int bonusHeight) {
         switch (rand.nextInt(11)) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
+            case 0, 1, 2, 3:
                 placeKnee(
                         x - 1,
                         y,
@@ -366,10 +355,7 @@ public class WorldGenBaldCypressTree extends WorldGenNewTreeBase {
                         TreeBlock.KNEE.get(),
                         world);
                 break;
-            case 4:
-            case 5:
-            case 6:
-            case 7:
+            case 4, 5, 6, 7:
                 placeKnee(
                         x - 1,
                         y,
@@ -405,10 +391,7 @@ public class WorldGenBaldCypressTree extends WorldGenNewTreeBase {
         }
 
         switch (rand.nextInt(11)) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
+            case 0, 1, 2, 3:
                 placeKnee(
                         x,
                         y,
@@ -419,10 +402,7 @@ public class WorldGenBaldCypressTree extends WorldGenNewTreeBase {
                         TreeBlock.KNEE.get(),
                         world);
                 break;
-            case 4:
-            case 5:
-            case 6:
-            case 7:
+            case 4, 5, 6, 7:
                 placeKnee(
                         x + 1,
                         y,
@@ -458,10 +438,7 @@ public class WorldGenBaldCypressTree extends WorldGenNewTreeBase {
         }
 
         switch (rand.nextInt(11)) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
+            case 0, 1, 2, 3:
                 placeKnee(
                         x + 2,
                         y,
@@ -472,10 +449,7 @@ public class WorldGenBaldCypressTree extends WorldGenNewTreeBase {
                         TreeBlock.KNEE.get(),
                         world);
                 break;
-            case 4:
-            case 5:
-            case 6:
-            case 7:
+            case 4, 5, 6, 7:
                 placeKnee(
                         x + 2,
                         y,
@@ -511,10 +485,7 @@ public class WorldGenBaldCypressTree extends WorldGenNewTreeBase {
         }
 
         switch (rand.nextInt(11)) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
+            case 0, 1, 2, 3:
                 placeKnee(
                         x,
                         y,
@@ -525,10 +496,7 @@ public class WorldGenBaldCypressTree extends WorldGenNewTreeBase {
                         TreeBlock.KNEE.get(),
                         world);
                 break;
-            case 4:
-            case 5:
-            case 6:
-            case 7:
+            case 4, 5, 6, 7:
                 placeKnee(
                         x + 1,
                         y,

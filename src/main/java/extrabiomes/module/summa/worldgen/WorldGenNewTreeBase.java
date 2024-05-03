@@ -19,7 +19,7 @@ public abstract class WorldGenNewTreeBase extends WorldGenAbstractTree {
         super(doBlockNotify);
     }
 
-    public boolean check1x1Trunk(int x, int y, int z, int height, ItemStack logs, World world) {
+    public boolean check1x1Trunk(int x, int y, int z, int height, World world) {
         for (int y1 = y + 1; y1 < y + height; y1++) {
             if (!world.isAirBlock(x, y1, z)) return false;
         }
@@ -49,7 +49,7 @@ public abstract class WorldGenNewTreeBase extends WorldGenAbstractTree {
         return true;
     }
 
-    public boolean check2x2Trunk(int x, int y, int z, int height, ItemStack logs, World world, boolean inWater) {
+    public boolean check2x2Trunk(int x, int y, int z, int height, World world, boolean inWater) {
         if (inWater) {
             for (int y1 = y + 1; y1 < y + height; y1++) {
                 Block b00 = world.getBlock(x, y1, z);
@@ -129,13 +129,13 @@ public abstract class WorldGenNewTreeBase extends WorldGenAbstractTree {
         return true;
     }
 
-    public boolean checkBlockLine(int[] start, int[] end, ItemStack logs, World world) {
+    public boolean checkBlockLine(int[] start, int[] end, World world) {
         if (start.length != 3 || end.length != 3) return false;
 
         // Get the direction vector
         int[] direction = { start[0] - end[0], start[1] - end[1], start[2] - end[2] };
         if (Math.abs(direction[2]) > Math.abs(direction[1]) && Math.abs(direction[2]) > Math.abs(direction[0])) {
-            // We are going to use the y axis as our major axis
+            // We are going to use the y-axis as our major axis
             if (direction[2] >= 0) {
                 for (int z = start[2]; z >= end[2]; z--) {
                     double m = (z - start[2]) / (double) direction[2];
@@ -152,7 +152,7 @@ public abstract class WorldGenNewTreeBase extends WorldGenAbstractTree {
                 }
             }
         } else if (Math.abs(direction[0]) > Math.abs(direction[1])) {
-            // Treverse along the x axis
+            // Traverse along the x-axis
             if (direction[0] >= 0) {
                 for (int x = start[0]; x >= end[0]; x--) {
                     double m = (x - start[0]) / (double) direction[0];
@@ -169,7 +169,7 @@ public abstract class WorldGenNewTreeBase extends WorldGenAbstractTree {
                 }
             }
         } else {
-            // We will use the y axis as our major axis
+            // We will use the y-axis as our major axis
             if (direction[1] >= 0) {
                 for (int y = start[1]; y >= end[1]; y--) {
                     double m = (y - start[1]) / (double) direction[1];
@@ -198,7 +198,7 @@ public abstract class WorldGenNewTreeBase extends WorldGenAbstractTree {
         // Get the direction vector
         int[] direction = { start[0] - end[0], start[1] - end[1], start[2] - end[2] };
         if (Math.abs(direction[2]) > Math.abs(direction[1]) && Math.abs(direction[2]) > Math.abs(direction[0])) {
-            // We are going to use the y axis as our major axis
+            // We are going to use the y-axis as our major axis
             if (direction[2] >= 0) {
                 for (int z = start[2]; z >= end[2]; z--) {
                     double m = (z - start[2]) / (double) direction[2];
@@ -217,7 +217,7 @@ public abstract class WorldGenNewTreeBase extends WorldGenAbstractTree {
                 }
             }
         } else if (Math.abs(direction[0]) > Math.abs(direction[1])) {
-            // Treverse along the x axis
+            // Traverse along the x-axis
             if (direction[0] >= 0) {
                 for (int x = start[0]; x >= end[0]; x--) {
                     double m = (x - start[0]) / (double) direction[0];
@@ -236,7 +236,7 @@ public abstract class WorldGenNewTreeBase extends WorldGenAbstractTree {
                 }
             }
         } else {
-            // We will use the y axis as our major axis
+            // We will use the y-axis as our major axis
             if (direction[1] >= 0) {
                 for (int y = start[1]; y >= end[1]; y--) {
                     double m = (y - start[1]) / (double) direction[1];
@@ -268,7 +268,7 @@ public abstract class WorldGenNewTreeBase extends WorldGenAbstractTree {
         // Get the direction vector
         int[] direction = { start[0] - end[0], start[1] - end[1], start[2] - end[2] };
         if (Math.abs(direction[2]) > Math.abs(direction[1]) && Math.abs(direction[2]) > Math.abs(direction[0])) {
-            // We are going to use the y axis as our major axis
+            // We are going to use the y-axis as our major axis
             if (direction[2] >= 0) {
                 for (int z = start[2]; z >= end[2]; z--) {
                     double m = (z - start[2]) / (double) direction[2];
@@ -325,7 +325,7 @@ public abstract class WorldGenNewTreeBase extends WorldGenAbstractTree {
                 }
             }
         } else if (Math.abs(direction[0]) > Math.abs(direction[1])) {
-            // Treverse along the x axis
+            // Traverse along the x-axis
             if (direction[0] >= 0) {
                 for (int x = start[0]; x >= end[0]; x--) {
                     double m = (x - start[0]) / (double) direction[0];
@@ -380,7 +380,7 @@ public abstract class WorldGenNewTreeBase extends WorldGenAbstractTree {
                 }
             }
         } else {
-            // We will use the y axis as our major axis
+            // We will use the y-axis as our major axis
             if (direction[1] >= 0) {
                 for (int y = start[1]; y >= end[1]; y--) {
                     double m = (y - start[1]) / (double) direction[1];

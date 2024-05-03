@@ -100,7 +100,7 @@ public class WorldGenCypressTree extends WorldGenNewTreeBase {
             return false;
 
         // See if we can generate the tree
-        if (!check1x1Trunk(x, y, z, height, TreeBlock.TRUNK.get(), world)) return false;
+        if (!check1x1Trunk(x, y, z, height, world)) return false;
 
         // Check the leaves
         for (int layer = 0; layer < 4 + height - start; layer++) {

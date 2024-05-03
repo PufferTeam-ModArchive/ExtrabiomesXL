@@ -12,7 +12,6 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.world.World;
@@ -88,16 +87,17 @@ public class LogTurner extends ItemTool {
     }
 
     @Override
-    public void addInformation(ItemStack itemForTooltip, EntityPlayer playerViewingToolTip, List listOfLines,
-            boolean sneaking) {
-        String line = LanguageRegistry.instance().getStringLocalization(this.getUnlocalizedName() + ".description");
+    public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean sneaking) {
+        String unlocalizedName = getUnlocalizedName() + ".description";
+        String localizedName = LanguageRegistry.instance().getStringLocalization(unlocalizedName);
 
-        if (!line.equals(this.getUnlocalizedName() + ".description")) {
-            if (listOfLines.size() > 0 && ((String) listOfLines.get(0)).length() > 20) {
-                ToolTipStringFormatter.Format(line, listOfLines, ((String) listOfLines.get(0)).length() + 5);
+        if (!localizedName.equals(unlocalizedName)) {
+            if (tooltip.isEmpty() || ((String) tooltip.get(0)).length() <= 20) {
+                ToolTipStringFormatter.Format(localizedName, tooltip);
             } else {
-                ToolTipStringFormatter.Format(line, listOfLines);
+                ToolTipStringFormatter.Format(localizedName, tooltip, ((String) tooltip.get(0)).length() + 5);
             }
         }
     }
+
 }
