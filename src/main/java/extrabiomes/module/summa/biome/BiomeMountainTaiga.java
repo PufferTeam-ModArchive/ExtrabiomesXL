@@ -7,8 +7,6 @@ package extrabiomes.module.summa.biome;
 
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.biome.BiomeGenBase.Height;
-import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
 import net.minecraftforge.common.BiomeDictionary.Type;
 
 import extrabiomes.lib.BiomeSettings;

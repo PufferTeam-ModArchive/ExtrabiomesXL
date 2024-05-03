@@ -8,7 +8,6 @@ package extrabiomes.module.summa.biome;
 import net.minecraft.world.ColorizerFoliage;
 import net.minecraft.world.ColorizerGrass;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.biome.BiomeGenBase.Height;
 import net.minecraftforge.common.BiomeDictionary.Type;
 
 import cpw.mods.fml.relauncher.Side;

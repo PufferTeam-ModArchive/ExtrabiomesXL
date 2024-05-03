@@ -9,8 +9,6 @@ import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.biome.BiomeGenBase.Height;
-import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent.CheckSpawn;
 

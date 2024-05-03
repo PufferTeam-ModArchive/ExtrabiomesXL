@@ -5,7 +5,6 @@
 
 package extrabiomes.module.summa.biome;
 
-import net.minecraft.world.biome.BiomeGenBase.Height;
 import net.minecraftforge.common.BiomeDictionary.Type;
 
 import extrabiomes.lib.BiomeSettings;
