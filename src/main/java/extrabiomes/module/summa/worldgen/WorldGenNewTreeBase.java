@@ -6,6 +6,7 @@
 package extrabiomes.module.summa.worldgen;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -99,31 +100,28 @@ public abstract class WorldGenNewTreeBase extends WorldGenAbstractTree {
                 break;
         }
 
-        for (int y1 = y - 1; y1 > 1; y1--) {
-            Block block = world.getBlock(x, y1, z);
-            if (block.canBeReplacedByLeaves(world, x, y1, z)) {
-                // If there is an air block here place a root log
-                setBlockAndNotifyAdequately(world, x, y1, z, logBlock, logs.getItemDamage());
-            }
-        }
-
-        for (int y1 = y; y1 < y + height - 1; y1++) {
-            Block block = world.getBlock(x, y1, z);
-            if (block.canBeReplacedByLeaves(world, x, y1, z)) {
-                setBlockAndNotifyAdequately(world, x, y1, z, logBlock, logs.getItemDamage());
-            }
-        }
-
         // Place the knee on top
         Block block = world.getBlock(x, y + height - 1, z);
-        if (block.canBeReplacedByLeaves(world, x, y + height - 1, z)) {
-            setBlockAndNotifyAdequately(
-                    world,
-                    x,
-                    y + height - 1,
-                    z,
-                    Block.getBlockFromItem(knees.getItem()),
-                    orientation);
+        Material material = block.getMaterial();
+        int checkY = y + height - 1;
+        if (material.isLiquid() || material.isReplaceable()
+                || block.canBeReplacedByLeaves(world, x, checkY, z)
+                || block.isLeaves(world, x, checkY, z)
+                || block.isFoliage(world, x, checkY, z)) {
+            setBlockAndNotifyAdequately(world, x, checkY, z, Block.getBlockFromItem(knees.getItem()), orientation);
+        }
+
+        for (int currentY = y + height - 2; currentY > 1; --currentY) {
+            block = world.getBlock(x, currentY, z);
+            material = block.getMaterial();
+            if (material.isLiquid() || material.isReplaceable()
+                    || block.canBeReplacedByLeaves(world, x, currentY, z)
+                    || block.isLeaves(world, x, currentY, z)
+                    || block.isFoliage(world, x, currentY, z)) {
+                setBlockAndNotifyAdequately(world, x, currentY, z, logBlock, logs.getItemDamage());
+            } else {
+                break;
+            }
         }
 
         return true;
