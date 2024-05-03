@@ -5,7 +5,6 @@
 
 package extrabiomes.blocks;
 
-import java.util.Optional;
 import java.util.Random;
 
 import net.minecraft.init.Blocks;
@@ -99,14 +98,14 @@ public class BlockGreenLeaves extends BlockLeafEbxl {
 
     @Override
     public int damageDropped(int metadata) {
-        final Optional<BlockType> type = Optional.ofNullable(BlockType.fromMetadata(metadata));
-        return type.isPresent() ? type.get().getSaplingMetadata() : 0;
+        final BlockType type = BlockType.fromMetadata(metadata);
+        return type != null ? type.getSaplingMetadata() : 0;
     }
 
     @Override
     public Item getItemDropped(int metadata, Random rand, int par3) {
-        final Optional<BlockType> type = Optional.ofNullable(BlockType.fromMetadata(metadata));
-        return type.isPresent() ? type.get().getSaplingItem() : Item.getItemFromBlock(Blocks.sapling);
+        final BlockType type = BlockType.fromMetadata(metadata);
+        return type != null ? type.getSaplingItem() : Item.getItemFromBlock(Blocks.sapling);
     }
 
     private static int calcSmoothedBiomeFoliageColor(IBlockAccess iBlockAccess, int x, int z) {

@@ -9,7 +9,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Optional;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
@@ -45,18 +44,18 @@ public class ForestryPlugin {
      * public void addRecipe(int packagingTime, LiquidStack liquid, ItemStack box, ItemStack product, Object
      * materials[]);
      */
-    private static Optional<Method> carpenterAddRecipe = Optional.empty();
+    private static Method carpenterAddRecipe;
 
     /**
      * public void addRecipe(ItemStack resource, int fermentationValue, float modifier, LiquidStack output, LiquidStack
      * liquid);
      */
-    private static Optional<Method> fermenterAddRecipe = Optional.empty();
+    private static Method fermenterAddRecipe;
 
     /**
      * public void registerPlantableFlower(Block flowerBlock, int flowerMeta, double weight, String... flowerTypes);
      */
-    private static Optional<Method> registerFlower = Optional.empty();
+    private static Method registerFlower;
 
     private static final int DIGGER = 1;
     private static final int FORESTER = 2;
@@ -85,13 +84,13 @@ public class ForestryPlugin {
 
     @SuppressWarnings("unchecked")
     private static void addBasicFlowers() {
-        if (registerFlower.isPresent()) {
+        if (registerFlower != null) {
             try {
                 String[] flowerTypes = new String[] { "flowersVanilla" };
                 for (final ItemStack flower : ForestryModHelper.getBasicFlowers()) {
                     Block block = Block.getBlockFromItem(flower.getItem());
                     int meta = flower.getItemDamage();
-                    registerFlower.get().invoke(flowerRegistry, block, meta, 1.0, flowerTypes);
+                    registerFlower.invoke(flowerRegistry, block, meta, 1.0, flowerTypes);
                 }
             } catch (Exception e) {
                 LogHelper.severe("The forestry API changed in regards to flowers.");
@@ -104,7 +103,7 @@ public class ForestryPlugin {
     }
 
     private static void addSaplingRecipes() {
-        if (fermenterAddRecipe.isPresent()) {
+        if (fermenterAddRecipe != null) {
             // Make sure that all the fluids that we need exist
             for (final String type : new String[] { "water", "biomass", "honey", "juice" }) {
                 if (!FluidRegistry.isFluidRegistered(type)) {
@@ -115,21 +114,21 @@ public class ForestryPlugin {
 
             try {
                 for (final ItemStack sapling : ForestryModHelper.getSaplings()) {
-                    fermenterAddRecipe.get().invoke(
+                    fermenterAddRecipe.invoke(
                             fermenterManager,
                             sapling,
                             BIOMASS_SAPLINGS,
                             1.0f,
                             getFluidStack("biomass"),
                             getFluidStack("water"));
-                    fermenterAddRecipe.get().invoke(
+                    fermenterAddRecipe.invoke(
                             fermenterManager,
                             sapling,
                             BIOMASS_SAPLINGS,
                             1.5f,
                             getFluidStack("biomass"),
                             getFluidStack("juice"));
-                    fermenterAddRecipe.get().invoke(
+                    fermenterAddRecipe.invoke(
                             fermenterManager,
                             sapling,
                             BIOMASS_SAPLINGS,
@@ -145,8 +144,8 @@ public class ForestryPlugin {
 
     private static void addRedrockCarpenterRecipes() {
         try {
-            if (carpenterAddRecipe.isPresent() && Element.RED_COBBLE.isPresent()) {
-                carpenterAddRecipe.get().invoke(
+            if (carpenterAddRecipe != null && Element.RED_COBBLE.isPresent()) {
+                carpenterAddRecipe.invoke(
                         carpenterManager,
                         10,
                         getFluidStack("water", 3000),
@@ -160,9 +159,9 @@ public class ForestryPlugin {
     }
 
     private static void addSoils() {
-        final Optional<ItemStack> soil = Optional.ofNullable(getBlock("soil"));
-        if (soil.isPresent()) {
-            Block soilBlock = Block.getBlockFromItem(soil.get().getItem());
+        final ItemStack soil = getBlock("soil");
+        if (soil != null) {
+            Block soilBlock = Block.getBlockFromItem(soil.getItem());
             TreeSoilRegistry.addValidSoil(soilBlock);
             BlockCustomSapling.setForestrySoil(soilBlock);
             BlockNewSapling.setForestrySoil(soilBlock);
@@ -227,8 +226,8 @@ public class ForestryPlugin {
                 fld = cls.getField("flowerRegistry");
                 flowerRegistry = fld.get(null);
                 cls = Class.forName("forestry.api.genetics.IFlowerRegistry");
-                registerFlower = Optional.ofNullable(
-                        cls.getMethod("registerPlantableFlower", Block.class, int.class, double.class, String[].class));
+                registerFlower = cls
+                        .getMethod("registerPlantableFlower", Block.class, int.class, double.class, String[].class);
             }
 
             cls = Class.forName("forestry.api.storage.BackpackManager");
@@ -236,30 +235,28 @@ public class ForestryPlugin {
             backpackItems = (ArrayList[]) fld.get(null);
 
             cls = Class.forName("forestry.api.recipes.IFermenterManager");
-            fermenterAddRecipe = Optional.ofNullable(
-                    cls.getMethod(
-                            "addRecipe",
-                            ItemStack.class,
-                            int.class,
-                            float.class,
-                            FluidStack.class,
-                            FluidStack.class));
+            fermenterAddRecipe = cls.getMethod(
+                    "addRecipe",
+                    ItemStack.class,
+                    int.class,
+                    float.class,
+                    FluidStack.class,
+                    FluidStack.class);
             cls = Class.forName("forestry.api.recipes.ICarpenterManager");
-            carpenterAddRecipe = Optional.ofNullable(
-                    cls.getMethod(
-                            "addRecipe",
-                            int.class,
-                            FluidStack.class,
-                            ItemStack.class,
-                            ItemStack.class,
-                            Object[].class));
+            carpenterAddRecipe = cls.getMethod(
+                    "addRecipe",
+                    int.class,
+                    FluidStack.class,
+                    ItemStack.class,
+                    ItemStack.class,
+                    Object[].class);
 
             cls = Class.forName("forestry.api.core.ForestryAPI");
             fld = cls.getField("activeMode");
             Object activeMode = fld.get(null);
             cls = Class.forName("forestry.api.core.IGameMode");
-            Optional<Method> getIntegerSetting = Optional.ofNullable(cls.getMethod("getIntegerSetting", String.class));
-            BIOMASS_SAPLINGS = (Integer) getIntegerSetting.get().invoke(activeMode, "fermenter.yield.sapling");
+            Method getIntegerSetting = cls.getMethod("getIntegerSetting", String.class);
+            BIOMASS_SAPLINGS = (Integer) getIntegerSetting.invoke(activeMode, "fermenter.yield.sapling");
         } catch (final Exception ex) {
             ex.printStackTrace();
             // LogHelper.fine(Extrabiomes.proxy.getStringLocalization(LOG_MESSAGE_PLUGIN_ERROR), "Forestry");
@@ -267,4 +264,5 @@ public class ForestryPlugin {
             enabled = false;
         }
     }
+
 }

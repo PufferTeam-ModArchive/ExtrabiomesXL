@@ -18,7 +18,7 @@ class IC2API {
     /**
      * public static void addBiomeBonus(BiomeGenBase biome, int humidityBonus, int nutrientsBonus);
      */
-    private Optional<Method> addBiomeBonus = Optional.absent();
+    private Method addBiomeBonus;
     private Object ic2CropsInstance = null;
 
     IC2API() {
@@ -26,17 +26,16 @@ class IC2API {
         try {
             cls = Class.forName("ic2.api.crops.Crops");
             ic2CropsInstance = cls.getField("instance").get(null);
-            addBiomeBonus = Optional
-                    .fromNullable(cls.getMethod("addBiomeBonus", BiomeGenBase.class, Integer.TYPE, Integer.TYPE));
+            addBiomeBonus = cls.getMethod("addBiomeBonus", BiomeGenBase.class, Integer.TYPE, Integer.TYPE);
         } catch (final Exception e) {
             LogHelper.fine("Found incompatible IC2 version.", e);
-            addBiomeBonus = Optional.absent();
+            addBiomeBonus = null;
         }
     }
 
     void addBiomeBonus(BiomeGenBase biome, int humidityBonus, int nutrientsBonus) {
         try {
-            addBiomeBonus.get().invoke(ic2CropsInstance, biome, humidityBonus, nutrientsBonus);
+            addBiomeBonus.invoke(ic2CropsInstance, biome, humidityBonus, nutrientsBonus);
         } catch (final IllegalStateException e) {} catch (final Exception e) {
             LogHelper.fine("Found incompatible IC2 version.", e);
         }
@@ -45,4 +44,5 @@ class IC2API {
     void addBiomeBonus(Optional<? extends BiomeGenBase> biome, int humidityBonus, int nutrientsBonus) {
         if (biome.isPresent()) addBiomeBonus(biome.get(), humidityBonus, nutrientsBonus);
     }
+
 }

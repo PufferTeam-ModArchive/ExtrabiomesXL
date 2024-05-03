@@ -278,28 +278,28 @@ public abstract class BlockHandler {
 
         ItemStack grassStack = Element.GRASS_BROWN.get();
         BiomeHelper.addWeightedGrassGen(
-                BiomeSettings.MOUNTAINRIDGE.getBiome(),
+                BiomeSettings.MOUNTAINRIDGE.getBiome().orNull(),
                 new WorldGenTallGrass(Block.getBlockFromItem(grassStack.getItem()), grassStack.getItemDamage()),
                 100);
         grassStack = Element.GRASS_BROWN_SHORT.get();
         BiomeHelper.addWeightedGrassGen(
-                BiomeSettings.MOUNTAINRIDGE.getBiome(),
+                BiomeSettings.MOUNTAINRIDGE.getBiome().orNull(),
                 new WorldGenTallGrass(Block.getBlockFromItem(grassStack.getItem()), grassStack.getItemDamage()),
                 100);
 
         grassStack = Element.GRASS_DEAD.get();
         BiomeHelper.addWeightedGrassGen(
-                BiomeSettings.WASTELAND.getBiome(),
+                BiomeSettings.WASTELAND.getBiome().orNull(),
                 new WorldGenTallGrass(Block.getBlockFromItem(grassStack.getItem()), grassStack.getItemDamage()),
                 90);
         grassStack = Element.GRASS_DEAD_YELLOW.get();
         BiomeHelper.addWeightedGrassGen(
-                BiomeSettings.WASTELAND.getBiome(),
+                BiomeSettings.WASTELAND.getBiome().orNull(),
                 new WorldGenTallGrass(Block.getBlockFromItem(grassStack.getItem()), grassStack.getItemDamage()),
                 90);
         grassStack = Element.GRASS_DEAD_TALL.get();
         BiomeHelper.addWeightedGrassGen(
-                BiomeSettings.WASTELAND.getBiome(),
+                BiomeSettings.WASTELAND.getBiome().orNull(),
                 new WorldGenTallGrass(Block.getBlockFromItem(grassStack.getItem()), grassStack.getItemDamage()),
                 35);
     }

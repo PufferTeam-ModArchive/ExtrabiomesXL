@@ -7,7 +7,6 @@ package extrabiomes.blocks;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -94,9 +93,9 @@ public class BlockCustomTallGrass extends BlockFlower implements IShearable {
             rarity *= 2;
         if (world.rand.nextInt(rarity) != 0) return ret;
 
-        final Optional<ItemStack> item = Extrabiomes.proxy.getGrassSeed(world);
+        final ItemStack item = Extrabiomes.proxy.getGrassSeed(world);
 
-        if (item.isPresent()) ret.add(item.get());
+        if (item != null) ret.add(item);
         return ret;
     }
 

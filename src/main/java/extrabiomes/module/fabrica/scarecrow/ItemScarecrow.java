@@ -18,8 +18,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Facing;
 import net.minecraft.world.World;
 
-import com.google.common.base.Optional;
-
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -32,16 +30,15 @@ public class ItemScarecrow extends Item {
     public static String ID = "ExtrabiomesXL." + NAME;
 
     private static boolean spawnCreature(World world, double x, double y, double z) {
-        // {
-        final Optional<Entity> entity = Optional.fromNullable(EntityList.createEntityByName(ID, world));
+        final Entity entity = EntityList.createEntityByName(ID, world);
 
-        if (entity.isPresent()) {
-            entity.get().setLocationAndAngles(x, y, z, world.rand.nextFloat() * 360.0F, 0.0F);
-            world.spawnEntityInWorld(entity.get());
+        if (entity != null) {
+            entity.setLocationAndAngles(x, y, z, world.rand.nextFloat() * 360.0F, 0.0F);
+            world.spawnEntityInWorld(entity);
+            return true;
         }
 
-        return entity.isPresent();
-        // }
+        return false;
     }
 
     @Override

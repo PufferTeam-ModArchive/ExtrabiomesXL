@@ -10,8 +10,6 @@ import java.io.File;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
-import com.google.common.base.Optional;
-
 import extrabiomes.helpers.LogHelper;
 import extrabiomes.lib.BiomeSettings;
 import extrabiomes.lib.BlockSettings;
@@ -26,7 +24,7 @@ import extrabiomes.utility.EnhancedConfiguration;
 
 /**
  * Loads configuration data
- * 
+ *
  */
 public abstract class ConfigurationHandler {
 
@@ -38,11 +36,11 @@ public abstract class ConfigurationHandler {
         if (upgradeOverride) {
             LogHelper.info("Overriding upgrade preference");
         }
-        Optional<EnhancedConfiguration> optionalConfig = Optional.absent();
+        EnhancedConfiguration optionalConfig = null;
 
         try {
-            optionalConfig = Optional.of(new EnhancedConfiguration(configFile));
-            final EnhancedConfiguration configuration = optionalConfig.get();
+            optionalConfig = new EnhancedConfiguration(configFile);
+            final EnhancedConfiguration configuration = optionalConfig;
 
             // version section
             Property configVersion;
@@ -129,8 +127,8 @@ public abstract class ConfigurationHandler {
         } catch (final Exception e) {
             LogHelper.severe("%s had had a problem loading its configuration", Reference.MOD_NAME);
         } finally {
-            if (optionalConfig.isPresent()) {
-                final EnhancedConfiguration config = optionalConfig.get();
+            if (optionalConfig != null) {
+                final EnhancedConfiguration config = optionalConfig;
                 config.save();
                 return config;
             }

@@ -495,9 +495,8 @@ public class BiomeManagerImpl extends BiomeManager {
                 .fromNullable(weightedChoices.get(genType));
         if (choicesForGenType.isPresent()) {
             final Collection<WeightedWorldGenerator> choicesForBiome = choicesForGenType.get().get(biome);
-            final Optional<WeightedWorldGenerator> randomItem = WeightedRandomChooser
-                    .getRandomItem(rand, choicesForBiome);
-            if (randomItem.isPresent()) return Optional.of(randomItem.get().getWorldGen());
+            final WeightedWorldGenerator randomItem = WeightedRandomChooser.getRandomItem(rand, choicesForBiome);
+            if (randomItem != null) return Optional.of(randomItem.getWorldGen());
         }
         return Optional.absent();
     }

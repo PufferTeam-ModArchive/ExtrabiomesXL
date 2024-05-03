@@ -1,7 +1,5 @@
 package extrabiomes.module.amica.newdawn;
 
-import com.google.common.base.Optional;
-
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import extrabiomes.Extrabiomes;
 import extrabiomes.api.PluginEvent;
@@ -10,7 +8,7 @@ import extrabiomes.helpers.LogHelper;
 public class NewDawnPlugin {
 
     private static final String MOD_ID = "newdawn";
-    private static Optional<NewDawnPluginImpl> api = Optional.absent();
+    private static NewDawnPluginImpl api;
 
     @SubscribeEvent
     public void preInit(PluginEvent.Pre event) {
@@ -20,23 +18,24 @@ public class NewDawnPlugin {
 
         LogHelper.fine("Initializing %s plugin.", MOD_ID);
         try {
-            api = Optional.of(new NewDawnPluginImpl());
+            api = new NewDawnPluginImpl();
         } catch (final Exception ex) {
             ex.printStackTrace();
             LogHelper.fine("Could not communicate with %s. Disabling plugin.", MOD_ID);
-            api = Optional.absent();
+            api = null;
         }
     }
 
     @SubscribeEvent
     public void init(PluginEvent.Init event) {
-        if (!api.isPresent()) return;
-
-        api.get().init();
+        if (api != null) {
+            api.init();
+        }
     }
 
     @SubscribeEvent
     public void postInit(PluginEvent.Post event) {
-        api = Optional.absent();
+        api = null;
     }
+
 }

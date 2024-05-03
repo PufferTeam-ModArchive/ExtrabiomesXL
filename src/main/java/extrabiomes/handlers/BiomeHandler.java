@@ -91,10 +91,10 @@ public enum BiomeHandler {
 
     @SubscribeEvent
     public void handleBiomeIDRequestsFromAPI(GetBiomeIDEvent event) {
-        final Optional<BiomeSettings> settings = Optional
-                .fromNullable(BiomeSettings.valueOf(event.targetBiome.toUpperCase(Locale.ENGLISH)));
-        if (settings.isPresent()) {
-            event.biomeID = settings.get().getID();
+        final BiomeSettings settings = BiomeSettings.valueOf(event.targetBiome.toUpperCase(Locale.ENGLISH));
+        if (settings != null) {
+            event.biomeID = settings.getID();
         }
     }
+
 }

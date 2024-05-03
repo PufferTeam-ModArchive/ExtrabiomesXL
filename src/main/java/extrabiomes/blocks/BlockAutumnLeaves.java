@@ -5,7 +5,6 @@
 
 package extrabiomes.blocks;
 
-import java.util.Optional;
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -101,14 +100,14 @@ public class BlockAutumnLeaves extends BlockLeafEbxl {
 
     @Override
     public int damageDropped(int metadata) {
-        final Optional<BlockType> type = Optional.ofNullable(BlockType.fromMetadata(metadata));
-        return type.isPresent() ? type.get().getSaplingMetadata() : 0;
+        final BlockType type = BlockType.fromMetadata(metadata);
+        return type != null ? type.getSaplingMetadata() : 0;
     }
 
     @Override
     public Item getItemDropped(int metadata, Random rand, int par3) {
-        final Optional<BlockType> type = Optional.ofNullable(BlockType.fromMetadata(metadata));
-        return Item.getItemFromBlock(type.isPresent() ? type.get().getSaplingBlock() : Blocks.sapling);
+        final BlockType type = BlockType.fromMetadata(metadata);
+        return Item.getItemFromBlock(type != null ? type.getSaplingBlock() : Blocks.sapling);
     }
 
     // Better Foliage (?) compat

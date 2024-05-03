@@ -10,25 +10,23 @@ import net.minecraft.block.BlockSlab;
 import net.minecraft.item.ItemSlab;
 import net.minecraft.item.ItemStack;
 
-import com.google.common.base.Optional;
-
 public class ItemNewWoodSlab extends ItemSlab {
 
-    private static Optional<BlockSlab> singleSlab = Optional.absent();
-    private static Optional<BlockSlab> doubleSlab = Optional.absent();
+    private static BlockSlab singleSlab;
+    private static BlockSlab doubleSlab;
 
     static void setSlabs(BlockSlab singleSlab, BlockSlab doubleSlab) {
-        ItemNewWoodSlab.singleSlab = Optional.of(singleSlab);
-        ItemNewWoodSlab.doubleSlab = Optional.of(doubleSlab);
+        ItemNewWoodSlab.singleSlab = singleSlab;
+        ItemNewWoodSlab.doubleSlab = doubleSlab;
     }
 
     public ItemNewWoodSlab(Block block) {
-        super(block, singleSlab.get(), doubleSlab.get(), block.equals(doubleSlab.get()));
+        super(block, singleSlab, doubleSlab, block.equals(doubleSlab));
     }
 
     @Override
     public String getUnlocalizedName(ItemStack itemStack) {
-        return singleSlab.get().func_150002_b(itemStack.getItemDamage());
+        return singleSlab.func_150002_b(itemStack.getItemDamage());
     }
 
 }

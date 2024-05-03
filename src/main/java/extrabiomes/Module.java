@@ -5,8 +5,6 @@
 
 package extrabiomes;
 
-import java.util.Optional;
-
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.EventBus;
 import extrabiomes.helpers.LogHelper;
@@ -21,10 +19,10 @@ enum Module {
     FABRICA(Fabrica.class),
     AMICA(Amica.class);
 
-    private static Optional<EventBus> eventBus = Optional.of(new EventBus());
+    private static EventBus eventBus = new EventBus();
 
     public static boolean postEvent(Event event) {
-        return eventBus.isPresent() && eventBus.get().post(event);
+        return eventBus != null && eventBus.post(event);
     }
 
     static void registerModules() throws InstantiationException, IllegalAccessException {
@@ -49,12 +47,12 @@ enum Module {
             // skip disabled modules
             if (!module.enabled) continue;
 
-            if (eventBus.isPresent()) eventBus.get().register(module.pluginClass.newInstance());
+            if (eventBus != null) eventBus.register(module.pluginClass.newInstance());
         }
     }
 
     public static void releaseStaticResources() {
-        eventBus = Optional.empty();
+        eventBus = null;
     }
 
     private boolean enabled = false;

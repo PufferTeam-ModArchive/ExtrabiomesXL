@@ -10,27 +10,25 @@ import java.util.Random;
 
 import net.minecraft.util.WeightedRandom.Item;
 
-import com.google.common.base.Optional;
-
 public enum WeightedRandomChooser {
 
     INSTANCE;
 
-    public static <T extends Item> Optional<T> getRandomItem(Random rand, Collection<T> collection) {
+    public static <T extends Item> T getRandomItem(Random rand, Collection<T> collection) {
         return getRandomItem(rand, collection, getTotalWeight(collection));
     }
 
-    static <T extends Item> Optional<T> getRandomItem(Random rand, Collection<T> collection, int limit) {
+    static <T extends Item> T getRandomItem(Random rand, Collection<T> collection, int limit) {
         if (limit > 0) {
             int choice = rand.nextInt(limit);
 
             for (final T item : collection) {
                 choice -= item.itemWeight;
-                if (choice < 0) return Optional.of(item);
+                if (choice < 0) return item;
             }
         }
 
-        return Optional.absent();
+        return null;
     }
 
     public static int getTotalWeight(Collection<? extends Item> collection) {

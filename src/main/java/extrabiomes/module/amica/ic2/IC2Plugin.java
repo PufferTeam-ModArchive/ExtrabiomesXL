@@ -22,7 +22,7 @@ public class IC2Plugin {
 
     private static final String MOD_ID = "IC2";
     private static final String MOD_NAME = "IndustrialCraft 2";
-    private Optional<IC2API> api = Optional.absent();
+    private IC2API api;
 
     private void addBiomeBonus(Collection<Optional<? extends BiomeGenBase>> biomes, int humidityBonus,
             int nutrientsBonus) {
@@ -30,7 +30,7 @@ public class IC2Plugin {
     }
 
     private void addBiomeBonus(Optional<? extends BiomeGenBase> biome, int humidityBonus, int nutrientsBonus) {
-        api.get().addBiomeBonus(biome, humidityBonus, nutrientsBonus);
+        api.addBiomeBonus(biome, humidityBonus, nutrientsBonus);
     }
 
     @SuppressWarnings("unchecked")
@@ -65,14 +65,14 @@ public class IC2Plugin {
 
     @SubscribeEvent
     public void init(PluginEvent.Init event) {
-        if (!api.isPresent()) return;
-
-        addBiomeBonuses();
+        if (api != null) {
+            addBiomeBonuses();
+        }
     }
 
     @SubscribeEvent
     public void postInit(PluginEvent.Post event) {
-        api = Optional.absent();
+        api = null;
     }
 
     @SubscribeEvent
@@ -82,12 +82,12 @@ public class IC2Plugin {
         LogHelper.fine("Initializing %s plugin.", MOD_NAME);
 
         try {
-            api = Optional.of(new IC2API());
+            api = new IC2API();
         } catch (final Exception ex) {
             ex.printStackTrace();
             // LogHelper.fine(Extrabiomes.proxy.getStringLocalization(LOG_MESSAGE_PLUGIN_ERROR), MOD_NAME);
             LogHelper.fine("Could not communicate with %s. Disabling plugin.", MOD_NAME);
-            api = Optional.absent();
+            api = null;
         }
     }
 

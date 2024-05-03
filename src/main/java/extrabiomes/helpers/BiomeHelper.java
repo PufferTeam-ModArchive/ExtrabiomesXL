@@ -16,7 +16,6 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.BiomeManager;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
 
 import extrabiomes.Extrabiomes;
@@ -26,9 +25,9 @@ import extrabiomes.lib.BiomeSettings;
 
 public abstract class BiomeHelper {
 
-    private static final Set<WorldType> worldTypes = new HashSet<WorldType>();
+    private static final Set<WorldType> worldTypes = new HashSet<>();
 
-    private static Optional<? extends ArrayList<BiomeGenBase>> activeBiomes = Optional.absent();
+    private static ArrayList<BiomeGenBase> activeBiomes = null;
 
     public static void addTerrainBlockstoBiome(BiomeSettings biome, Block topBlock, Block fillerBlock) {
         if (!biome.getBiome().isPresent()) return;
@@ -39,13 +38,13 @@ public abstract class BiomeHelper {
 
     /**
      * <pre>
-     * 
+     *
      * static void createBiome(BiomeSettings biome);
      * </pre>
-     * 
+     *
      * create a custom biome.
      * <p>
-     * 
+     *
      * @param setting - the biome to create
      */
     public static void createBiome(BiomeSettings setting) throws Exception {
@@ -55,7 +54,7 @@ public abstract class BiomeHelper {
                             "Biome id %d is already in use by %s when adding %s. Please review the configuration file.",
                             setting.getID(),
                             BiomeGenBase.getBiomeGenArray()[setting.getID()].biomeName,
-                            setting.toString()));
+                            setting));
         }
 
         setting.createBiome();
@@ -63,13 +62,13 @@ public abstract class BiomeHelper {
 
     /**
      * <pre>
-     * 
+     *
      * static Set&lt;WorldType&gt; discoverWorldTypes();
      * </pre>
-     * 
+     *
      * Allow other mods to add ExtrabiomesXL biomes to their custom world types.
      * <p>
-     * 
+     *
      * @return An immutable set of world types.
      */
     public static Set<WorldType> discoverWorldTypes() {
@@ -84,13 +83,13 @@ public abstract class BiomeHelper {
 
     /**
      * <pre>
-     * 
+     *
      * static void enableBiome(BiomeGenBase biome);
      * </pre>
-     * 
+     *
      * enable a custom biome.
      * <p>
-     * 
+     *
      * @param worldTypes - a collection of worldTypes in which to enable these biomes
      * @param biome      - the BiomeGenBase to add
      */
@@ -101,16 +100,16 @@ public abstract class BiomeHelper {
     }
 
     public static Collection<BiomeGenBase> getActiveBiomes() {
-        if (!activeBiomes.isPresent()) {
-            activeBiomes = Optional.of(new ArrayList<BiomeGenBase>(BiomeSettings.values().length));
+        if (activeBiomes == null) {
+            activeBiomes = new ArrayList<>(BiomeSettings.values().length);
             for (final BiomeSettings setting : BiomeSettings.values()) {
                 if (setting.getBiome().isPresent() && !setting.isVanilla()) {
-                    activeBiomes.get().add(setting.getBiome().get());
+                    activeBiomes.add(setting.getBiome().get());
                 }
             }
-            activeBiomes.get().trimToSize();
+            activeBiomes.trimToSize();
         }
-        return ImmutableSet.copyOf(activeBiomes.get());
+        return ImmutableSet.copyOf(activeBiomes);
     }
 
     public static BiomeGenBase settingToBiomeGenBase(BiomeSettings setting) {
@@ -140,10 +139,9 @@ public abstract class BiomeHelper {
     }
 
     @SuppressWarnings("deprecation")
-    public static void addWeightedGrassGen(Optional<? extends BiomeGenBase> biome, WorldGenerator grassGen,
-            int weight) {
-        if (!biome.isPresent()) return;
+    public static void addWeightedGrassGen(BiomeGenBase biome, WorldGenerator grassGen, int weight) {
+        if (biome == null) return;
 
-        extrabiomes.api.BiomeManager.addWeightedGrassGenForBiome(biome.get(), grassGen, weight);
+        extrabiomes.api.BiomeManager.addWeightedGrassGenForBiome(biome, grassGen, weight);
     }
 }

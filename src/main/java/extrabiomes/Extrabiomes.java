@@ -14,8 +14,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.MinecraftForge;
 
-import com.google.common.base.Optional;
-
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
@@ -60,7 +58,7 @@ public class Extrabiomes {
 
     public static final String TEXTURE_PATH = Reference.MOD_ID.toLowerCase(Locale.ENGLISH) + ":";
 
-    private static Optional<EventBus> initBus = Optional.of(new EventBus());
+    private static EventBus initBus = new EventBus();
 
     @Mod.EventHandler
     public static void init(FMLInitializationEvent event) throws InstantiationException, IllegalAccessException {
@@ -74,7 +72,7 @@ public class Extrabiomes {
     public static void postInit(FMLPostInitializationEvent event) {
         PluginManager.activatePlugins();
         RecipeHandler.init();
-        initBus = Optional.absent();
+        initBus = null;
         Module.releaseStaticResources();
 
         if (PluginThaumcraft4.isEnabled()) {
@@ -90,7 +88,7 @@ public class Extrabiomes {
     }
 
     public static boolean postInitEvent(Event event) {
-        return initBus.isPresent() ? initBus.get().post(event) : false;
+        return initBus != null ? initBus.post(event) : false;
     }
 
     @Mod.EventHandler
@@ -155,6 +153,6 @@ public class Extrabiomes {
     }
 
     public static void registerInitEventHandler(Object target) {
-        if (initBus.isPresent()) initBus.get().register(target);
+        if (initBus != null) initBus.register(target);
     }
 }
