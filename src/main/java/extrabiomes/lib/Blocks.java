@@ -2,25 +2,24 @@ package extrabiomes.lib;
 
 import net.minecraft.block.Block;
 
-import com.google.common.base.Optional;
-
 public enum Blocks {
 
     // @formatter:off
 	BLOCK_LOG_SAKURA_GROVE;
     // @formatter:on
 
-    private Optional<Block> block = Optional.absent();
+    private Block block = null;
 
     public Block get() {
-        return block.get();
+        return block;
     }
 
     public boolean isPresent() {
-        return block.isPresent();
+        return block != null;
     }
 
     public void set(Block block) {
-        this.block = Optional.of(block);
+        this.block = block;
     }
+
 }
