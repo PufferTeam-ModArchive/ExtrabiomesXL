@@ -14,7 +14,6 @@ public class BlockCustomStairs extends BlockStairs {
 
     public BlockCustomStairs(Block modelBlock, int modelMetadata) {
         super(modelBlock, modelMetadata);
-        setLightOpacity(0);
         setCreativeTab(Extrabiomes.tabsEBXL);
     }
 
