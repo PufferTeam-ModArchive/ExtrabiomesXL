@@ -8,7 +8,6 @@ package extrabiomes.blocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.util.IIcon;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -18,22 +17,16 @@ import extrabiomes.utility.IDRestrictionAnnotation;
 @IDRestrictionAnnotation(maxIDRValue = 255)
 public class GenericTerrainBlock extends Block {
 
-    public GenericTerrainBlock(int index, Material material) {
+    public GenericTerrainBlock(Material material) {
         super(material);
     }
-
-    public IIcon texture;
 
     public String texturePath;
 
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconRegister) {
-        texture = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + texturePath);
+        blockIcon = iconRegister.registerIcon(Extrabiomes.TEXTURE_PATH + texturePath);
     }
 
-    @Override
-    public IIcon getIcon(int side, int metadata) {
-        return texture;
-    }
 }

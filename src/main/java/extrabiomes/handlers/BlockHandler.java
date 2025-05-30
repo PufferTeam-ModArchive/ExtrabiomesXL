@@ -146,7 +146,7 @@ public abstract class BlockHandler {
     private static void createCrackedSand() {
         if (!ModuleControlSettings.SUMMA.isEnabled() || !BlockSettings.CRACKEDSAND.getEnabled()) return;
 
-        final GenericTerrainBlock block = new GenericTerrainBlock(0, Material.rock);
+        final GenericTerrainBlock block = new GenericTerrainBlock(Material.rock);
         block.setBlockName("extrabiomes.crackedsand").setHardness(1.2F).setStepSound(Block.soundTypeStone)
                 .setCreativeTab(Extrabiomes.tabsEBXL);
 
@@ -372,7 +372,7 @@ public abstract class BlockHandler {
     private static void createLeafPile() {
         if (!ModuleControlSettings.SUMMA.isEnabled() || !BlockSettings.LEAFPILE.getEnabled()) return;
 
-        final BlockLeafPile block = new BlockLeafPile(64, Material.vine);
+        final BlockLeafPile block = new BlockLeafPile(Material.vine);
         block.setBlockName("extrabiomes.leafpile").setHardness(0.0F).setTickRandomly(true)
                 .setStepSound(Block.soundTypeGrass).setCreativeTab(Extrabiomes.tabsEBXL);
 

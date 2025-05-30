@@ -29,7 +29,7 @@ public class BlockLeafPile extends Block {
 
     private IIcon texture;
 
-    public BlockLeafPile(int index, Material material) {
+    public BlockLeafPile(Material material) {
         super(material);
         setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.015625F, 1.0F);
     }
