@@ -16,10 +16,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
-import extrabiomes.Extrabiomes;
 import extrabiomes.api.Stuff;
 import extrabiomes.blocks.BlockCustomSapling;
 import extrabiomes.blocks.BlockNewSapling;
@@ -96,9 +96,7 @@ public class ForestryPlugin {
                 LogHelper.severe("The forestry API changed in regards to flowers.");
             }
         } else {
-            for (final ItemStack flower : ForestryModHelper.getBasicFlowers()) {
-                plainFlowers.add(flower);
-            }
+            plainFlowers.addAll(ForestryModHelper.getBasicFlowers());
         }
     }
 
@@ -201,13 +199,12 @@ public class ForestryPlugin {
     }
 
     private static boolean isEnabled() {
-        return enabled && Extrabiomes.proxy.isModLoaded("Forestry");
+        return enabled && Loader.isModLoaded("Forestry");
     }
 
     @SuppressWarnings({ "rawtypes" })
     public static void setupPlugin() {
         if (!isEnabled()) return;
-        // LogHelper.fine(Extrabiomes.proxy.getStringLocalization(LOG_MESSAGE_PLUGIN_INIT), "Forestry");
         LogHelper.fine("Initializing %s plugin.", "Forestry");
 
         try {
@@ -259,7 +256,6 @@ public class ForestryPlugin {
             BIOMASS_SAPLINGS = (Integer) getIntegerSetting.invoke(activeMode, "fermenter.yield.sapling");
         } catch (final Exception ex) {
             ex.printStackTrace();
-            // LogHelper.fine(Extrabiomes.proxy.getStringLocalization(LOG_MESSAGE_PLUGIN_ERROR), "Forestry");
             LogHelper.fine("Could not communicate with %s. Disabling plugin.", "Forestry");
             enabled = false;
         }

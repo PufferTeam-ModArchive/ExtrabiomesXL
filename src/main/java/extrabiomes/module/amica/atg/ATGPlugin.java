@@ -1,7 +1,7 @@
 package extrabiomes.module.amica.atg;
 
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import extrabiomes.Extrabiomes;
 import extrabiomes.api.PluginEvent;
 import extrabiomes.helpers.LogHelper;
 
@@ -12,7 +12,7 @@ public class ATGPlugin {
 
     @SubscribeEvent
     public void preInit(PluginEvent.Pre event) {
-        if (!Extrabiomes.proxy.isModLoaded(MOD_ID)) {
+        if (!Loader.isModLoaded(MOD_ID)) {
             return;
         }
 
@@ -31,7 +31,6 @@ public class ATGPlugin {
         if (api != null) {
             api.init();
         }
-
     }
 
     @SubscribeEvent

@@ -2,7 +2,7 @@ package extrabiomes.plugins;
 
 import net.minecraft.item.ItemStack;
 
-import extrabiomes.Extrabiomes;
+import cpw.mods.fml.common.Loader;
 import extrabiomes.api.Stuff;
 import extrabiomes.lib.Element;
 import extrabiomes.module.fabrica.scarecrow.ItemScarecrow;
@@ -13,7 +13,7 @@ import thaumcraft.api.aspects.AspectList;
 public class PluginThaumcraft4 {
 
     public static boolean isEnabled() {
-        return Extrabiomes.proxy.isModLoaded("Thaumcraft");
+        return Loader.isModLoaded("Thaumcraft");
     }
 
     public static void init() {

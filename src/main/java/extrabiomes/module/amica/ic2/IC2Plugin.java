@@ -12,8 +12,8 @@ import net.minecraft.world.biome.BiomeGenBase;
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import extrabiomes.Extrabiomes;
 import extrabiomes.api.PluginEvent;
 import extrabiomes.helpers.LogHelper;
 import extrabiomes.lib.BiomeSettings;
@@ -77,15 +77,13 @@ public class IC2Plugin {
 
     @SubscribeEvent
     public void preInit(PluginEvent.Pre event) {
-        if (!Extrabiomes.proxy.isModLoaded(MOD_ID)) return;
-        // LogHelper.fine(Extrabiomes.proxy.getStringLocalization(LOG_MESSAGE_PLUGIN_INIT), MOD_NAME);
+        if (!Loader.isModLoaded(MOD_ID)) return;
         LogHelper.fine("Initializing %s plugin.", MOD_NAME);
 
         try {
             api = new IC2API();
         } catch (final Exception ex) {
             ex.printStackTrace();
-            // LogHelper.fine(Extrabiomes.proxy.getStringLocalization(LOG_MESSAGE_PLUGIN_ERROR), MOD_NAME);
             LogHelper.fine("Could not communicate with %s. Disabling plugin.", MOD_NAME);
             api = null;
         }

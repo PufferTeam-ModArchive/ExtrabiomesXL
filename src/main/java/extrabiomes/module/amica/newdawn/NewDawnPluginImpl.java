@@ -6,8 +6,8 @@ import java.util.Set;
 
 import net.minecraft.world.biome.BiomeGenBase;
 
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import extrabiomes.Extrabiomes;
 import extrabiomes.helpers.LogHelper;
 import extrabiomes.lib.BiomeSettings;
 import two.newdawn.API.NewDawnBiome;
@@ -19,8 +19,6 @@ import two.newdawn.API.noise.SimplexNoise;
 
 public class NewDawnPluginImpl implements NewDawnBiomeProvider {
 
-    private static boolean enabled = true;
-
     @SubscribeEvent
     public void init() {
         if (!isEnabled()) return;
@@ -29,7 +27,7 @@ public class NewDawnPluginImpl implements NewDawnBiomeProvider {
     }
 
     private boolean isEnabled() {
-        return enabled && Extrabiomes.proxy.isModLoaded("newdawn");
+        return Loader.isModLoaded("newdawn");
     }
 
     public static NewDawnBiome getBiomeIfEnabled(BiomeSettings biome) {
@@ -55,13 +53,12 @@ public class NewDawnPluginImpl implements NewDawnBiomeProvider {
         final Random rng = noise.getRandom();
         final int sizeX = fuzzValue(size, rng);
         final int sizeZ = fuzzValue(size, rng);
-        final NoiseStretch stretch = noise.generateNoiseStretcher(sizeX, sizeZ, rng.nextDouble(), rng.nextDouble());
-        return stretch;
+        return noise.generateNoiseStretcher(sizeX, sizeZ, rng.nextDouble(), rng.nextDouble());
     }
 
     @Override
     public Set<NewDawnBiomeSelector> getBiomeSelectors(SimplexNoise worldNoise) {
-        final HashSet<NewDawnBiomeSelector> selectors = new HashSet<NewDawnBiomeSelector>();
+        final HashSet<NewDawnBiomeSelector> selectors = new HashSet<>();
 
         // NB: had to change priority values because the constants are broken in the API
         selectors.add(new EBXLAridSelector(worldNoise, 450));

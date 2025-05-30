@@ -7,11 +7,9 @@ package extrabiomes.proxy;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -25,18 +23,13 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
 
-import org.apache.logging.log4j.Logger;
-
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.IFuelHandler;
 import cpw.mods.fml.common.IWorldGenerator;
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import extrabiomes.helpers.LogHelper;
-import extrabiomes.lib.Reference;
 
 public class CommonProxy {
 
@@ -70,24 +63,8 @@ public class CommonProxy {
         FurnaceRecipes.smelting().func_151394_a(input, output, experience);
     }
 
-    public int findGlobalUniqueEntityId() {
-        return EntityRegistry.findGlobalUniqueEntityId();
-    }
-
-    public Logger getFMLLogger() {
-        return FMLLog.getLogger();
-    }
-
     public ItemStack getGrassSeed(World world) {
         return ForgeHooks.getGrassSeed(world);
-    }
-
-    public ArrayList<ItemStack> getOres(String name) {
-        return OreDictionary.getOres(name);
-    }
-
-    public boolean isModLoaded(String modID) {
-        return Loader.isModLoaded(modID);
     }
 
     public boolean postEventToBus(Event event) {
@@ -119,22 +96,12 @@ public class CommonProxy {
                 sendsVelocityUpdates);
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    public void registerEntityID(Class entityClass, String entityName, int entityID) {
-        EntityRegistry.registerGlobalEntityID(entityClass, entityName, entityID);
-    }
-
     public void registerEventHandler(Object target) {
         MinecraftForge.EVENT_BUS.register(target);
     }
 
     public void registerFuelHandler(IFuelHandler fuelHandler) {
         GameRegistry.registerFuelHandler(checkNotNull(fuelHandler));
-    }
-
-    public void registerItem(Item item, String name) {
-        GameRegistry.registerItem(item, name, Reference.MOD_ID);
-
     }
 
     @Deprecated
@@ -154,14 +121,6 @@ public class CommonProxy {
 
     public void registerOre(String name, Block ore) {
         OreDictionary.registerOre(name, new ItemStack(ore));
-    }
-
-    public void registerOre(String name, Item ore) {
-        OreDictionary.registerOre(name, new ItemStack(ore));
-    }
-
-    public void registerOre(String name, ItemStack ore) {
-        OreDictionary.registerOre(name, ore);
     }
 
     public void registerOreInAllSubblocks(String name, Block ore) {
@@ -191,10 +150,6 @@ public class CommonProxy {
 
     public void setBlockHarvestLevel(Block block, String toolClass, int harvestLevel) {
         block.setHarvestLevel(toolClass, harvestLevel);
-    }
-
-    public void setFireInfo(Block block, int encouragement, int flammability) {
-        Blocks.fire.setFireInfo(block, encouragement, flammability);
     }
 
 }
