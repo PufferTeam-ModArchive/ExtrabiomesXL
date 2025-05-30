@@ -44,7 +44,8 @@ public class ItemCustomDye extends Item {
         }
     }
 
-    private static Element[] elements = { Element.DYE_BLACK, Element.DYE_BLUE, Element.DYE_BROWN, Element.DYE_WHITE };
+    private static final Element[] elements = { Element.DYE_BLACK, Element.DYE_BLUE, Element.DYE_BROWN,
+            Element.DYE_WHITE };
 
     @SideOnly(Side.CLIENT)
     private IIcon[] dyeIIcons;
@@ -75,8 +76,7 @@ public class ItemCustomDye extends Item {
      */
     @Override
     public boolean itemInteractionForEntity(ItemStack itemStack, EntityPlayer player, EntityLivingBase target) {
-        if (target instanceof EntitySheep) {
-            final EntitySheep sheep = (EntitySheep) target;
+        if (target instanceof EntitySheep sheep) {
             final int color = BlockColored.func_150031_c(Color.values()[itemStack.getItemDamage()].mcDamage);
 
             if (!sheep.getSheared() && sheep.getFleeceColor() != color) {

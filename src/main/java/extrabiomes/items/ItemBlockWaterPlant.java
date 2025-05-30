@@ -19,7 +19,7 @@ import extrabiomes.blocks.BlockWaterPlant;
 
 public class ItemBlockWaterPlant extends ItemBlock {
 
-    private Block block;
+    private final Block block;
 
     public ItemBlockWaterPlant(Block block) {
         super(block);

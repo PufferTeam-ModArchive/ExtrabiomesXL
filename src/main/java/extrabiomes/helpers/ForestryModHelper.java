@@ -15,12 +15,12 @@ import com.google.common.collect.ImmutableList;
 
 public abstract class ForestryModHelper {
 
-    private static List<ItemStack> backpackDigger = new ArrayList<>();
-    private static List<ItemStack> backpackForester = new ArrayList<>();
-    private static List<ItemStack> basicFlowers = new ArrayList<>();
-    private static List<ItemStack> germlings = new ArrayList<>();
-    private static List<ItemStack> leaves = new ArrayList<>();
-    private static List<ItemStack> saplings = new ArrayList<>();
+    private static final List<ItemStack> backpackDigger = new ArrayList<>();
+    private static final List<ItemStack> backpackForester = new ArrayList<>();
+    private static final List<ItemStack> basicFlowers = new ArrayList<>();
+    private static final List<ItemStack> germlings = new ArrayList<>();
+    private static final List<ItemStack> leaves = new ArrayList<>();
+    private static final List<ItemStack> saplings = new ArrayList<>();
 
     public static void addToForesterBackpack(ItemStack stack) {
         backpackForester.add(stack);

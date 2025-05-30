@@ -48,9 +48,7 @@ public class EBXLCommandHandler extends CommandBase {
 
     @Override
     public void processCommand(ICommandSender icommandsender, String[] cmds) {
-        if (icommandsender instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer) icommandsender;
-
+        if (icommandsender instanceof EntityPlayer player) {
             if (cmds.length == 0) {
                 sendChatMessage(player, "use \"/ebxl help\" for the list of valid commands.");
             } else {
@@ -60,14 +58,14 @@ public class EBXLCommandHandler extends CommandBase {
                     } else {
                         // Give instructions about a command
                         if (cmds[1].equals("help")) {
-                            sendChatMessage(player, "\u00A72-ExtrabiomesXl help Command-\u00A7r");
-                            sendChatMessage(player, "\u00A7o/ebxl help [command]\u00A7r");
+                            sendChatMessage(player, "§2-ExtrabiomesXl help Command-§r");
+                            sendChatMessage(player, "§o/ebxl help [command]§r");
                             sendChatMessage(player, "If [command] is blank or an invalid command then the list of");
                             sendChatMessage(player, "valid commands will be displayed. If [command] is a valid");
                             sendChatMessage(player, "command then details about that command will be dispalyed.");
                         } else if (cmds[1].equals("spawntree")) {
-                            sendChatMessage(player, "\u00A72-ExtrabiomesXl spawntree Command-\u00A7r");
-                            sendChatMessage(player, "\u00A7o/ebxl spawntree <treetype> <x> <y> <z> [seed]\u00A7r");
+                            sendChatMessage(player, "§2-ExtrabiomesXl spawntree Command-§r");
+                            sendChatMessage(player, "§o/ebxl spawntree <treetype> <x> <y> <z> [seed]§r");
                             sendChatMessage(player, "Forces a tree of the specified <type> to spawn at");
                             sendChatMessage(player, "<x>,<y>,<z> in the world. [command] is optional and if a");
                             sendChatMessage(player, "number is provided will force the tree to use the same random");
@@ -76,23 +74,23 @@ public class EBXLCommandHandler extends CommandBase {
                             sendChatMessage(player, "fur tree to spawn at 0,100,0 no matter how many times you run");
                             sendChatMessage(player, "the command.");
                         } else if (cmds[1].equals("version")) {
-                            sendChatMessage(player, "\u00A72-ExtrabiomesXl version Command-\u00A7r");
-                            sendChatMessage(player, "\u00A7o/ebxl version\u00A7r");
+                            sendChatMessage(player, "§2-ExtrabiomesXl version Command-§r");
+                            sendChatMessage(player, "§o/ebxl version§r");
                             sendChatMessage(player, "Displays the change log for the current");
                             sendChatMessage(player, "version of ExtrabiomesXL.");
                         } else if (cmds[1].equals("lastseed")) {
-                            sendChatMessage(player, "\u00A72-ExtrabiomesXl lastseed Command-\u00A7r");
-                            sendChatMessage(player, "\u00A7o/ebxl lastseed <treetype>\u00A7r");
+                            sendChatMessage(player, "§2-ExtrabiomesXl lastseed Command-§r");
+                            sendChatMessage(player, "§o/ebxl lastseed <treetype>§r");
                             sendChatMessage(player, "Displays the last random number that was used to generate");
                             sendChatMessage(player, "the specified tree type for use with the spawntree command.");
                         } else if (cmds[1].equals("saplingdespawntime")) {
-                            sendChatMessage(player, "\u00A72-ExtrabiomesXl saplingdespawntime Command-\u00A7r");
-                            sendChatMessage(player, "\u00A7o/ebxl saplingdespawntime [ticks]\u00A7r");
+                            sendChatMessage(player, "§2-ExtrabiomesXl saplingdespawntime Command-§r");
+                            sendChatMessage(player, "§o/ebxl saplingdespawntime [ticks]§r");
                             sendChatMessage(player, "Display/set the number of ticks that a sapling will exist");
                             sendChatMessage(player, "on the ground before it despawns.");
                         } else if (cmds[1].equals("killtree")) {
-                            sendChatMessage(player, "\u00A72-ExtrabiomesXl killtree Command-\u00A7r");
-                            sendChatMessage(player, "\u00A7o/ebxl killtree <x> <y> <z>\u00A7r");
+                            sendChatMessage(player, "§2-ExtrabiomesXl killtree Command-§r");
+                            sendChatMessage(player, "§o/ebxl killtree <x> <y> <z>§r");
                             sendChatMessage(player, "Kills the tree at the specified coords.");
                         } else {
                             helpList(player);
@@ -123,8 +121,7 @@ public class EBXLCommandHandler extends CommandBase {
                     if (cmds.length == 1) {
                         sendChatMessage(
                                 player,
-                                "Sapling despawn time is currently: "
-                                        + Integer.toString(BlockCustomSapling.getSaplingLifespan())
+                                "Sapling despawn time is currently: " + BlockCustomSapling.getSaplingLifespan()
                                         + " ticks");
                     } else if (cmds.length == 2) {
                         int newTime = Integer.parseInt(cmds[1]);
@@ -144,85 +141,49 @@ public class EBXLCommandHandler extends CommandBase {
                         treeNames(player);
                     } else {
                         if (cmds[1].equals("acacia")) {
-                            sendChatMessage(
-                                    player,
-                                    "The last seed used was: " + Long.toString(WorldGenAcacia.getLastSeed()));
+                            sendChatMessage(player, "The last seed used was: " + WorldGenAcacia.getLastSeed());
                         } else if (cmds[1].equals("cypress")) {
-                            sendChatMessage(
-                                    player,
-                                    "The last seed used was: " + Long.toString(WorldGenCypressTree.getLastSeed()));
+                            sendChatMessage(player, "The last seed used was: " + WorldGenCypressTree.getLastSeed());
                         } else if (cmds[1].equals("baldcypress")) {
-                            sendChatMessage(
-                                    player,
-                                    "The last seed used was: " + Long.toString(WorldGenBaldCypressTree.getLastSeed()));
+                            sendChatMessage(player, "The last seed used was: " + WorldGenBaldCypressTree.getLastSeed());
                         } else if (cmds[1].equals("rainbow")) {
                             sendChatMessage(
                                     player,
-                                    "The last seed used was: "
-                                            + Long.toString(WorldGenRainbowEucalyptusTree.getLastSeed()));
+                                    "The last seed used was: " + WorldGenRainbowEucalyptusTree.getLastSeed());
                         } else if (cmds[1].equals("japanesemaple")) {
                             sendChatMessage(
                                     player,
-                                    "The last seed used was: "
-                                            + Long.toString(WorldGenJapaneseMapleTree.getLastSeed()));
+                                    "The last seed used was: " + WorldGenJapaneseMapleTree.getLastSeed());
                         } else if (cmds[1].equals("japanesemapleshrub")) {
                             sendChatMessage(
                                     player,
-                                    "The last seed used was: "
-                                            + Long.toString(WorldGenJapaneseMapleShrub.getLastSeed()));
+                                    "The last seed used was: " + WorldGenJapaneseMapleShrub.getLastSeed());
                         } else if (cmds[1].equals("fir")) {
-                            sendChatMessage(
-                                    player,
-                                    "The last seed used was: " + Long.toString(WorldGenFirTree.getLastSeed()));
+                            sendChatMessage(player, "The last seed used was: " + WorldGenFirTree.getLastSeed());
                         } else if (cmds[1].equals("redwood")) {
-                            sendChatMessage(
-                                    player,
-                                    "The last seed used was: " + Long.toString(WorldGenNewRedwood.getLastSeed()));
+                            sendChatMessage(player, "The last seed used was: " + WorldGenNewRedwood.getLastSeed());
                         } else if (cmds[1].equals("largefir")) {
-                            sendChatMessage(
-                                    player,
-                                    "The last seed used was: " + Long.toString(WorldGenFirTreeHuge.getLastSeed()));
+                            sendChatMessage(player, "The last seed used was: " + WorldGenFirTreeHuge.getLastSeed());
                         } else if (cmds[1].equals("brown")) {
-                            sendChatMessage(
-                                    player,
-                                    "The last seed used was: " + Long.toString(WorldGenAutumnTree.getLastSeed()));
+                            sendChatMessage(player, "The last seed used was: " + WorldGenAutumnTree.getLastSeed());
                         } else if (cmds[1].equals("orange")) {
-                            sendChatMessage(
-                                    player,
-                                    "The last seed used was: " + Long.toString(WorldGenAutumnTree.getLastSeed()));
+                            sendChatMessage(player, "The last seed used was: " + WorldGenAutumnTree.getLastSeed());
                         } else if (cmds[1].equals("red")) {
-                            sendChatMessage(
-                                    player,
-                                    "The last seed used was: " + Long.toString(WorldGenAutumnTree.getLastSeed()));
+                            sendChatMessage(player, "The last seed used was: " + WorldGenAutumnTree.getLastSeed());
                         } else if (cmds[1].equals("yellow")) {
-                            sendChatMessage(
-                                    player,
-                                    "The last seed used was: " + Long.toString(WorldGenAutumnTree.getLastSeed()));
+                            sendChatMessage(player, "The last seed used was: " + WorldGenAutumnTree.getLastSeed());
                         } else if (cmds[1].equals("largebrown")) {
-                            sendChatMessage(
-                                    player,
-                                    "The last seed used was: " + Long.toString(WorldGenBigAutumnTree.getLastSeed()));
+                            sendChatMessage(player, "The last seed used was: " + WorldGenBigAutumnTree.getLastSeed());
                         } else if (cmds[1].equals("largeorange")) {
-                            sendChatMessage(
-                                    player,
-                                    "The last seed used was: " + Long.toString(WorldGenBigAutumnTree.getLastSeed()));
+                            sendChatMessage(player, "The last seed used was: " + WorldGenBigAutumnTree.getLastSeed());
                         } else if (cmds[1].equals("largered")) {
-                            sendChatMessage(
-                                    player,
-                                    "The last seed used was: " + Long.toString(WorldGenBigAutumnTree.getLastSeed()));
+                            sendChatMessage(player, "The last seed used was: " + WorldGenBigAutumnTree.getLastSeed());
                         } else if (cmds[1].equals("largeyellow")) {
-                            sendChatMessage(
-                                    player,
-                                    "The last seed used was: " + Long.toString(WorldGenBigAutumnTree.getLastSeed()));
-                        } else if (cmds[1].equals("baldcypress")) {
-                            sendChatMessage(
-                                    player,
-                                    "The last seed used was: " + Long.toString(WorldGenBaldCypressTree.getLastSeed()));
+                            sendChatMessage(player, "The last seed used was: " + WorldGenBigAutumnTree.getLastSeed());
                         } else if (cmds[1].equals("sakura")) {
                             sendChatMessage(
                                     player,
-                                    "The last seed used was: "
-                                            + Long.toString(WorldGenSakuraBlossomTree.getLastSeed()));
+                                    "The last seed used was: " + WorldGenSakuraBlossomTree.getLastSeed());
                         } else if (cmds[1].equals("legend")) {
                             sendChatMessage(player, "The Legend Oak does not currently support seeding.");
                         } else {
@@ -425,12 +386,12 @@ public class EBXLCommandHandler extends CommandBase {
     }
 
     private boolean killTree(EntityPlayer player, int x, int y, int z) {
-        Queue<Vector3> killList = new LinkedList<Vector3>();
+        Queue<Vector3> killList = new LinkedList<>();
 
         killList.add(new Vector3(x, y, z));
         Vector3 currentBlock;
 
-        while (killList.size() > 0) {
+        while (!killList.isEmpty()) {
             currentBlock = killList.remove();
             Block block = player.worldObj.getBlock(currentBlock.x(), currentBlock.y(), currentBlock.z());
             int damage = player.worldObj.getBlockMetadata(currentBlock.x(), currentBlock.y(), currentBlock.z());
@@ -460,7 +421,7 @@ public class EBXLCommandHandler extends CommandBase {
 
     private void helpList(EntityPlayer player) {
         // List the available commands
-        sendChatMessage(player, "\u00A72-ExtrabiomesXl Commands-\u00A7r");
+        sendChatMessage(player, "§2-ExtrabiomesXl Commands-§r");
         sendChatMessage(player, "/ebxl help [command]");
         sendChatMessage(player, "/ebxl lastseed <treetype>");
         sendChatMessage(player, "/ebxl killtree <x> <y> <z>");

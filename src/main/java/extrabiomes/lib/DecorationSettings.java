@@ -69,19 +69,19 @@ public enum DecorationSettings {
         // default value
         public final int def;
 
-        private Decoration(String key, int def) {
+        Decoration(String key, int def) {
             this.key = key;
             this.def = def;
         }
-    };
+    }
 
     private final Map<Decoration, Integer> settings = Maps.newHashMap();
 
-    private DecorationSettings() {
+    DecorationSettings() {
         this(null, null, null, null, null, null, null, null, null, null, null, null, null);
     }
 
-    private DecorationSettings(Integer waterlily, Integer trees, Integer flowers, Integer grass, Integer deadBush,
+    DecorationSettings(Integer waterlily, Integer trees, Integer flowers, Integer grass, Integer deadBush,
             Integer mushrooms, Integer reeds, Integer cacti, Integer sand, Integer sand2, Integer clay,
             Integer bigMushrooms, Integer newFlowers) {
         initSetting(Decoration.WATERLILY, waterlily);

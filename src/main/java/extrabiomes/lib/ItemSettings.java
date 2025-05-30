@@ -21,14 +21,10 @@ public enum ItemSettings {
     FOOD;
     // @formatter:on
 
-    private boolean enabled = true;
+    private boolean enabled;
 
-    private ItemSettings() {
+    ItemSettings() {
         this.enabled = true;
-    }
-
-    private ItemSettings(boolean enabled) {
-        this.enabled = enabled;
     }
 
     public boolean getEnabled() {

@@ -25,7 +25,7 @@ public enum SaplingSettings {
     private double chance;
     private final double defaultChance;
 
-    private SaplingSettings(double defaultChance) {
+    SaplingSettings(double defaultChance) {
         this.defaultChance = defaultChance;
         chance = this.defaultChance;
     }

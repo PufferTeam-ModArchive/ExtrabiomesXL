@@ -33,8 +33,8 @@ public class ItemCustomCrop extends ItemFood {
         public enum Edible {
             ALWAYS,
             YES,
-            NO;
-        };
+            NO
+        }
 
         public Edible edible = Edible.YES;
 

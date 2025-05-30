@@ -28,11 +28,11 @@ public enum BlockSettings {
     GLORIOSA,
     WATERPLANT,
     SPANISH_MOSS	(false),
-    
+
     SAPLING,
     NEWSAPLING,
     STRAWBERRY,
-    
+
     AUTUMNLEAVES,
     GREENLEAVES,
     NEWLEAVES,
@@ -42,23 +42,23 @@ public enum BlockSettings {
     QUARTERLOG1		(false),
     QUARTERLOG2		(false),
     QUARTERLOG3		(false),
-    
+
     CUSTOMLOG,
     NEWLOG,
 
     KNEELOG,
     RAINBOWKNEELOG,
     RAINBOWQUARTERLOG,
-    
+
     NEWQUARTERLOG,
     FIRQUARTERLOG,
     REDWOODQUARTERLOG,
     OAKQUARTERLOG,
 
     MINILOG,
-    
+
     PLANKS,
-   
+
     WOODSLAB,
     DOUBLEWOODSLAB,
     NEWWOODSLAB,
@@ -78,7 +78,7 @@ public enum BlockSettings {
     BALDCYPRESSSTAIRS,
     SAKURABLOSSOMSTAIRS,
 
-    WALL,    
+    WALL,
 
     REDWOODDOOR,
     FIRDOOR,
@@ -89,29 +89,29 @@ public enum BlockSettings {
     AUTUMNDOOR,
     BALDCYPRESSDOOR,
     SAKURABLOSSOMDOOR,
-    
+
     SAKURABLOSSOMGATE;
-    
+
     private boolean			enabled;
     private Item			item;
-    
+
     private static boolean	clearedQuarterLogs = false;
     private static boolean	clearedWoodSlabs   = false;
-    
-    private BlockSettings()
+
+    BlockSettings()
     {
     	this.enabled = true;
     }
-    private BlockSettings(boolean enabled)
+    BlockSettings(boolean enabled)
     {
         this.enabled = enabled;
     }
-    
+
     public boolean getEnabled()
     {
         return enabled;
     }
-    
+
     public Item getItem()
     {
     	return item;
@@ -120,17 +120,17 @@ public enum BlockSettings {
     {
     	this.item = item;
     }
-    
+
     private String enabledKey()
     {
         return toString() + ".enabled";
     }
-    
+
     private boolean isQuarterLog()
     {
         return this == QUARTERLOG0 || this == QUARTERLOG1 || this == QUARTERLOG2 || this == QUARTERLOG3;
     }
-    
+
     public void load(EnhancedConfiguration configuration, boolean update)
     {
     	switch( this ) {
@@ -144,11 +144,11 @@ public enum BlockSettings {
 				break;
     	}
     }
-    
+
     @Override
     public String toString()
     {
         return super.toString().toLowerCase(Locale.ENGLISH);
     }
-    
+
 }
