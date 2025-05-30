@@ -23,13 +23,13 @@ public enum ModuleControlSettings {
     private boolean enabled;
 
     private String commentLangKey() {
-        if (toString() == "amica") {
+        if (toString().equals("amica")) {
             return "Set amica to true to enable support for other mods.";
-        } else if (toString() == "cautia") {
+        } else if (toString().equals("cautia")) {
             return "Set cautia to true to add danger.";
-        } else if (toString() == "fabrica") {
+        } else if (toString().equals("fabrica")) {
             return "Set fabrica to true to enable craftable items.";
-        } else if (toString() == "summa") {
+        } else if (toString().equals("summa")) {
             return "Set summa to false to disable the mod.";
         } else {
             return "Oops Unknown Module";
