@@ -62,9 +62,6 @@ public class RenderMiniLog implements ISimpleBlockRenderingHandler {
     public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId,
             RenderBlocks renderer) {
 
-        // renderer.enableAO = false;
-        GL11.glColor3f(1.0f, 1.0f, 1.0f);
-
         renderer.aoBrightnessXYNN = 255;
         renderer.aoBrightnessXYNP = 255;
         renderer.aoBrightnessXYPN = 255;
