@@ -7,6 +7,9 @@ package extrabiomes.module.summa.worldgen;
 
 import java.util.Random;
 
+import biomesoplenty.api.content.BOPCBlocks;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -35,7 +38,7 @@ public class WorldGenAutumnTree extends WorldGenAbstractTree {
             if (Element.LEAVES_AUTUMN_ORANGE.isPresent()) ORANGE.leaves = Element.LEAVES_AUTUMN_ORANGE.get();
             if (Element.LEAVES_AUTUMN_PURPLE.isPresent()) PURPLE.leaves = Element.LEAVES_AUTUMN_PURPLE.get();
             if (Element.LEAVES_AUTUMN_YELLOW.isPresent()) YELLOW.leaves = Element.LEAVES_AUTUMN_YELLOW.get();
-
+            
             loadedCustomBlocks = true;
         }
 
@@ -83,10 +86,9 @@ public class WorldGenAutumnTree extends WorldGenAbstractTree {
                     final Block block = world.getBlock(x1, i, z1);
 
                     if (block != null && !block.isLeaves(world, x1, i, z1)
-                            && !block.equals(Blocks.grass)
-                            && !block.isWood(world, x1, i, z1)
-                            && !block.isReplaceable(world, x1, i, z1))
-                        return false;
+                        && !block.equals(Blocks.grass)
+                        && !block.isWood(world, x1, i, z1)
+                        && !block.isReplaceable(world, x1, i, z1)) return false;
                 }
             }
         }
@@ -142,7 +144,7 @@ public class WorldGenAutumnTree extends WorldGenAbstractTree {
     }
 
     private void growLeaves(final World world, final Random rand, final int x, final int y, final int z,
-            final int height, Block leaf, int leafMeta) {
+        final int height, Block leaf, int leafMeta) {
         for (int y1 = y - CANOPY_HEIGHT + height; y1 <= y + height; ++y1) {
             final int canopyRow = y1 - (y + height);
             final int radius = CANOPY_RADIUS_EXTRA_RADIUS + 1 - canopyRow / 2;
@@ -156,8 +158,8 @@ public class WorldGenAutumnTree extends WorldGenAbstractTree {
                     final Block block = world.getBlock(x1, y1, z1);
 
                     if ((Math.abs(xDistanceFromTrunk) != radius || Math.abs(zDistanceFromTrunk) != radius
-                            || rand.nextInt(2) != 0 && canopyRow != 0)
-                            && (block == null || block.canBeReplacedByLeaves(world, x1, y1, z1))) {
+                        || rand.nextInt(2) != 0 && canopyRow != 0)
+                        && (block == null || block.canBeReplacedByLeaves(world, x1, y1, z1))) {
                         setBlockAndNotifyAdequately(world, x1, y1, z1, leaf, leafMeta);
                     }
                 }
@@ -166,7 +168,7 @@ public class WorldGenAutumnTree extends WorldGenAbstractTree {
     }
 
     private void growTrunk(final World world, final int x, final int y, final int z, final int height, Block wood,
-            int woodMeta) {
+        int woodMeta) {
         for (int y1 = 0; y1 < height; ++y1) {
             final Block block = world.getBlock(x, y + y1, z);
 

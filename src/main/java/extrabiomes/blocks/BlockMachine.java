@@ -56,7 +56,7 @@ public class BlockMachine extends Block {
 
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX,
-            float hitY, float hitZ) {
+        float hitY, float hitZ) {
         if (!doingGenesis && !world.isRemote && canDoGenesis(world, x, y, z, 3, player)) {
             doingGenesis = true;
             doGenesis(world, x, y, z, 3, player);
@@ -152,8 +152,8 @@ public class BlockMachine extends Block {
         for (int x1 = chunkX.intValue() - range; x1 <= chunkX.intValue() + range; x1++) {
             for (int z1 = chunkZ.intValue() - range; z1 <= chunkZ.intValue() + range; z1++) {
                 for (EntityPlayerMP player : players) {
-                    if (worldObj.getPlayerManager().isPlayerWatchingChunk(player, x1, z1)
-                            && !playerOrigPositions.containsKey(player)) {
+                    if (worldObj.getPlayerManager()
+                        .isPlayerWatchingChunk(player, x1, z1) && !playerOrigPositions.containsKey(player)) {
                         final Vec3 origPosition = Vec3.createVectorHelper(player.posX, player.posY, player.posZ);
                         playerOrigPositions.put(player, origPosition);
                         LogHelper.info("Moving player " + player);

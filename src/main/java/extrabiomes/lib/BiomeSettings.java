@@ -158,7 +158,9 @@ public enum BiomeSettings {
 
     public void createBiome() throws Exception {
         if (biomeClass.isPresent() && !biome.isPresent()) {
-            biome = Optional.of(biomeClass.get().newInstance());
+            biome = Optional.of(
+                biomeClass.get()
+                    .newInstance());
         }
     }
 

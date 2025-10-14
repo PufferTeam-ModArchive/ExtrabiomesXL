@@ -46,13 +46,8 @@ public class EntityScarecrow extends EntityGolem {
             super.startExecuting();
             if (closestEntity instanceof EntityCreature && !(closestEntity instanceof EntityGolem)) {
                 ((EntityCreature) closestEntity).tasks.addTask(
-                        1,
-                        new EntityAIAvoidEntity(
-                                (EntityCreature) closestEntity,
-                                EntityScarecrow.class,
-                                10.0F,
-                                0.3F,
-                                0.4F));
+                    1,
+                    new EntityAIAvoidEntity((EntityCreature) closestEntity, EntityScarecrow.class, 10.0F, 0.3F, 0.4F));
             }
         }
     }
