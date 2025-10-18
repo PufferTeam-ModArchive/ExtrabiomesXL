@@ -50,6 +50,17 @@ public abstract class WorldGenNewTreeBase extends WorldGenAbstractTree {
         return true;
     }
 
+    public boolean place2x2Trunk(int x, int y, int z, int height, Block logBlock, int meta, World world) {
+        for (int y1 = y; y1 < y + height; y1++) {
+            setBlockAndNotifyAdequately(world, x, y1, z, logBlock, meta);
+            setBlockAndNotifyAdequately(world, x + 1, y1, z, logBlock, meta);
+            setBlockAndNotifyAdequately(world, x, y1, z + 1, logBlock, meta);
+            setBlockAndNotifyAdequately(world, x + 1, y1, z + 1, logBlock, meta);
+        }
+
+        return true;
+    }
+
     public boolean check2x2Trunk(int x, int y, int z, int height, World world, boolean inWater) {
         if (inWater) {
             for (int y1 = y + 1; y1 < y + height; y1++) {
@@ -119,6 +130,35 @@ public abstract class WorldGenNewTreeBase extends WorldGenAbstractTree {
                 || block.isLeaves(world, x, currentY, z)
                 || block.isFoliage(world, x, currentY, z)) {
                 setBlockAndNotifyAdequately(world, x, currentY, z, logBlock, logs.getItemDamage());
+            } else {
+                break;
+            }
+        }
+
+        return true;
+    }
+
+    public boolean placeKnee(int x, int y, int z, int height, int direction, Block logBlock, int meta, World world) {
+
+        // Place the knee on top
+        Block block = world.getBlock(x, y + height - 1, z);
+        Material material = block.getMaterial();
+        int checkY = y + height - 1;
+        if (material.isLiquid() || material.isReplaceable()
+            || block.canBeReplacedByLeaves(world, x, checkY, z)
+            || block.isLeaves(world, x, checkY, z)
+            || block.isFoliage(world, x, checkY, z)) {
+            setBlockAndNotifyAdequately(world, x, checkY, z, logBlock, meta + (direction * 4));
+        }
+
+        for (int currentY = y + height - 2; currentY > 1; --currentY) {
+            block = world.getBlock(x, currentY, z);
+            material = block.getMaterial();
+            if (material.isLiquid() || material.isReplaceable()
+                || block.canBeReplacedByLeaves(world, x, currentY, z)
+                || block.isLeaves(world, x, currentY, z)
+                || block.isFoliage(world, x, currentY, z)) {
+                setBlockAndNotifyAdequately(world, x, currentY, z, logBlock, meta + (direction * 4));
             } else {
                 break;
             }
@@ -250,6 +290,68 @@ public abstract class WorldGenNewTreeBase extends WorldGenAbstractTree {
                     int z = (int) (start[2] + (direction[2] * m));
                     if (world.isAirBlock(x, y, z))
                         setBlockAndNotifyAdequately(world, x, y, z, logBlock, logs.getItemDamage());
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public boolean placeBlockLine(int[] start, int[] end, Block logBlock, int meta, World world) {
+
+        if (start.length != 3 || end.length != 3) return false;
+
+        // Get the direction vector
+        int[] direction = { start[0] - end[0], start[1] - end[1], start[2] - end[2] };
+        if (Math.abs(direction[2]) > Math.abs(direction[1]) && Math.abs(direction[2]) > Math.abs(direction[0])) {
+            // We are going to use the y-axis as our major axis
+            if (direction[2] >= 0) {
+                for (int z = start[2]; z >= end[2]; z--) {
+                    double m = (z - start[2]) / (double) direction[2];
+                    int x = (int) (start[0] + (direction[0] * m));
+                    int y = (int) (start[1] + (direction[1] * m));
+                    if (world.isAirBlock(x, y, z)) setBlockAndNotifyAdequately(world, x, y, z, logBlock, meta);
+                }
+            } else {
+                for (int z = start[2]; z <= end[2]; z++) {
+                    double m = (z - start[2]) / (double) direction[2];
+                    int x = (int) (start[0] + (direction[0] * m));
+                    int y = (int) (start[1] + (direction[1] * m));
+                    if (world.isAirBlock(x, y, z)) setBlockAndNotifyAdequately(world, x, y, z, logBlock, meta);
+                }
+            }
+        } else if (Math.abs(direction[0]) > Math.abs(direction[1])) {
+            // Traverse along the x-axis
+            if (direction[0] >= 0) {
+                for (int x = start[0]; x >= end[0]; x--) {
+                    double m = (x - start[0]) / (double) direction[0];
+                    int z = (int) (start[2] + (direction[2] * m));
+                    int y = (int) (start[1] + (direction[1] * m));
+                    if (world.isAirBlock(x, y, z)) setBlockAndNotifyAdequately(world, x, y, z, logBlock, meta);
+                }
+            } else {
+                for (int x = start[0]; x <= end[0]; x++) {
+                    double m = (x - start[0]) / (double) direction[0];
+                    int z = (int) (start[2] + (direction[2] * m));
+                    int y = (int) (start[1] + (direction[1] * m));
+                    if (world.isAirBlock(x, y, z)) setBlockAndNotifyAdequately(world, x, y, z, logBlock, meta);
+                }
+            }
+        } else {
+            // We will use the y-axis as our major axis
+            if (direction[1] >= 0) {
+                for (int y = start[1]; y >= end[1]; y--) {
+                    double m = (y - start[1]) / (double) direction[1];
+                    int x = (int) (start[0] + (direction[0] * m));
+                    int z = (int) (start[2] + (direction[2] * m));
+                    if (world.isAirBlock(x, y, z)) setBlockAndNotifyAdequately(world, x, y, z, logBlock, meta);
+                }
+            } else {
+                for (int y = start[1]; y <= end[1]; y++) {
+                    double m = (y - start[1]) / (double) direction[1];
+                    int x = (int) (start[0] + (direction[0] * m));
+                    int z = (int) (start[2] + (direction[2] * m));
+                    if (world.isAirBlock(x, y, z)) setBlockAndNotifyAdequately(world, x, y, z, logBlock, meta);
                 }
             }
         }
@@ -424,6 +526,179 @@ public abstract class WorldGenNewTreeBase extends WorldGenAbstractTree {
                         } else {
                             setBlockAndNotifyAdequately(world, x, last[1], last[2], logBlock, logs.getItemDamage());
                             setBlockAndNotifyAdequately(world, x, last[1], z, logBlock, logs.getItemDamage());
+                        }
+                    }
+
+                    last[0] = x;
+                    last[1] = y;
+                    last[2] = z;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public boolean placeThinBlockLine(int[] start, int[] end, Block logBlock, int meta, World world) {
+        if (start.length != 3 || end.length != 3) return false;
+
+        int[] last = { start[0], start[1], start[2] };
+
+        // Get the direction vector
+        int[] direction = { start[0] - end[0], start[1] - end[1], start[2] - end[2] };
+        if (Math.abs(direction[2]) > Math.abs(direction[1]) && Math.abs(direction[2]) > Math.abs(direction[0])) {
+            // We are going to use the y-axis as our major axis
+            if (direction[2] >= 0) {
+                for (int z = start[2]; z >= end[2]; z--) {
+                    double m = (z - start[2]) / (double) direction[2];
+                    int x = (int) (start[0] + (direction[0] * m));
+                    int y = (int) (start[1] + (direction[1] * m));
+                    if (world.isAirBlock(x, y, z)) setBlockAndNotifyAdequately(world, x, y, z, logBlock, meta);
+
+                    // Detect the distance
+                    int dist = Math.abs(last[0] - x) + Math.abs(last[1] - y) + Math.abs(last[2] - z);
+                    // LogHelper.info("Dist: %d", dist);
+                    if (dist == 2) {
+                        setBlockAndNotifyAdequately(world, last[0], last[1], z, logBlock, meta);
+                    } else if (dist == 3) {
+                        if (direction[0] > 0) {
+                            setBlockAndNotifyAdequately(world, x, last[1], last[2], logBlock, meta);
+                            setBlockAndNotifyAdequately(world, x, y, last[2], logBlock, meta);
+                        } else {
+                            setBlockAndNotifyAdequately(world, last[0], y, last[2], logBlock, meta);
+                            setBlockAndNotifyAdequately(world, x, y, last[2], logBlock, meta);
+                        }
+                    }
+
+                    last[0] = x;
+                    last[1] = y;
+                    last[2] = z;
+                }
+            } else {
+                for (int z = start[2]; z <= end[2]; z++) {
+                    double m = (z - start[2]) / (double) direction[2];
+                    int x = (int) (start[0] + (direction[0] * m));
+                    int y = (int) (start[1] + (direction[1] * m));
+                    if (world.isAirBlock(x, y, z)) setBlockAndNotifyAdequately(world, x, y, z, logBlock, meta);
+
+                    // Detect the distance
+                    int dist = Math.abs(last[0] - x) + Math.abs(last[1] - y) + Math.abs(last[2] - z);
+                    // LogHelper.info("Dist: %d", dist);
+                    if (dist == 2) {
+                        setBlockAndNotifyAdequately(world, last[0], last[1], z, logBlock, meta);
+                    } else if (dist == 3) {
+                        if (direction[0] > 0) {
+                            setBlockAndNotifyAdequately(world, x, last[1], last[2], logBlock, meta);
+                            setBlockAndNotifyAdequately(world, x, y, last[2], logBlock, meta);
+                        } else {
+                            setBlockAndNotifyAdequately(world, last[0], y, last[2], logBlock, meta);
+                            setBlockAndNotifyAdequately(world, x, y, last[2], logBlock, meta);
+                        }
+                    }
+
+                    last[0] = x;
+                    last[1] = y;
+                    last[2] = z;
+                }
+            }
+        } else if (Math.abs(direction[0]) > Math.abs(direction[1])) {
+            // Traverse along the x-axis
+            if (direction[0] >= 0) {
+                for (int x = start[0]; x >= end[0]; x--) {
+                    double m = (x - start[0]) / (double) direction[0];
+                    int z = (int) (start[2] + (direction[2] * m));
+                    int y = (int) (start[1] + (direction[1] * m));
+                    if (world.isAirBlock(x, y, z)) setBlockAndNotifyAdequately(world, x, y, z, logBlock, meta);
+
+                    // Detect the distance
+                    int dist = Math.abs(last[0] - x) + Math.abs(last[1] - y) + Math.abs(last[2] - z);
+                    if (dist == 2) {
+                        setBlockAndNotifyAdequately(world, x, last[1], last[2], logBlock, meta);
+                    } else if (dist == 3) {
+                        if (direction[2] > 0) {
+                            setBlockAndNotifyAdequately(world, last[0], last[1], z, logBlock, meta);
+                            setBlockAndNotifyAdequately(world, last[0], y, z, logBlock, meta);
+                        } else {
+                            setBlockAndNotifyAdequately(world, last[0], y, last[2], logBlock, meta);
+                            setBlockAndNotifyAdequately(world, last[0], y, z, logBlock, meta);
+                        }
+                    }
+
+                    last[0] = x;
+                    last[1] = y;
+                    last[2] = z;
+                }
+            } else {
+                for (int x = start[0]; x <= end[0]; x++) {
+                    double m = (x - start[0]) / (double) direction[0];
+                    int z = (int) (start[2] + (direction[2] * m));
+                    int y = (int) (start[1] + (direction[1] * m));
+                    if (world.isAirBlock(x, y, z)) setBlockAndNotifyAdequately(world, x, y, z, logBlock, meta);
+
+                    // Detect the distance
+                    int dist = Math.abs(last[0] - x) + Math.abs(last[1] - y) + Math.abs(last[2] - z);
+                    if (dist == 2) {
+                        setBlockAndNotifyAdequately(world, x, last[1], last[2], logBlock, meta);
+                    } else if (dist == 3) {
+                        if (direction[2] > 0) {
+                            setBlockAndNotifyAdequately(world, last[0], last[1], z, logBlock, meta);
+                            setBlockAndNotifyAdequately(world, last[0], y, z, logBlock, meta);
+                        } else {
+                            setBlockAndNotifyAdequately(world, last[0], y, last[2], logBlock, meta);
+                            setBlockAndNotifyAdequately(world, last[0], y, z, logBlock, meta);
+                        }
+                    }
+
+                    last[0] = x;
+                    last[1] = y;
+                    last[2] = z;
+                }
+            }
+        } else {
+            // We will use the y-axis as our major axis
+            if (direction[1] >= 0) {
+                for (int y = start[1]; y >= end[1]; y--) {
+                    double m = (y - start[1]) / (double) direction[1];
+                    int x = (int) (start[0] + (direction[0] * m));
+                    int z = (int) (start[2] + (direction[2] * m));
+                    if (world.isAirBlock(x, y, z)) setBlockAndNotifyAdequately(world, x, y, z, logBlock, meta);
+
+                    // Detect the distance
+                    int dist = Math.abs(last[0] - x) + Math.abs(last[1] - y) + Math.abs(last[2] - z);
+                    if (dist == 2) {
+                        setBlockAndNotifyAdequately(world, last[0], y, last[2], logBlock, meta);
+                    } else if (dist == 3) {
+                        if (direction[2] > 0) {
+                            setBlockAndNotifyAdequately(world, last[0], last[1], z, logBlock, meta);
+                            setBlockAndNotifyAdequately(world, x, last[1], z, logBlock, meta);
+                        } else {
+                            setBlockAndNotifyAdequately(world, x, last[1], last[2], logBlock, meta);
+                            setBlockAndNotifyAdequately(world, x, last[1], z, logBlock, meta);
+                        }
+                    }
+
+                    last[0] = x;
+                    last[1] = y;
+                    last[2] = z;
+                }
+            } else {
+                for (int y = start[1]; y <= end[1]; y++) {
+                    double m = (y - start[1]) / (double) direction[1];
+                    int x = (int) (start[0] + (direction[0] * m));
+                    int z = (int) (start[2] + (direction[2] * m));
+                    if (world.isAirBlock(x, y, z)) setBlockAndNotifyAdequately(world, x, y, z, logBlock, meta);
+
+                    // Detect the distance
+                    int dist = Math.abs(last[0] - x) + Math.abs(last[1] - y) + Math.abs(last[2] - z);
+                    if (dist == 2) {
+                        setBlockAndNotifyAdequately(world, last[0], y, last[2], logBlock, meta);
+                    } else if (dist == 3) {
+                        if (direction[2] > 0) {
+                            setBlockAndNotifyAdequately(world, last[0], last[1], z, logBlock, meta);
+                            setBlockAndNotifyAdequately(world, x, last[1], z, logBlock, meta);
+                        } else {
+                            setBlockAndNotifyAdequately(world, x, last[1], last[2], logBlock, meta);
+                            setBlockAndNotifyAdequately(world, x, last[1], z, logBlock, meta);
                         }
                     }
 

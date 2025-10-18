@@ -4,56 +4,27 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 
-import extrabiomes.lib.Element;
+import biomesoplenty.api.content.BOPCBlocks;
 import extrabiomes.module.summa.TreeSoilRegistry;
 
 public class WorldGenNewRedwood extends WorldGenAbstractTree {
 
-    private enum TreeBlock {
+    Block leaves = BOPCBlocks.colorizedLeaves1;
+    int leavesMeta = 3;
 
-        LEAVES(new ItemStack(Blocks.leaves)),
-        TRUNK(new ItemStack(Blocks.log, 1, 1)),
-        BRANCH(new ItemStack(Blocks.log, 1, 1));
+    Block log = BOPCBlocks.logs3;
+    int logMeta = 0;
 
-        private ItemStack stack;
-
-        private static boolean loadedCustomBlocks = false;
-
-        private static void loadCustomBlocks() {
-            if (Element.LEAVES_REDWOOD.isPresent()) {
-                LEAVES.stack = Element.LEAVES_REDWOOD.get();
-            }
-
-            if (Element.LOG_REDWOOD.isPresent()) {
-                BRANCH.stack = Element.LOG_REDWOOD.get();
-            }
-
-            if (Element.LOG_QUARTER_REDWOOD.isPresent()) {
-                useQuarter = true;
-                TRUNK.stack = Element.LOG_QUARTER_REDWOOD.get();
-            }
-
-            loadedCustomBlocks = true;
+    public void loadValues() {
+        if (leaves == null) {
+            leaves = BOPCBlocks.colorizedLeaves1;
         }
-
-        TreeBlock(ItemStack stack) {
-            this.stack = stack;
+        if (log == null) {
+            log = BOPCBlocks.logs3;
         }
-
-        public Block getBlock() {
-            if (!loadedCustomBlocks) loadCustomBlocks();
-            return Block.getBlockFromItem(stack.getItem());
-        }
-
-        public int getMetadata() {
-            if (!loadedCustomBlocks) loadCustomBlocks();
-            return stack.getItemDamage();
-        }
-
     }
 
     public WorldGenNewRedwood(boolean doNotify) {
@@ -66,6 +37,7 @@ public class WorldGenNewRedwood extends WorldGenAbstractTree {
 
     @Override
     public boolean generate(World world, Random rand, int x, int y, int z) {
+        loadValues();
         // Store the seed
         lastSeed = rand.nextLong();
 
@@ -73,6 +45,7 @@ public class WorldGenNewRedwood extends WorldGenAbstractTree {
     }
 
     public boolean generate(World world, long seed, int x, int y, int z) {
+        loadValues();
         // Store the seed
         lastSeed = seed;
 
@@ -130,7 +103,7 @@ public class WorldGenNewRedwood extends WorldGenAbstractTree {
          * 0) { generateBranch(world, rand, x + b1, y + j3, z - b1, 1, -1); } } return true; }
          */
 
-        if (TreeBlock.TRUNK.getBlock() != null && !useQuarter) {
+        if (log != null && !useQuarter) {
             for (int j1 = 0; j1 <= 1; j1++) {
                 for (int j2 = 0; j2 <= 1; j2++) {
                     if (j1 == 1) {
@@ -142,36 +115,24 @@ public class WorldGenNewRedwood extends WorldGenAbstractTree {
                     Block block = world.getBlock(x + j1, y, z + j2);
                     if (block == null || block.isAir(world, x + j1, y, z + j2)
                         || block.isLeaves(world, x + j1, y, z + j2)) {
-                        setBlockAndNotifyAdequately(
-                            world,
-                            x + j1,
-                            y,
-                            z + j2,
-                            TreeBlock.BRANCH.getBlock(),
-                            TreeBlock.BRANCH.getMetadata());
+                        setBlockAndNotifyAdequately(world, x + j1, y, z + j2, log, logMeta);
                     }
 
                     for (int k3 = 1; k3 <= height - 4; k3++) {
                         block = world.getBlock(x + j1, y + k3, z + j2);
                         if (block == null || block.isAir(world, x + j1, y + k3, z + j2)
                             || block.isLeaves(world, x + j1, y + k3, z + j2)) {
-                            setBlockAndNotifyAdequately(
-                                world,
-                                x + j1,
-                                y + k3,
-                                z + j2,
-                                TreeBlock.BRANCH.getBlock(),
-                                TreeBlock.BRANCH.getMetadata());
+                            setBlockAndNotifyAdequately(world, x + j1, y + k3, z + j2, log, logMeta);
                         }
                     }
                 }
             }
         } else {
             for (int offset = 0; offset <= height - 4; offset++) {
-                setBlockAndNotifyAdequately(world, x, y + offset, z, TreeBlock.TRUNK.getBlock(), 0);
-                setBlockAndNotifyAdequately(world, x, y + offset, z + 1, TreeBlock.TRUNK.getBlock(), 3);
-                setBlockAndNotifyAdequately(world, x + 1, y + offset, z, TreeBlock.TRUNK.getBlock(), 1);
-                setBlockAndNotifyAdequately(world, x + 1, y + offset, z + 1, TreeBlock.TRUNK.getBlock(), 2);
+                setBlockAndNotifyAdequately(world, x, y + offset, z, log, logMeta);
+                setBlockAndNotifyAdequately(world, x, y + offset, z + 1, log, logMeta);
+                setBlockAndNotifyAdequately(world, x + 1, y + offset, z, log, logMeta);
+                setBlockAndNotifyAdequately(world, x + 1, y + offset, z + 1, log, logMeta);
             }
         }
 
@@ -232,13 +193,7 @@ public class WorldGenNewRedwood extends WorldGenAbstractTree {
 
             final Block block = world.getBlock(x, y, z);
             if (block == null || block.isAir(world, x, y, z) || block.isLeaves(world, x, y, z)) {
-                setBlockAndNotifyAdequately(
-                    world,
-                    x,
-                    y,
-                    z,
-                    TreeBlock.BRANCH.getBlock(),
-                    TreeBlock.BRANCH.getMetadata());
+                setBlockAndNotifyAdequately(world, x, y, z, log, logMeta);
             }
 
             if ((br == 8) || (random.nextInt(6) == 0)) {
@@ -262,13 +217,7 @@ public class WorldGenNewRedwood extends WorldGenAbstractTree {
                     && ((Math.abs(i) != 3) || (Math.abs(j) != 2))) {
                     block = world.getBlock(x + i, y, z + j);
                     if (block == null || block.canBeReplacedByLeaves(world, x + i, y, z + j)) {
-                        setBlockAndNotifyAdequately(
-                            world,
-                            x + i,
-                            y,
-                            z + j,
-                            TreeBlock.LEAVES.getBlock(),
-                            TreeBlock.LEAVES.getMetadata());
+                        setBlockAndNotifyAdequately(world, x + i, y, z + j, leaves, leavesMeta);
                     }
                 }
 
@@ -276,24 +225,12 @@ public class WorldGenNewRedwood extends WorldGenAbstractTree {
 
                 block = world.getBlock(x + i, y + 1, z + j);
                 if (block == null || block.canBeReplacedByLeaves(world, x + i, y + 1, z + j)) {
-                    setBlockAndNotifyAdequately(
-                        world,
-                        x + i,
-                        y + 1,
-                        z + j,
-                        TreeBlock.LEAVES.getBlock(),
-                        TreeBlock.LEAVES.getMetadata());
+                    setBlockAndNotifyAdequately(world, x + i, y + 1, z + j, leaves, leavesMeta);
                 }
 
                 block = world.getBlock(x + i, y - 1, z + j);
                 if (block == null || block.canBeReplacedByLeaves(world, x + i, y - 1, z + j)) {
-                    setBlockAndNotifyAdequately(
-                        world,
-                        x + i,
-                        y - 1,
-                        z + j,
-                        TreeBlock.LEAVES.getBlock(),
-                        TreeBlock.LEAVES.getMetadata());
+                    setBlockAndNotifyAdequately(world, x + i, y - 1, z + j, leaves, leavesMeta);
                 }
             }
         }

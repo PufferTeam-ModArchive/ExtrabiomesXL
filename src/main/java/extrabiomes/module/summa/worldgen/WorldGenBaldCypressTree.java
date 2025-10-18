@@ -9,43 +9,32 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-import extrabiomes.lib.Element;
+import biomesoplenty.api.content.BOPCBlocks;
 import extrabiomes.module.summa.TreeSoilRegistry;
 
 public class WorldGenBaldCypressTree extends WorldGenNewTreeBase {
 
-    private enum TreeBlock {
-
-        LEAVES(new ItemStack(Blocks.leaves, 1, 1)),
-        TRUNK(new ItemStack(Blocks.log, 1, 1)),
-        KNEE_LOG(new ItemStack(Blocks.log, 1, 1)),
-        KNEE(new ItemStack(Blocks.log, 1, 1));
-
-        private ItemStack stack;
-        private static boolean loadedCustomBlocks = false;
-
-        private static void loadCustomBlocks() {
-            if (Element.LEAVES_BALD_CYPRESS.isPresent()) LEAVES.stack = Element.LEAVES_BALD_CYPRESS.get();
-            if (Element.LOG_QUARTER_BALD_CYPRESS.isPresent()) TRUNK.stack = Element.LOG_QUARTER_BALD_CYPRESS.get();
-            if (Element.LOG_KNEE_BALD_CYPRESS.isPresent()) KNEE.stack = Element.LOG_KNEE_BALD_CYPRESS.get();
-            if (Element.LOG_BALD_CYPRESS.isPresent()) KNEE_LOG.stack = Element.LOG_BALD_CYPRESS.get();
-
-            loadedCustomBlocks = true;
-        }
-
-        TreeBlock(ItemStack stack) {
-            this.stack = stack;
-        }
-
-        public ItemStack get() {
-            if (!loadedCustomBlocks) loadCustomBlocks();
-            return this.stack;
-        }
-
-    }
-
     public WorldGenBaldCypressTree(boolean par1) {
         super(par1);
+    }
+
+    Block leaves = BOPCBlocks.colorizedLeaves2;
+    int leavesMeta = 0;
+    ItemStack leavesIS = new ItemStack(leaves, 1, leavesMeta);
+
+    Block log = BOPCBlocks.logs3;
+    int logMeta = 1;
+    ItemStack logIS = new ItemStack(log, 1, logMeta);
+
+    public void loadValues() {
+        if (leaves == null) {
+            leaves = BOPCBlocks.colorizedLeaves2;
+            leavesIS = new ItemStack(leaves, 1, leavesMeta);
+        }
+        if (log == null) {
+            log = BOPCBlocks.logs3;
+            logIS = new ItemStack(log, 1, logMeta);
+        }
     }
 
     // Store the last seed that was used to generate a tree
@@ -55,6 +44,8 @@ public class WorldGenBaldCypressTree extends WorldGenNewTreeBase {
     public boolean generate(World world, Random rand, int x, int y, int z) {
         // Store the seed
         lastSeed = rand.nextLong();
+
+        loadValues();
 
         // Check the water level
         int waterLevel = 0;
@@ -76,6 +67,8 @@ public class WorldGenBaldCypressTree extends WorldGenNewTreeBase {
     public boolean generate(World world, long seed, int x, int y, int z) {
         // Store the seed
         lastSeed = seed;
+
+        loadValues();
 
         // Check the water level
         int waterLevel = 0;
@@ -176,7 +169,7 @@ public class WorldGenBaldCypressTree extends WorldGenNewTreeBase {
             z + chunkCheck)) return false;
 
         // Draw the main trunk
-        if (place2x2Trunk(x, y, z, (int) (height * TRUNK_HEIGHT_PERCENT) + waterLevel, TreeBlock.TRUNK.get(), world)) {
+        if (place2x2Trunk(x, y, z, (int) (height * TRUNK_HEIGHT_PERCENT) + waterLevel, log, logMeta, world)) {
             // Draw the knees
             generateKnees(world, rand, x, y, z, waterLevel);
 
@@ -191,7 +184,7 @@ public class WorldGenBaldCypressTree extends WorldGenNewTreeBase {
                 z,
                 4 + rand.nextInt(CLUSTER_HEIGHT_VARIANCE),
                 4 + rand.nextInt(CLUSTER_DIAMETER_VARIANCE),
-                TreeBlock.LEAVES.get());
+                leavesIS);
 
             // We generated a tree
             return true;
@@ -316,7 +309,7 @@ public class WorldGenBaldCypressTree extends WorldGenNewTreeBase {
             }
 
             // Place the branch
-            placeBlockLine(start, end, TreeBlock.KNEE_LOG.get(), world);
+            placeBlockLine(start, end, log, logMeta, world);
 
             int[] node = new int[] { end[0], end[1], end[2] };
 
@@ -333,53 +326,21 @@ public class WorldGenBaldCypressTree extends WorldGenNewTreeBase {
                 cluster[2],
                 CLUSTER_HEIGHT + rand.nextInt(CLUSTER_HEIGHT_VARIANCE),
                 CLUSTER_DIAMETER + rand.nextInt(CLUSTER_DIAMETER_VARIANCE),
-                TreeBlock.LEAVES.get());
+                leavesIS);
         }
     }
 
     public void generateKnees(World world, Random rand, int x, int y, int z, int bonusHeight) {
         switch (rand.nextInt(11)) {
             case 0, 1, 2, 3:
-                placeKnee(
-                    x - 1,
-                    y,
-                    z,
-                    ((rand.nextInt(3) != 0) ? 1 : 2) + bonusHeight,
-                    2,
-                    TreeBlock.KNEE_LOG.get(),
-                    TreeBlock.KNEE.get(),
-                    world);
+                placeKnee(x - 1, y, z, ((rand.nextInt(3) != 0) ? 1 : 2) + bonusHeight, 2, log, logMeta, world);
                 break;
             case 4, 5, 6, 7:
-                placeKnee(
-                    x - 1,
-                    y,
-                    z + 1,
-                    ((rand.nextInt(3) != 0) ? 1 : 2) + bonusHeight,
-                    2,
-                    TreeBlock.KNEE_LOG.get(),
-                    TreeBlock.KNEE.get(),
-                    world);
+                placeKnee(x - 1, y, z + 1, ((rand.nextInt(3) != 0) ? 1 : 2) + bonusHeight, 2, log, logMeta, world);
                 break;
             case 8:
-                placeKnee(
-                    x - 1,
-                    y,
-                    z,
-                    ((rand.nextInt(5) != 0) ? 1 : 2) + bonusHeight,
-                    2,
-                    TreeBlock.KNEE_LOG.get(),
-                    TreeBlock.KNEE.get(),
-                    world);
-                placeKnee(
-                    x - 1,
-                    y,
-                    z + 1,
-                    ((rand.nextInt(2) != 0) ? 1 : 2) + bonusHeight,
-                    2,
-                    TreeBlock.KNEE_LOG.get(),
-                    TreeBlock.KNEE.get(),
-                    world);
+                placeKnee(x - 1, y, z, ((rand.nextInt(5) != 0) ? 1 : 2) + bonusHeight, 2, log, logMeta, world);
+                placeKnee(x - 1, y, z + 1, ((rand.nextInt(2) != 0) ? 1 : 2) + bonusHeight, 2, log, logMeta, world);
                 break;
             default:
                 break;
@@ -387,46 +348,14 @@ public class WorldGenBaldCypressTree extends WorldGenNewTreeBase {
 
         switch (rand.nextInt(11)) {
             case 0, 1, 2, 3:
-                placeKnee(
-                    x,
-                    y,
-                    z - 1,
-                    ((rand.nextInt(3) != 0) ? 1 : 2) + bonusHeight,
-                    3,
-                    TreeBlock.KNEE_LOG.get(),
-                    TreeBlock.KNEE.get(),
-                    world);
+                placeKnee(x, y, z - 1, ((rand.nextInt(3) != 0) ? 1 : 2) + bonusHeight, 3, log, logMeta, world);
                 break;
             case 4, 5, 6, 7:
-                placeKnee(
-                    x + 1,
-                    y,
-                    z - 1,
-                    ((rand.nextInt(3) != 0) ? 1 : 2) + bonusHeight,
-                    3,
-                    TreeBlock.KNEE_LOG.get(),
-                    TreeBlock.KNEE.get(),
-                    world);
+                placeKnee(x + 1, y, z - 1, ((rand.nextInt(3) != 0) ? 1 : 2) + bonusHeight, 3, log, logMeta, world);
                 break;
             case 8:
-                placeKnee(
-                    x,
-                    y,
-                    z - 1,
-                    ((rand.nextInt(3) != 0) ? 1 : 2) + bonusHeight,
-                    3,
-                    TreeBlock.KNEE_LOG.get(),
-                    TreeBlock.KNEE.get(),
-                    world);
-                placeKnee(
-                    x + 1,
-                    y,
-                    z - 1,
-                    ((rand.nextInt(5) != 0) ? 1 : 2) + bonusHeight,
-                    3,
-                    TreeBlock.KNEE_LOG.get(),
-                    TreeBlock.KNEE.get(),
-                    world);
+                placeKnee(x, y, z - 1, ((rand.nextInt(3) != 0) ? 1 : 2) + bonusHeight, 3, log, logMeta, world);
+                placeKnee(x + 1, y, z - 1, ((rand.nextInt(5) != 0) ? 1 : 2) + bonusHeight, 3, log, logMeta, world);
                 break;
             default:
                 break;
@@ -434,46 +363,14 @@ public class WorldGenBaldCypressTree extends WorldGenNewTreeBase {
 
         switch (rand.nextInt(11)) {
             case 0, 1, 2, 3:
-                placeKnee(
-                    x + 2,
-                    y,
-                    z,
-                    ((rand.nextInt(3) != 0) ? 1 : 2) + bonusHeight,
-                    0,
-                    TreeBlock.KNEE_LOG.get(),
-                    TreeBlock.KNEE.get(),
-                    world);
+                placeKnee(x + 2, y, z, ((rand.nextInt(3) != 0) ? 1 : 2) + bonusHeight, 0, log, logMeta, world);
                 break;
             case 4, 5, 6, 7:
-                placeKnee(
-                    x + 2,
-                    y,
-                    z + 1,
-                    ((rand.nextInt(3) != 0) ? 1 : 2) + bonusHeight,
-                    0,
-                    TreeBlock.KNEE_LOG.get(),
-                    TreeBlock.KNEE.get(),
-                    world);
+                placeKnee(x + 2, y, z + 1, ((rand.nextInt(3) != 0) ? 1 : 2) + bonusHeight, 0, log, logMeta, world);
                 break;
             case 8:
-                placeKnee(
-                    x + 2,
-                    y,
-                    z,
-                    ((rand.nextInt(3) != 0) ? 1 : 2) + bonusHeight,
-                    0,
-                    TreeBlock.KNEE_LOG.get(),
-                    TreeBlock.KNEE.get(),
-                    world);
-                placeKnee(
-                    x + 2,
-                    y,
-                    z + 1,
-                    ((rand.nextInt(3) != 0) ? 1 : 2) + bonusHeight,
-                    0,
-                    TreeBlock.KNEE_LOG.get(),
-                    TreeBlock.KNEE.get(),
-                    world);
+                placeKnee(x + 2, y, z, ((rand.nextInt(3) != 0) ? 1 : 2) + bonusHeight, 0, log, logMeta, world);
+                placeKnee(x + 2, y, z + 1, ((rand.nextInt(3) != 0) ? 1 : 2) + bonusHeight, 0, log, logMeta, world);
                 break;
             default:
                 break;
@@ -481,46 +378,14 @@ public class WorldGenBaldCypressTree extends WorldGenNewTreeBase {
 
         switch (rand.nextInt(11)) {
             case 0, 1, 2, 3:
-                placeKnee(
-                    x,
-                    y,
-                    z + 2,
-                    ((rand.nextInt(3) != 0) ? 1 : 2) + bonusHeight,
-                    1,
-                    TreeBlock.KNEE_LOG.get(),
-                    TreeBlock.KNEE.get(),
-                    world);
+                placeKnee(x, y, z + 2, ((rand.nextInt(3) != 0) ? 1 : 2) + bonusHeight, 1, log, logMeta, world);
                 break;
             case 4, 5, 6, 7:
-                placeKnee(
-                    x + 1,
-                    y,
-                    z + 2,
-                    ((rand.nextInt(3) != 0) ? 1 : 2) + bonusHeight,
-                    1,
-                    TreeBlock.KNEE_LOG.get(),
-                    TreeBlock.KNEE.get(),
-                    world);
+                placeKnee(x + 1, y, z + 2, ((rand.nextInt(3) != 0) ? 1 : 2) + bonusHeight, 1, log, logMeta, world);
                 break;
             case 8:
-                placeKnee(
-                    x,
-                    y,
-                    z + 2,
-                    ((rand.nextInt(2) != 0) ? 1 : 2) + bonusHeight,
-                    1,
-                    TreeBlock.KNEE_LOG.get(),
-                    TreeBlock.KNEE.get(),
-                    world);
-                placeKnee(
-                    x + 1,
-                    y,
-                    z + 2,
-                    ((rand.nextInt(5) != 0) ? 1 : 2) + bonusHeight,
-                    1,
-                    TreeBlock.KNEE_LOG.get(),
-                    TreeBlock.KNEE.get(),
-                    world);
+                placeKnee(x, y, z + 2, ((rand.nextInt(2) != 0) ? 1 : 2) + bonusHeight, 1, log, logMeta, world);
+                placeKnee(x + 1, y, z + 2, ((rand.nextInt(5) != 0) ? 1 : 2) + bonusHeight, 1, log, logMeta, world);
                 break;
             default:
                 break;

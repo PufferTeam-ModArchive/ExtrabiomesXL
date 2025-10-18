@@ -8,46 +8,27 @@ package extrabiomes.module.summa.worldgen;
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 
-import extrabiomes.lib.Element;
+import biomesoplenty.api.content.BOPCBlocks;
 import extrabiomes.module.summa.TreeSoilRegistry;
 
 public class WorldGenFirTree extends WorldGenAbstractTree {
 
-    public enum TreeBlock {
+    Block leaves = BOPCBlocks.leaves2;
+    int leavesMeta = 1;
 
-        LEAVES(new ItemStack(Blocks.leaves, 1, 1)),
-        TRUNK(new ItemStack(Blocks.log, 1, 1));
+    Block log = BOPCBlocks.logs1;
+    int logMeta = 3;
 
-        private ItemStack stack;
-
-        private static boolean loadedCustomBlocks = false;
-
-        private static void loadCustomBlocks() {
-            if (Element.LEAVES_FIR.isPresent()) LEAVES.stack = Element.LEAVES_FIR.get();
-            if (Element.LOG_FIR.isPresent()) TRUNK.stack = Element.LOG_FIR.get();
-
-            loadedCustomBlocks = true;
+    public void loadValues() {
+        if (leaves == null) {
+            leaves = BOPCBlocks.leaves2;
         }
-
-        TreeBlock(ItemStack stack) {
-            this.stack = stack;
+        if (log == null) {
+            log = BOPCBlocks.logs1;
         }
-
-        public Block getBlock() {
-            if (!loadedCustomBlocks) loadCustomBlocks();
-            return Block.getBlockFromItem(stack.getItem());
-        }
-
-        public int getMetadata() {
-            if (!loadedCustomBlocks) loadCustomBlocks();
-            return stack.getItemDamage();
-        }
-
     }
 
     public WorldGenFirTree(boolean par1) {
@@ -59,11 +40,15 @@ public class WorldGenFirTree extends WorldGenAbstractTree {
 
     @Override
     public boolean generate(World world, Random rand, int x, int y, int z) {
+        loadValues();
+
         lastSeed = rand.nextLong();
         return generateTree(world, new Random(lastSeed), x, y, z);
     }
 
     public boolean generate(World world, long seed, int x, int y, int z) {
+        loadValues();
+
         lastSeed = seed;
         return generateTree(world, new Random(seed), x, y, z);
     }
@@ -103,8 +88,6 @@ public class WorldGenFirTree extends WorldGenAbstractTree {
         // world.setBlock(originX, originY - 1, originZ, Blocks.dirt);
 
         // Trunk
-        final Block trunk = TreeBlock.TRUNK.getBlock();
-        final int trunkMeta = TreeBlock.TRUNK.getMetadata();
         final int randomTrunkHeightReduction = rand.nextInt(3);
         for (int relativeTrunkLevel = 0; relativeTrunkLevel
             < height - randomTrunkHeightReduction; relativeTrunkLevel++) {
@@ -112,7 +95,7 @@ public class WorldGenFirTree extends WorldGenAbstractTree {
             final Block block = world.getBlock(originX, actualTrunkLevel, originZ);
             if (block.isLeaves(world, originX, actualTrunkLevel, originZ)
                 || block.isReplaceable(world, originX, actualTrunkLevel, originZ)) {
-                setBlockAndNotifyAdequately(world, originX, actualTrunkLevel, originZ, trunk, trunkMeta);
+                setBlockAndNotifyAdequately(world, originX, actualTrunkLevel, originZ, log, logMeta);
             }
         }
 
@@ -121,8 +104,6 @@ public class WorldGenFirTree extends WorldGenAbstractTree {
         boolean cornerFlag = false;
 
         final int minLeafHeight = height - trunkClearHeight;
-        final Block leaves = TreeBlock.LEAVES.getBlock();
-        final int leavesMeta = TreeBlock.LEAVES.getMetadata();
         for (int relativeY = 0; relativeY <= minLeafHeight; ++relativeY) {
             final int actualY = originY + height - relativeY;
             for (int actualX = originX - cornerLimit; actualX <= originX + cornerLimit; ++actualX) {
@@ -140,7 +121,7 @@ public class WorldGenFirTree extends WorldGenAbstractTree {
                         && (Math.abs(cornerCheckX) == cornerLimit - 2 && Math.abs(cornerCheckZ) == cornerLimit - 2)) {
                         if (other.isLeaves(world, originX, actualY, originZ)
                             || other.isReplaceable(world, originX, actualY, originZ)) {
-                            setBlockAndNotifyAdequately(world, actualX, actualY, actualZ, trunk, trunkMeta);
+                            setBlockAndNotifyAdequately(world, actualX, actualY, actualZ, log, logMeta);
                             continue;
                         }
                     }
