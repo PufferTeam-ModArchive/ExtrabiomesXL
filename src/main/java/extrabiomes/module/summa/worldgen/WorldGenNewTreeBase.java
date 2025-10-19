@@ -157,7 +157,7 @@ public abstract class WorldGenNewTreeBase extends WorldGenAbstractTree {
             || block.canBeReplacedByLeaves(world, x, checkY, z)
             || block.isLeaves(world, x, checkY, z)
             || block.isFoliage(world, x, checkY, z)) {
-            setBlockAndNotifyAdequately(world, x, checkY, z, logBlock, meta + (direction * 4));
+            setBlockAndNotifyAdequately(world, x, checkY, z, logBlock, meta + (3 * 4));
         }
 
         for (int currentY = y + height - 2; currentY > 1; --currentY) {
@@ -167,7 +167,7 @@ public abstract class WorldGenNewTreeBase extends WorldGenAbstractTree {
                 || block.canBeReplacedByLeaves(world, x, currentY, z)
                 || block.isLeaves(world, x, currentY, z)
                 || block.isFoliage(world, x, currentY, z)) {
-                setBlockAndNotifyAdequately(world, x, currentY, z, logBlock, meta + (direction * 4));
+                setBlockAndNotifyAdequately(world, x, currentY, z, logBlock, meta + (3 * 4));
             } else {
                 break;
             }
