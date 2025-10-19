@@ -51,7 +51,6 @@ import extrabiomes.lib.Element;
 import extrabiomes.lib.ModuleControlSettings;
 import extrabiomes.module.amica.buildcraft.FacadeHelper;
 import extrabiomes.module.summa.worldgen.CatTailGenerator;
-import extrabiomes.module.summa.worldgen.EelGrassGenerator;
 import extrabiomes.module.summa.worldgen.FlowerGenerator;
 import extrabiomes.module.summa.worldgen.LeafPileGenerator;
 import extrabiomes.module.summa.worldgen.VineGenerator;
@@ -132,7 +131,7 @@ public abstract class BlockHandler {
 
         Element.WATERPLANT.set(new ItemStack(waterPlantBlock, 1, 0));
 
-        proxy.registerWorldGenerator(new EelGrassGenerator(waterPlantBlock, 0));
+        // proxy.registerWorldGenerator(new EelGrassGenerator(waterPlantBlock, 0));
     }
 
     private static void createCattail() {

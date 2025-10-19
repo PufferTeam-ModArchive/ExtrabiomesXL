@@ -38,6 +38,15 @@ public abstract class WorldGenNewTreeBase extends WorldGenAbstractTree {
         return true;
     }
 
+    public boolean place1x1Trunk(int x, int y, int z, int height, Block logBlock, int meta, World world) {
+        // Place the wood blocks
+        for (int y1 = y; y1 < y + height; y1++) {
+            setBlockAndNotifyAdequately(world, x, y1, z, logBlock, meta);
+        }
+
+        return true;
+    }
+
     public boolean place2x2Trunk(int x, int y, int z, int height, ItemStack logs, World world) {
         Block logBlock = Block.getBlockFromItem(logs.getItem());
         for (int y1 = y; y1 < y + height; y1++) {

@@ -3,40 +3,12 @@ package extrabiomes.module.summa.worldgen;
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-import extrabiomes.lib.Element;
+import biomesoplenty.common.world.features.trees.WorldGenPineTree;
 import extrabiomes.module.summa.TreeSoilRegistry;
 
 public class WorldGenCypressTree extends WorldGenNewTreeBase {
-
-    private enum TreeBlock {
-
-        LEAVES(new ItemStack(Blocks.leaves, 1, 1)),
-        TRUNK(new ItemStack(Blocks.log, 1, 1));
-
-        private ItemStack stack;
-        private static boolean loadedCustomBlocks = false;
-
-        private static void loadCustomBlocks() {
-            if (Element.LEAVES_CYPRESS.isPresent()) LEAVES.stack = Element.LEAVES_CYPRESS.get();
-            if (Element.LOG_CYPRESS.isPresent()) TRUNK.stack = Element.LOG_CYPRESS.get();
-
-            loadedCustomBlocks = true;
-        }
-
-        TreeBlock(ItemStack stack) {
-            this.stack = stack;
-        }
-
-        public ItemStack get() {
-            if (!loadedCustomBlocks) loadCustomBlocks();
-            return this.stack;
-        }
-
-    }
 
     public WorldGenCypressTree(boolean doBlockNotify) {
         super(doBlockNotify);
@@ -137,21 +109,8 @@ public class WorldGenCypressTree extends WorldGenNewTreeBase {
             y + chunkCheck,
             z + chunkCheck)) return false;
 
-        // See if we can generate the tree
-        if (place1x1Trunk(x, y, z, height, TreeBlock.TRUNK.get(), world)) {
-            // Generate the leaves
-            for (int layer = 0; layer < 4 + height - start; layer++) {
-                double offset = factor * layer;
-                double offset2 = offset * offset;
-                double offset3 = offset2 * offset;
-                double r1 = radius * ((0.00142 * offset3) - (0.0517 * offset2) + (0.5085 * offset) - 0.4611);
-                placeLeavesCircle(x, layer + start + y, z, r1, TreeBlock.LEAVES.get(), world);
-            }
-
-            return true;
-        }
-
-        return false;
+        WorldGenPineTree bopGen = new WorldGenPineTree();
+        return bopGen.generate(world, rand, x, y, z);
     }
 
     public static long getLastSeed() {

@@ -140,6 +140,11 @@ public class CommonProxy {
         GameRegistry.registerWorldGenerator(worldGenerator, 50);
     }
 
+    public void registerWorldGeneratorLate(IWorldGenerator worldGenerator) {
+        // TODO: check correct weight
+        GameRegistry.registerWorldGenerator(worldGenerator, 60);
+    }
+
     public void removeBiome(BiomeGenBase biome) {
         if (biome != null) {
             LogHelper.severe("REMOVING BIOMES NOT IMPLEMENTED IN DEV BUILD, TODO!");

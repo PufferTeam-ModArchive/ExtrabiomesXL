@@ -309,7 +309,7 @@ public class WorldGenBaldCypressTree extends WorldGenNewTreeBase {
             }
 
             // Place the branch
-            placeBlockLine(start, end, log, logMeta, world);
+            placeBlockLine(start, end, logIS, world);
 
             int[] node = new int[] { end[0], end[1], end[2] };
 

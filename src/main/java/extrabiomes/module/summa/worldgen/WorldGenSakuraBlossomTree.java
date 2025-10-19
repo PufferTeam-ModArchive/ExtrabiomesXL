@@ -5,40 +5,32 @@ import java.util.Queue;
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import biomesoplenty.api.content.BOPCBlocks;
 import extrabiomes.helpers.LogHelper;
-import extrabiomes.lib.Element;
 import extrabiomes.module.summa.TreeSoilRegistry;
 
 public class WorldGenSakuraBlossomTree extends WorldGenNewTreeBase {
 
-    private enum TreeBlock {
+    Block leaves = BOPCBlocks.leaves3;
+    int leavesMeta = 1;
+    ItemStack leavesIS = new ItemStack(leaves, 1, leavesMeta);
 
-        LEAVES(new ItemStack(Blocks.leaves, 1, 1)),
-        TRUNK(new ItemStack(Blocks.log, 1, 1));
+    Block log = BOPCBlocks.logs1;
+    int logMeta = 1;
+    ItemStack logIS = new ItemStack(log, 1, logMeta);
 
-        private ItemStack stack;
-        private static boolean loadedCustomBlocks = false;
-
-        private static void loadCustomBlocks() {
-            if (Element.LEAVES_SAKURA_BLOSSOM.isPresent()) LEAVES.stack = Element.LEAVES_SAKURA_BLOSSOM.get();
-            if (Element.LOG_SAKURA_BLOSSOM.isPresent()) TRUNK.stack = Element.LOG_SAKURA_BLOSSOM.get();
-
-            loadedCustomBlocks = true;
+    public void loadValues() {
+        if (leaves == null) {
+            leaves = BOPCBlocks.leaves3;
+            leavesIS = new ItemStack(leaves, 1, leavesMeta);
         }
-
-        TreeBlock(ItemStack stack) {
-            this.stack = stack;
+        if (log == null) {
+            log = BOPCBlocks.logs1;
+            logIS = new ItemStack(log, 1, logMeta);
         }
-
-        public ItemStack get() {
-            if (!loadedCustomBlocks) loadCustomBlocks();
-            return this.stack;
-        }
-
     }
 
     public WorldGenSakuraBlossomTree(boolean doBlockNotify) {
@@ -50,6 +42,8 @@ public class WorldGenSakuraBlossomTree extends WorldGenNewTreeBase {
 
     @Override
     public boolean generate(World world, Random rand, int x, int y, int z) {
+        loadValues();
+
         // Store the seed
         lastSeed = rand.nextLong();
 
@@ -60,6 +54,8 @@ public class WorldGenSakuraBlossomTree extends WorldGenNewTreeBase {
     }
 
     public boolean generate(World world, long seed, int x, int y, int z) {
+        loadValues();
+
         // Store the seed
         lastSeed = seed;
 
@@ -138,7 +134,7 @@ public class WorldGenSakuraBlossomTree extends WorldGenNewTreeBase {
             z + chunkCheck)) return false;
 
         // Draw the main trunk
-        if (place1x1Trunk(x, y, z, (int) (height * TRUNK_HEIGHT_PERCENT), TreeBlock.TRUNK.get(), world)) {
+        if (place1x1Trunk(x, y, z, (int) (height * TRUNK_HEIGHT_PERCENT), log, logMeta, world)) {
             // Generate the branches
             generateBranches(
                 world,
@@ -241,12 +237,12 @@ public class WorldGenSakuraBlossomTree extends WorldGenNewTreeBase {
             branches.add(node);
 
             // Generate the branch
-            placeThinBlockLine(start, node, TreeBlock.TRUNK.get(), world);
+            placeThinBlockLine(start, node, logIS, world);
         }
 
         // Place the branch tips
         for (int[] cluster : branches) {
-            generateLeafCluster(world, cluster[0], cluster[1], cluster[2], 2, 2, TreeBlock.LEAVES.get());
+            generateLeafCluster(world, cluster[0], cluster[1], cluster[2], 2, 2, leavesIS);
         }
 
         // Calculate the center position
@@ -255,10 +251,10 @@ public class WorldGenSakuraBlossomTree extends WorldGenNewTreeBase {
         average[2] /= branchCount;
 
         // Generate the canopy
-        generateCanopy(world, rand, average[0] + x, y, average[2] + z, radius, height, TreeBlock.LEAVES.get());
+        generateCanopy(world, rand, average[0] + x, y, average[2] + z, radius, height, leavesIS);
 
         // Generate the center cone
-        generateVerticalCone(world, x, y, z, height - 1, .75, 2, TreeBlock.LEAVES.get());
+        generateVerticalCone(world, x, y, z, height - 1, .75, 2, leavesIS);
 
     }
 
