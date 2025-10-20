@@ -9,36 +9,27 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-import extrabiomes.lib.Element;
 import extrabiomes.module.summa.TreeSoilRegistry;
 
 public class WorldGenJapaneseMapleShrub extends WorldGenNewTreeBase {
 
-    private enum TreeBlock {
+    Block leaves = Blocks.leaves;
+    int leavesMeta = 0;
+    ItemStack leavesIS = new ItemStack(leaves, 1, leavesMeta);
 
-        LEAVES(new ItemStack(Blocks.leaves, 1, 1)),
-        TRUNK(new ItemStack(Blocks.log, 1, 1));
+    Block log = Blocks.log;
+    int logMeta = 0;
+    ItemStack logIS = new ItemStack(log, 1, logMeta);
 
-        private ItemStack stack;
-        private static boolean loadedCustomBlocks = false;
-
-        private static void loadCustomBlocks() {
-            if (Element.LEAVES_JAPANESE_MAPLE_SHRUB.isPresent())
-                LEAVES.stack = Element.LEAVES_JAPANESE_MAPLE_SHRUB.get();
-            if (Element.LOG_JAPANESE_MAPLE.isPresent()) TRUNK.stack = Element.LOG_JAPANESE_MAPLE.get();
-
-            loadedCustomBlocks = true;
+    public void loadValues() {
+        if (leaves == null) {
+            leaves = Blocks.leaves;
+            leavesIS = new ItemStack(leaves, 1, leavesMeta);
         }
-
-        TreeBlock(ItemStack stack) {
-            this.stack = stack;
+        if (log == null) {
+            log = Blocks.log;
+            logIS = new ItemStack(log, 1, logMeta);
         }
-
-        public ItemStack get() {
-            if (!loadedCustomBlocks) loadCustomBlocks();
-            return this.stack;
-        }
-
     }
 
     public WorldGenJapaneseMapleShrub(boolean par1) {
@@ -50,6 +41,7 @@ public class WorldGenJapaneseMapleShrub extends WorldGenNewTreeBase {
 
     @Override
     public boolean generate(World world, Random rand, int x, int y, int z) {
+        loadValues();
         // Store the seed
         lastSeed = rand.nextLong();
 
@@ -60,6 +52,7 @@ public class WorldGenJapaneseMapleShrub extends WorldGenNewTreeBase {
     }
 
     public boolean generate(World world, long seed, int x, int y, int z) {
+        loadValues();
         // Store the seed
         lastSeed = seed;
 
@@ -102,7 +95,7 @@ public class WorldGenJapaneseMapleShrub extends WorldGenNewTreeBase {
             z + chunkCheck)) return false;
 
         // Draw the main trunk
-        if (place1x1Trunk(x, y, z, (int) (height * TRUNK_HEIGHT_PERCENT), TreeBlock.TRUNK.get(), world)) {
+        if (place1x1Trunk(x, y, z, (int) (height * TRUNK_HEIGHT_PERCENT), log, logMeta, world)) {
             // Generate the branches
             generateBranches(
                 world,
@@ -205,19 +198,12 @@ public class WorldGenJapaneseMapleShrub extends WorldGenNewTreeBase {
             branches.add(node);
 
             // Generate the branch
-            placeBlockLine(start, node, TreeBlock.TRUNK.get(), world);
+            placeBlockLine(start, node, logIS, world);
         }
 
         // Place the branch tips
         for (int[] cluster : branches) {
-            generateLeafCluster(
-                world,
-                cluster[0],
-                cluster[1],
-                cluster[2],
-                1 + rand.nextInt(2),
-                2,
-                TreeBlock.LEAVES.get());
+            generateLeafCluster(world, cluster[0], cluster[1], cluster[2], 1 + rand.nextInt(2), 2, leavesIS);
         }
 
         // Calculate the center position
@@ -226,7 +212,7 @@ public class WorldGenJapaneseMapleShrub extends WorldGenNewTreeBase {
         average[2] /= branchCount;
 
         // Generate the canopy
-        generateCanopy(world, rand, average[0] + x, y, average[2] + z, radius, height, TreeBlock.LEAVES.get());
+        generateCanopy(world, rand, average[0] + x, y, average[2] + z, radius, height, leavesIS);
 
     }
 
