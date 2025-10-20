@@ -5,6 +5,8 @@
 
 package extrabiomes.module.summa.worldgen;
 
+import static extrabiomes.handlers.BlockHandler.blockReplacer;
+
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -18,8 +20,9 @@ class WorldGenEelGrass extends WorldGenerator {
     private final int metaData;
 
     WorldGenEelGrass(Block block, int metaData) {
-        this.block = block;
-        this.metaData = metaData;
+        blockReplacer.loadValuesIntoMap();
+        this.block = blockReplacer.getBlockObj(block, metaData);
+        this.metaData = blockReplacer.getBlockMeta(block, metaData);
     }
 
     @Override

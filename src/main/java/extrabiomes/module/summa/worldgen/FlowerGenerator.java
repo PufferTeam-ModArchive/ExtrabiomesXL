@@ -15,7 +15,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenerator;
-import net.pufferlab.materialis.events.BlockReplacer;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -211,10 +210,7 @@ public class FlowerGenerator implements IWorldGenerator {
         registerFlower(BiomeSettings.WOODLANDS, BlockType.TULIP);
     }
 
-    public static BlockReplacer blockReplacer = new BlockReplacer();
-
     public void registerBlock(Block block, Collection<BlockType> types) {
-        blockReplacer.loadValuesIntoMap();
         for (BlockCustomFlower.BlockType type : types) {
             // special cases
             final WorldGenerator gen;
@@ -234,7 +230,6 @@ public class FlowerGenerator implements IWorldGenerator {
 
     // special gen for wild crops
     public void registerCrop(Element element) {
-        blockReplacer.loadValuesIntoMap();
         if (element.isPresent()) {
             final WorldGenerator gen = new WorldGenMetadataFlowers(
                 Block.getBlockFromItem(

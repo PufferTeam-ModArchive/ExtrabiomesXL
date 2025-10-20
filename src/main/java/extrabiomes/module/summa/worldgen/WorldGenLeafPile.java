@@ -5,6 +5,8 @@
 
 package extrabiomes.module.summa.worldgen;
 
+import static extrabiomes.handlers.BlockHandler.blockReplacer;
+
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -14,9 +16,12 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 class WorldGenLeafPile extends WorldGenerator {
 
     private final Block block;
+    private final int meta;
 
     WorldGenLeafPile(Block block) {
-        this.block = block;
+        blockReplacer.loadValuesIntoMap();
+        this.block = blockReplacer.getBlockObj(block, 0);
+        this.meta = blockReplacer.getBlockMeta(block, 0);
     }
 
     @Override
@@ -33,7 +38,7 @@ class WorldGenLeafPile extends WorldGenerator {
             final int z1 = z + rand.nextInt(8) - rand.nextInt(8);
 
             if (world.isAirBlock(x1, y1, z1) && block.canBlockStay(world, x1, y1, z1))
-                world.setBlock(x1, y1, z1, block);
+                world.setBlock(x1, y1, z1, block, meta, 2);
         }
 
         return true;

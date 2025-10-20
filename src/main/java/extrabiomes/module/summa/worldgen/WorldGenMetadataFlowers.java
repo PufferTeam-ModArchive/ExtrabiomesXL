@@ -5,7 +5,7 @@
 
 package extrabiomes.module.summa.worldgen;
 
-import static extrabiomes.module.summa.worldgen.FlowerGenerator.blockReplacer;
+import static extrabiomes.handlers.BlockHandler.blockReplacer;
 
 import java.util.Random;
 
@@ -22,6 +22,7 @@ class WorldGenMetadataFlowers extends WorldGenerator {
     private final int metadata;
 
     WorldGenMetadataFlowers(Block block, int metadata) {
+        blockReplacer.loadValuesIntoMap();
         this.block = blockReplacer.getBlockObj(block, metadata);
         this.metadata = blockReplacer.getBlockMeta(block, metadata);
     }

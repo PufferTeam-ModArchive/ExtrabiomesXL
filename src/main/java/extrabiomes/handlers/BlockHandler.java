@@ -15,6 +15,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.gen.feature.WorldGenTallGrass;
 import net.minecraftforge.oredict.OreDictionary;
+import net.pufferlab.materialis.events.BlockReplacer;
 
 import extrabiomes.Extrabiomes;
 import extrabiomes.blocks.BlockAutumnLeaves;
@@ -50,10 +51,7 @@ import extrabiomes.lib.BlockSettings;
 import extrabiomes.lib.Element;
 import extrabiomes.lib.ModuleControlSettings;
 import extrabiomes.module.amica.buildcraft.FacadeHelper;
-import extrabiomes.module.summa.worldgen.CatTailGenerator;
-import extrabiomes.module.summa.worldgen.FlowerGenerator;
-import extrabiomes.module.summa.worldgen.LeafPileGenerator;
-import extrabiomes.module.summa.worldgen.VineGenerator;
+import extrabiomes.module.summa.worldgen.*;
 import extrabiomes.proxy.CommonProxy;
 import extrabiomes.renderers.RenderKneeLog;
 import extrabiomes.renderers.RenderMiniLog;
@@ -105,7 +103,15 @@ public abstract class BlockHandler {
         createLogs();
         createVines();
         createWaterPlants();
+        createBOPCompat();
+    }
 
+    public static BlockReplacer blockReplacer = new BlockReplacer();
+
+    private static void createBOPCompat() throws Exception {
+        final CommonProxy proxy = Extrabiomes.proxy;
+
+        proxy.registerWorldGenerator(new BOPFloraGenerator());
     }
 
     private static void createWaterPlants() throws Exception {

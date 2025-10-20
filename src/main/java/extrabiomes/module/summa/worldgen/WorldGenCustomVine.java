@@ -1,5 +1,7 @@
 package extrabiomes.module.summa.worldgen;
 
+import static extrabiomes.handlers.BlockHandler.blockReplacer;
+
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -9,14 +11,13 @@ import net.minecraft.util.Facing;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
-import extrabiomes.blocks.BlockCustomVine;
-
 public class WorldGenCustomVine extends WorldGenerator {
 
-    private final BlockCustomVine block;
+    private final Block block;
 
-    WorldGenCustomVine(BlockCustomVine block) {
-        this.block = block;
+    WorldGenCustomVine(Block block) {
+        blockReplacer.loadValuesIntoMap();
+        this.block = blockReplacer.getBlockObj(block, 0);
     }
 
     public boolean generate(World world, Random rand, int x, int y, int z) {

@@ -83,8 +83,6 @@ public enum BiomeHandler {
 
         Extrabiomes.proxy.registerWorldGenerator(new VanillaFloraGenerator());
 
-        Extrabiomes.proxy.registerWorldGeneratorLate(new BOPFloraGenerator());
-
         // allow legendary oaks to be disabled
         if (config.get(config.CATEGORY_GENERAL, "GenerateLegendOaks", true)
             .getBoolean()) {
