@@ -5,6 +5,8 @@
 
 package extrabiomes.module.summa.worldgen;
 
+import static extrabiomes.module.summa.worldgen.FlowerGenerator.blockReplacer;
+
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -20,8 +22,8 @@ class WorldGenTinyCactus extends WorldGenerator {
     private final int metadata;
 
     WorldGenTinyCactus(Block block, int metadata) {
-        this.block = block;
-        this.metadata = metadata;
+        this.block = blockReplacer.getBlockObj(block, metadata);
+        this.metadata = blockReplacer.getBlockMeta(block, metadata);
     }
 
     @Override
